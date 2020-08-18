@@ -1,0 +1,34 @@
+{
+    "билайн": {
+        "youtube": {
+            "count": 6
+        },
+        "instagram": {
+            "count": 30
+        }
+    },
+    "мтс": {
+        "youtube": {
+            "count": 18
+        },
+        "instagram": {
+            "count": 22
+        }
+    },
+    "теле2": {
+        "youtube": {
+            "count": 1
+        },
+        "instagram": {
+            "count": 7
+        }
+    },
+    "мегафон": {
+        "youtube": {
+            "count": 5
+        },
+        "instagram": {
+            "count": 22
+        }
+    }
+}

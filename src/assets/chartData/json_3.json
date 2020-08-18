@@ -1,0 +1,34 @@
+{
+    "мегафон": {
+        "youtube": {
+            "count": 170.193
+        },
+        "instagram": {
+            "count": 69.415
+        }
+    },
+    "мтс": {
+        "youtube": {
+            "count": 618.241
+        },
+        "instagram": {
+            "count": 47.167
+        }
+    },
+    "билайн": {
+        "youtube": {
+            "count": 68.176
+        },
+        "instagram": {
+            "count": 134.169
+        }
+    },
+    "теле2": {
+        "youtube": {
+            "count": 2.904
+        },
+        "instagram": {
+            "count": 18.259
+        }
+    }
+}

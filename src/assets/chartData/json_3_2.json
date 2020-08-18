@@ -1,0 +1,984 @@
+{
+    "билайн": {
+        "2020-01-01": {
+            "youtube": {
+                "count": 0.406
+            },
+            "instagram": {
+                "count": 4.629
+            }
+        },
+        "2020-01-02": {
+            "youtube": {
+                "count": 0.741
+            },
+            "instagram": {
+                "count": 0.84
+            }
+        },
+        "2020-01-03": {
+            "youtube": {
+                "count": 0.22
+            },
+            "instagram": {
+                "count": 1.653
+            }
+        },
+        "2020-01-04": {
+            "youtube": {
+                "count": 0.325
+            },
+            "instagram": {
+                "count": 1.398
+            }
+        },
+        "2020-01-05": {
+            "youtube": {
+                "count": 0.25
+            },
+            "instagram": {
+                "count": 2.32
+            }
+        },
+        "2020-01-06": {
+            "youtube": {
+                "count": 3.472
+            },
+            "instagram": {
+                "count": 4.739
+            }
+        },
+        "2020-01-07": {
+            "youtube": {
+                "count": 2.658
+            },
+            "instagram": {
+                "count": 2.456
+            }
+        },
+        "2020-01-08": {
+            "youtube": {
+                "count": 0.419
+            },
+            "instagram": {
+                "count": 3.666
+            }
+        },
+        "2020-01-09": {
+            "youtube": {
+                "count": 0.262
+            },
+            "instagram": {
+                "count": 3.493
+            }
+        },
+        "2020-01-10": {
+            "youtube": {
+                "count": 0.441
+            },
+            "instagram": {
+                "count": 3.122
+            }
+        },
+        "2020-01-11": {
+            "youtube": {
+                "count": 0.358
+            },
+            "instagram": {
+                "count": 0.869
+            }
+        },
+        "2020-01-12": {
+            "youtube": {
+                "count": 0.398
+            },
+            "instagram": {
+                "count": 16.338
+            }
+        },
+        "2020-01-13": {
+            "youtube": {
+                "count": 2.616
+            },
+            "instagram": {
+                "count": 9.339
+            }
+        },
+        "2020-01-14": {
+            "youtube": {
+                "count": 1.758
+            },
+            "instagram": {
+                "count": 6.104
+            }
+        },
+        "2020-01-15": {
+            "youtube": {
+                "count": 0.118
+            },
+            "instagram": {
+                "count": 2.097
+            }
+        },
+        "2020-01-16": {
+            "youtube": {
+                "count": 0.659
+            },
+            "instagram": {
+                "count": 2.715
+            }
+        },
+        "2020-01-17": {
+            "youtube": {
+                "count": 0.312
+            },
+            "instagram": {
+                "count": 5.848
+            }
+        },
+        "2020-01-18": {
+            "youtube": {
+                "count": 0.415
+            },
+            "instagram": {
+                "count": 4.805
+            }
+        },
+        "2020-01-19": {
+            "youtube": {
+                "count": 1.622
+            },
+            "instagram": {
+                "count": 2.908
+            }
+        },
+        "2020-01-20": {
+            "youtube": {
+                "count": 0.208
+            },
+            "instagram": {
+                "count": 2.996
+            }
+        },
+        "2020-01-21": {
+            "youtube": {
+                "count": 0.201
+            },
+            "instagram": {
+                "count": 11.053
+            }
+        },
+        "2020-01-22": {
+            "youtube": {
+                "count": 2.414
+            },
+            "instagram": {
+                "count": 1.869
+            }
+        },
+        "2020-01-23": {
+            "youtube": {
+                "count": 13.407
+            },
+            "instagram": {
+                "count": 6.898
+            }
+        },
+        "2020-01-24": {
+            "youtube": {
+                "count": 2.655
+            },
+            "instagram": {
+                "count": 6.689
+            }
+        },
+        "2020-01-25": {
+            "youtube": {
+                "count": 0.408
+            },
+            "instagram": {
+                "count": 2.194
+            }
+        },
+        "2020-01-26": {
+            "youtube": {
+                "count": 2.745
+            },
+            "instagram": {
+                "count": 9.214
+            }
+        },
+        "2020-01-27": {
+            "youtube": {
+                "count": 0.432
+            },
+            "instagram": {
+                "count": 2.987
+            }
+        },
+        "2020-01-28": {
+            "youtube": {
+                "count": 2.961
+            },
+            "instagram": {
+                "count": 2.091
+            }
+        },
+        "2020-01-29": {
+            "youtube": {
+                "count": 1.056
+            }
+        },
+        "2020-01-30": {
+            "youtube": {
+                "count": 21.802
+            },
+            "instagram": {
+                "count": 4.209
+            }
+        },
+        "2020-01-31": {
+            "youtube": {
+                "count": 2.437
+            },
+            "instagram": {
+                "count": 4.63
+            }
+        }
+    },
+    "мегафон": {
+        "2020-01-01": {
+            "youtube": {
+                "count": 0.0
+            },
+            "instagram": {
+                "count": 4.0
+            }
+        },
+        "2020-01-02": {
+            "youtube": {
+                "count": 7.319
+            },
+            "instagram": {
+                "count": 0.291
+            }
+        },
+        "2020-01-03": {
+            "youtube": {
+                "count": 0.64
+            },
+            "instagram": {
+                "count": 0.764
+            }
+        },
+        "2020-01-04": {
+            "youtube": {
+                "count": 0.508
+            },
+            "instagram": {
+                "count": 0.271
+            }
+        },
+        "2020-01-05": {
+            "youtube": {
+                "count": 1.764
+            },
+            "instagram": {
+                "count": 0.63
+            }
+        },
+        "2020-01-06": {
+            "youtube": {
+                "count": 3.318
+            },
+            "instagram": {
+                "count": 1.281
+            }
+        },
+        "2020-01-07": {
+            "youtube": {
+                "count": 2.506
+            },
+            "instagram": {
+                "count": 1.692
+            }
+        },
+        "2020-01-08": {
+            "youtube": {
+                "count": 0.041
+            },
+            "instagram": {
+                "count": 1.73
+            }
+        },
+        "2020-01-09": {
+            "youtube": {
+                "count": 0.93
+            },
+            "instagram": {
+                "count": 1.839
+            }
+        },
+        "2020-01-10": {
+            "youtube": {
+                "count": 0.087
+            },
+            "instagram": {
+                "count": 1.308
+            }
+        },
+        "2020-01-11": {
+            "youtube": {
+                "count": 2.664
+            },
+            "instagram": {
+                "count": 0.205
+            }
+        },
+        "2020-01-12": {
+            "youtube": {
+                "count": 0.834
+            },
+            "instagram": {
+                "count": 14.682
+            }
+        },
+        "2020-01-13": {
+            "youtube": {
+                "count": 8.73
+            },
+            "instagram": {
+                "count": 7.428
+            }
+        },
+        "2020-01-14": {
+            "youtube": {
+                "count": 7.476
+            },
+            "instagram": {
+                "count": 5.223
+            }
+        },
+        "2020-01-15": {
+            "youtube": {
+                "count": 65.057
+            },
+            "instagram": {
+                "count": 0.749
+            }
+        },
+        "2020-01-16": {
+            "youtube": {
+                "count": 25.273
+            },
+            "instagram": {
+                "count": 1.089
+            }
+        },
+        "2020-01-17": {
+            "youtube": {
+                "count": 4.78
+            },
+            "instagram": {
+                "count": 2.304
+            }
+        },
+        "2020-01-18": {
+            "youtube": {
+                "count": 3.425
+            },
+            "instagram": {
+                "count": 1.5
+            }
+        },
+        "2020-01-19": {
+            "youtube": {
+                "count": 0.683
+            },
+            "instagram": {
+                "count": 1.823
+            }
+        },
+        "2020-01-20": {
+            "youtube": {
+                "count": 4.689
+            },
+            "instagram": {
+                "count": 1.661
+            }
+        },
+        "2020-01-21": {
+            "youtube": {
+                "count": 8.888
+            },
+            "instagram": {
+                "count": 1.145
+            }
+        },
+        "2020-01-22": {
+            "youtube": {
+                "count": 7.994
+            },
+            "instagram": {
+                "count": 0.753
+            }
+        },
+        "2020-01-23": {
+            "youtube": {
+                "count": 0.057
+            },
+            "instagram": {
+                "count": 0.585
+            }
+        },
+        "2020-01-24": {
+            "youtube": {
+                "count": 0.163
+            },
+            "instagram": {
+                "count": 0.467
+            }
+        },
+        "2020-01-25": {
+            "youtube": {
+                "count": 0.073
+            },
+            "instagram": {
+                "count": 1.1
+            }
+        },
+        "2020-01-26": {
+            "youtube": {
+                "count": 0.082
+            },
+            "instagram": {
+                "count": 7.549
+            }
+        },
+        "2020-01-27": {
+            "youtube": {
+                "count": 0.876
+            },
+            "instagram": {
+                "count": 1.401
+            }
+        },
+        "2020-01-28": {
+            "youtube": {
+                "count": 3.498
+            },
+            "instagram": {
+                "count": 0.806
+            }
+        },
+        "2020-01-29": {
+            "youtube": {
+                "count": 0.291
+            }
+        },
+        "2020-01-30": {
+            "youtube": {
+                "count": 6.814
+            },
+            "instagram": {
+                "count": 2.144
+            }
+        },
+        "2020-01-31": {
+            "youtube": {
+                "count": 0.733
+            },
+            "instagram": {
+                "count": 2.995
+            }
+        }
+    },
+    "мтс": {
+        "2020-01-01": {
+            "youtube": {
+                "count": 0.377
+            },
+            "instagram": {
+                "count": 0.139
+            }
+        },
+        "2020-01-02": {
+            "youtube": {
+                "count": 0.97
+            },
+            "instagram": {
+                "count": 0.282
+            }
+        },
+        "2020-01-03": {
+            "youtube": {
+                "count": 0.448
+            },
+            "instagram": {
+                "count": 0.476
+            }
+        },
+        "2020-01-04": {
+            "youtube": {
+                "count": 0.061
+            },
+            "instagram": {
+                "count": 0.379
+            }
+        },
+        "2020-01-05": {
+            "youtube": {
+                "count": 1.791
+            },
+            "instagram": {
+                "count": 1.13
+            }
+        },
+        "2020-01-06": {
+            "youtube": {
+                "count": 82.584
+            },
+            "instagram": {
+                "count": 1.793
+            }
+        },
+        "2020-01-07": {
+            "youtube": {
+                "count": 4.517
+            },
+            "instagram": {
+                "count": 1.294
+            }
+        },
+        "2020-01-08": {
+            "youtube": {
+                "count": 2.804
+            },
+            "instagram": {
+                "count": 1.971
+            }
+        },
+        "2020-01-09": {
+            "youtube": {
+                "count": 0.744
+            },
+            "instagram": {
+                "count": 2.635
+            }
+        },
+        "2020-01-10": {
+            "youtube": {
+                "count": 1.36
+            },
+            "instagram": {
+                "count": 1.346
+            }
+        },
+        "2020-01-11": {
+            "youtube": {
+                "count": 0.376
+            },
+            "instagram": {
+                "count": 0.225
+            }
+        },
+        "2020-01-12": {
+            "youtube": {
+                "count": 3.215
+            },
+            "instagram": {
+                "count": 1.511
+            }
+        },
+        "2020-01-13": {
+            "youtube": {
+                "count": 2.617
+            },
+            "instagram": {
+                "count": 6.944
+            }
+        },
+        "2020-01-14": {
+            "youtube": {
+                "count": 2.806
+            },
+            "instagram": {
+                "count": 4.863
+            }
+        },
+        "2020-01-15": {
+            "youtube": {
+                "count": 0.469
+            },
+            "instagram": {
+                "count": 0.839
+            }
+        },
+        "2020-01-16": {
+            "youtube": {
+                "count": 7.72
+            },
+            "instagram": {
+                "count": 1.697
+            }
+        },
+        "2020-01-17": {
+            "youtube": {
+                "count": 33.627
+            },
+            "instagram": {
+                "count": 2.74
+            }
+        },
+        "2020-01-18": {
+            "youtube": {
+                "count": 7.459
+            },
+            "instagram": {
+                "count": 1.566
+            }
+        },
+        "2020-01-19": {
+            "youtube": {
+                "count": 4.973
+            },
+            "instagram": {
+                "count": 1.009
+            }
+        },
+        "2020-01-20": {
+            "youtube": {
+                "count": 22.434
+            },
+            "instagram": {
+                "count": 2.228
+            }
+        },
+        "2020-01-21": {
+            "youtube": {
+                "count": 14.472
+            },
+            "instagram": {
+                "count": 1.997
+            }
+        },
+        "2020-01-22": {
+            "youtube": {
+                "count": 37.039
+            },
+            "instagram": {
+                "count": 1.027
+            }
+        },
+        "2020-01-23": {
+            "youtube": {
+                "count": 41.593
+            },
+            "instagram": {
+                "count": 0.42
+            }
+        },
+        "2020-01-24": {
+            "youtube": {
+                "count": 31.226
+            },
+            "instagram": {
+                "count": 1.515
+            }
+        },
+        "2020-01-25": {
+            "youtube": {
+                "count": 38.164
+            },
+            "instagram": {
+                "count": 0.813
+            }
+        },
+        "2020-01-26": {
+            "youtube": {
+                "count": 23.134
+            },
+            "instagram": {
+                "count": 0.831
+            }
+        },
+        "2020-01-27": {
+            "youtube": {
+                "count": 142.652
+            },
+            "instagram": {
+                "count": 1.134
+            }
+        },
+        "2020-01-28": {
+            "youtube": {
+                "count": 24.654
+            },
+            "instagram": {
+                "count": 0.659
+            }
+        },
+        "2020-01-29": {
+            "youtube": {
+                "count": 33.897
+            }
+        },
+        "2020-01-30": {
+            "youtube": {
+                "count": 23.657
+            },
+            "instagram": {
+                "count": 2.225
+            }
+        },
+        "2020-01-31": {
+            "youtube": {
+                "count": 26.401
+            },
+            "instagram": {
+                "count": 1.479
+            }
+        }
+    },
+    "теле2": {
+        "2020-01-01": {
+            "youtube": {
+                "count": 0.025
+            },
+            "instagram": {
+                "count": 0.059
+            }
+        },
+        "2020-01-02": {
+            "youtube": {
+                "count": 0.013
+            },
+            "instagram": {
+                "count": 0.01
+            }
+        },
+        "2020-01-03": {
+            "youtube": {
+                "count": 0.033
+            },
+            "instagram": {
+                "count": 0.04
+            }
+        },
+        "2020-01-04": {
+            "youtube": {
+                "count": 0.086
+            },
+            "instagram": {
+                "count": 0.26
+            }
+        },
+        "2020-01-05": {
+            "youtube": {
+                "count": 0.0
+            },
+            "instagram": {
+                "count": 0.699
+            }
+        },
+        "2020-01-06": {
+            "youtube": {
+                "count": 0.056
+            },
+            "instagram": {
+                "count": 0.205
+            }
+        },
+        "2020-01-08": {
+            "youtube": {
+                "count": 0.144
+            },
+            "instagram": {
+                "count": 0.311
+            }
+        },
+        "2020-01-09": {
+            "youtube": {
+                "count": 0.579
+            },
+            "instagram": {
+                "count": 0.999
+            }
+        },
+        "2020-01-10": {
+            "youtube": {
+                "count": 0.005
+            },
+            "instagram": {
+                "count": 0.561
+            }
+        },
+        "2020-01-11": {
+            "youtube": {
+                "count": 0.023
+            },
+            "instagram": {
+                "count": 0.231
+            }
+        },
+        "2020-01-13": {
+            "youtube": {
+                "count": 0.027
+            },
+            "instagram": {
+                "count": 1.537
+            }
+        },
+        "2020-01-14": {
+            "youtube": {
+                "count": 0.003
+            },
+            "instagram": {
+                "count": 1.458
+            }
+        },
+        "2020-01-15": {
+            "youtube": {
+                "count": 0.04
+            },
+            "instagram": {
+                "count": 0.495
+            }
+        },
+        "2020-01-16": {
+            "youtube": {
+                "count": 0.16
+            },
+            "instagram": {
+                "count": 1.184
+            }
+        },
+        "2020-01-17": {
+            "youtube": {
+                "count": 0.173
+            },
+            "instagram": {
+                "count": 1.188
+            }
+        },
+        "2020-01-18": {
+            "youtube": {
+                "count": 0.139
+            },
+            "instagram": {
+                "count": 0.228
+            }
+        },
+        "2020-01-19": {
+            "youtube": {
+                "count": 0.641
+            },
+            "instagram": {
+                "count": 0.363
+            }
+        },
+        "2020-01-20": {
+            "youtube": {
+                "count": 0.015
+            },
+            "instagram": {
+                "count": 0.447
+            }
+        },
+        "2020-01-21": {
+            "youtube": {
+                "count": 0.072
+            },
+            "instagram": {
+                "count": 0.309
+            }
+        },
+        "2020-01-22": {
+            "youtube": {
+                "count": 0.051
+            },
+            "instagram": {
+                "count": 0.304
+            }
+        },
+        "2020-01-23": {
+            "youtube": {
+                "count": 0.01
+            },
+            "instagram": {
+                "count": 0.099
+            }
+        },
+        "2020-01-24": {
+            "youtube": {
+                "count": 0.084
+            },
+            "instagram": {
+                "count": 3.953
+            }
+        },
+        "2020-01-25": {
+            "youtube": {
+                "count": 0.264
+            },
+            "instagram": {
+                "count": 0.272
+            }
+        },
+        "2020-01-26": {
+            "youtube": {
+                "count": 0.025
+            },
+            "instagram": {
+                "count": 0.118
+            }
+        },
+        "2020-01-27": {
+            "youtube": {
+                "count": 0.001
+            },
+            "instagram": {
+                "count": 0.091
+            }
+        },
+        "2020-01-28": {
+            "youtube": {
+                "count": 0.007
+            },
+            "instagram": {
+                "count": 0.232
+            }
+        },
+        "2020-01-29": {
+            "youtube": {
+                "count": 0.182
+            }
+        },
+        "2020-01-30": {
+            "youtube": {
+                "count": 0.035
+            },
+            "instagram": {
+                "count": 1.758
+            }
+        },
+        "2020-01-31": {
+            "youtube": {
+                "count": 0.011
+            },
+            "instagram": {
+                "count": 0.307
+            }
+        },
+        "2020-01-07": {
+            "instagram": {
+                "count": 0.321
+            }
+        },
+        "2020-01-12": {
+            "instagram": {
+                "count": 0.22
+            }
+        }
+    }
+}
