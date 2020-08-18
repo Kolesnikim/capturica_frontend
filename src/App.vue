@@ -1,14 +1,6 @@
 <template>
   <v-app>
     <v-app-bar v-if="$route.path !== '/auth'" app color="#3A4149" dark>
-      <v-layout class="justify-end align-center">
-        <div class="d-flex align-center">
-          <span>{{ getUserData.username }}</span>
-          <v-btn @click="logout()" icon>
-            <v-icon>mdi-run</v-icon>
-          </v-btn>
-        </div>
-      </v-layout>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -94,11 +86,11 @@
       </div>
     </v-navigation-drawer>
 
-    <v-content
+    <v-main
       style="background: #EBEDEF; height: calc(100% + 48px); margin-bottom: -48px"
     >
       <router-view></router-view>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

@@ -8,7 +8,6 @@
         class="date-picker"
         type="date"
         range
-        disabled="true"
         value-type="format"
         format="YYYY-MM-DD"
         placeholder="Выберите период"
