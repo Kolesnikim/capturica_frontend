@@ -1,17 +1,19 @@
 import axios from 'axios'
+import router from '@/router'
 
 const HTTP = axios.create({
-  baseURL: 'http://95.213.248.92:8000/api/v5'
+  baseURL: '/api/v4'
 })
 
 HTTP.interceptors.response.use(
   response => {
+    // console.log(response.status)
     return response
   },
   err => {
     const {status} = err.response
     if (status === 401) {
-      this.$router.push('/auth')
+      router.push('/auth')
     }
     return Promise.reject(err)
   }

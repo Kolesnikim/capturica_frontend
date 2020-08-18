@@ -8,6 +8,7 @@
         class="date-picker"
         type="date"
         range
+        disabled="true"
         value-type="format"
         format="YYYY-MM-DD"
         placeholder="Выберите период"
@@ -122,7 +123,7 @@
                 charts.vertical_bar.vertical_bar_1[getRequestType.value].title
               }}
             </h2>
-            <v-menu offset-y :close-on-content-click="false">
+            <!-- <v-menu offset-y :close-on-content-click="false">
               <template v-slot:activator="{on}">
                 <v-btn class="ml-2" color="primary--text" v-on="on" icon>
                   <v-icon>mdi-camera-control</v-icon>
@@ -163,7 +164,7 @@
                   </v-list-item>
                 </v-list>
               </div>
-            </v-menu>
+            </v-menu> -->
           </div>
           <vertical-bar-chart
             v-if="!charts.vertical_bar.vertical_bar_1.loading"
@@ -207,7 +208,7 @@
       </v-flex>
     </div>
 
-    <v-card class="pa-2 mb-4" style="width: 100%">
+    <!-- <v-card class="pa-2 mb-4" style="width: 100%">
       <h2 class="text-center">
         {{ charts.line.line_2[getRequestType.value].title }}
       </h2>
@@ -221,8 +222,7 @@
         indeterminate
         color="#639FF8"
       ></v-progress-circular>
-    </v-card>
-    -->
+    </v-card> -->
 
     <div class="mb-4 d-flex mx-n2">
       <v-flex md12 class="ma-2 pb-4">
