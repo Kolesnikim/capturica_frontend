@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     user_data: {},
     request_type: {
-      value: 'views'
+      value: 'reach'
     }
   },
   getters: {

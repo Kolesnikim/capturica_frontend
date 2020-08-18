@@ -581,10 +581,10 @@ export default {
           mentions: {
             title: 'Упоминания брендов'
           },
-          views: {
+          reach: {
             title: 'Охват по брендам'
           },
-          comments: {
+          impressions: {
             title: 'Вовлеченность по брендам'
           },
           data: {},
@@ -599,10 +599,10 @@ export default {
           mentions: {
             title: 'Упоминания брендов YT'
           },
-          views: {
+          reach: {
             title: 'Охват по брендам YT'
           },
-          comments: {
+          impressions: {
             title: 'Вовлеченность по брендам YT'
           },
           data: {},
@@ -617,10 +617,10 @@ export default {
           mentions: {
             title: 'Упоминания брендов IG'
           },
-          views: {
+          reach: {
             title: 'Охват по брендам IG'
           },
-          comments: {
+          impressions: {
             title: 'Вовлеченность по брендам IG'
           },
           data: {},
@@ -635,10 +635,10 @@ export default {
           mentions: {
             title: 'Динамика упоминаний брендов'
           },
-          views: {
+          reach: {
             title: 'Динамика охвата по брендам'
           },
-          comments: {
+          impressions: {
             title: 'Динамика вовлеченности по брендам'
           },
           loading: true,
@@ -1058,10 +1058,10 @@ export default {
           mentions: {
             title: 'Упоминания продуктов брендов'
           },
-          views: {
+          reach: {
             title: 'Охват по упоминаниям продуктов'
           },
-          comments: {
+          impressions: {
             title: 'Вовлеченность по упоминаниям продуктов'
           },
           loading: true,
@@ -1154,7 +1154,7 @@ export default {
               ]
             }
           },
-          views: {
+          reach: {
             title: 'Охват по слоганам',
             loading: true,
             data: {
@@ -1192,7 +1192,7 @@ export default {
               ]
             }
           },
-          comments: {
+          impressions: {
             title: 'Вовлеченность по слоганам',
             loading: true,
             data: {
@@ -1255,10 +1255,10 @@ export default {
           mentions: {
             title: 'Топ каналов по упоминаниям YT'
           },
-          views: {
+          reach: {
             title: 'Топ каналов по охвату YT'
           },
-          comments: {
+          impressions: {
             title: 'Топ каналов по вовлеченности YT'
           },
           loading: true,
@@ -1269,10 +1269,10 @@ export default {
           mentions: {
             title: 'Топ каналов по упоминаниям IG'
           },
-          views: {
+          reach: {
             title: 'Топ каналов по охвату IG'
           },
-          comments: {
+          impressions: {
             title: 'Топ каналов по вовлеченности IG'
           },
           loading: true,
@@ -1284,10 +1284,10 @@ export default {
         mentions: {
           title: 'Общее количество упоминаний брендов'
         },
-        views: {
+        reach: {
           title: 'Общий охват упоминаний брендов'
         },
-        comments: {
+        impressions: {
           title: 'Общая вовлеченность упоминаний брендов'
         },
         loading: true,
@@ -1298,10 +1298,10 @@ export default {
         mentions: {
           title: 'Соотношение упоминаний'
         },
-        views: {
+        reach: {
           title: 'Соотношение охвата'
         },
-        comments: {
+        impressions: {
           title: 'Соотношение вовлеченности'
         },
         loading: true,
@@ -1329,10 +1329,10 @@ export default {
         mentions: {
           title: 'Список упоминаний IG'
         },
-        views: {
+        reach: {
           title: 'Список упоминаний IG'
         },
-        comments: {
+        impressions: {
           title: 'Список упоминаний IG'
         },
         headers: [
@@ -1377,10 +1377,10 @@ export default {
         mentions: {
           title: 'Список упоминаний YT'
         },
-        views: {
+        reach: {
           title: 'Список упоминаний YT'
         },
-        comments: {
+        impressions: {
           title: 'Список упоминаний YT'
         },
         headers: [
@@ -1525,8 +1525,8 @@ export default {
 
       const jsons = {
         mentions: json_1_8,
-        views: json_2_8,
-        comments: json_3_8
+        reach: json_2_8,
+        impressions: json_3_8
       }
 
       // const [start_date, end_date] = this.date_picker.dates
@@ -1543,8 +1543,8 @@ export default {
 
       const jsons = {
         mentions: json_1_7,
-        views: json_2_7,
-        comments: json_3_7
+        reach: json_2_7,
+        impressions: json_3_7
       }
 
       // const [start_date, end_date] = this.date_picker.dates
@@ -1561,8 +1561,8 @@ export default {
 
       const jsons = {
         mentions: json_1_2,
-        views: json_2_2,
-        comments: json_3_2
+        reach: json_2_2,
+        impressions: json_3_2
       }
 
       const brands_labels = ['мегафон', 'билайн', 'мтс', 'теле2']
@@ -1663,8 +1663,8 @@ export default {
 
       const jsons = {
         mentions: json_1,
-        views: json_2,
-        comments: json_3
+        reach: json_2,
+        impressions: json_3
       }
 
       // const labels = Object.keys(jsons[this.getRequestType.value])
@@ -1695,8 +1695,8 @@ export default {
 
       const jsons = {
         mentions: json_1_1,
-        views: json_2_1,
-        comments: json_3_1
+        reach: json_2_1,
+        impressions: json_3_1
       }
 
       const obj = jsons[this.getRequestType.value]['мтс']
@@ -1721,8 +1721,8 @@ export default {
 
       const jsons = {
         mentions: json_1_5,
-        views: json_2_5,
-        comments: json_3_5
+        reach: json_2_5,
+        impressions: json_3_5
       }
 
       // const [start_date, end_date] = this.date_picker.dates
@@ -1770,8 +1770,8 @@ export default {
 
       const jsons = {
         mentions: json_1_6,
-        views: json_2_6,
-        comments: json_3_6
+        reach: json_2_6,
+        impressions: json_3_6
       }
 
       // const [start_date, end_date] = this.date_picker.dates
@@ -1808,8 +1808,8 @@ export default {
 
       const jsons = {
         mentions: json_1_3,
-        views: json_2_3,
-        comments: json_3_3
+        reach: json_2_3,
+        impressions: json_3_3
       }
 
       const labels = Object.keys(jsons[this.getRequestType.value])

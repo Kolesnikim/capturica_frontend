@@ -26,12 +26,12 @@ export default {
     tabs: [
       {
         name: 'Охват',
-        value: 'views',
+        value: 'reach',
         disabled: false
       },
       {
         name: 'Вовлечения',
-        value: 'comments',
+        value: 'impressions',
         disabled: false
       },
       {
