@@ -8,6 +8,7 @@
         class="date-picker"
         type="date"
         range
+        disabled="true"
         value-type="format"
         format="YYYY-MM-DD"
         placeholder="Выберите период"
@@ -38,19 +39,369 @@
           ></v-progress-circular>
         </v-card>
       </v-flex>
+      <v-flex md6 class="mx-2">
+        <v-card class="pa-2" style="width: 100%">
+          <h2 class="text-center">
+            {{ charts.horizontal_bar_2[getRequestType.value].title }}
+          </h2>
+          <horizontal-bar-chart
+            v-if="!charts.horizontal_bar_2.loading"
+            :chart-data="charts.horizontal_bar_2.data"
+            style="height: 150px; width: 99%"
+          ></horizontal-bar-chart>
+          <v-progress-circular
+            v-if="charts.horizontal_bar_2.loading"
+            size="48"
+            indeterminate
+            color="#639FF8"
+          ></v-progress-circular>
+        </v-card>
+      </v-flex>
+    </div>
+    <v-card class="pa-2 mb-4" style="width: 100%">
+      <h2 class="text-center">
+        {{ charts.line.line_1[getRequestType.value].title }}
+      </h2>
+      <line-chart
+        v-if="!charts.line.line_1.loading"
+        :chart-data="charts.line.line_1.data"
+        :options="charts.line.line_1.options"
+      ></line-chart>
+      <v-progress-circular
+        v-if="charts.line.line_1.loading"
+        size="48"
+        indeterminate
+        color="#639FF8"
+      ></v-progress-circular>
+    </v-card>
+    <div class="d-flex mx-n2 mb-4">
+      <v-flex md6 class="mx-2">
+        <v-card class="pa-2 mb-4" style="width: 100%">
+          <h2 class="text-center">
+            {{ charts.line.line_3[getRequestType.value].title }}
+          </h2>
+          <line-chart
+            v-if="!charts.line.line_3.loading"
+            :chart-data="charts.line.line_3.data"
+            :options="charts.line.line_3.options"
+            style="width: 99%"
+          ></line-chart>
+          <v-progress-circular
+            v-if="charts.line.line_3.loading"
+            size="48"
+            indeterminate
+            color="#639FF8"
+          ></v-progress-circular>
+        </v-card>
+      </v-flex>
+      <v-flex md6 class="mx-2">
+        <v-card class="pa-2 mb-4" style="width: 100%">
+          <h2 class="text-center">
+            {{ charts.line.line_4[getRequestType.value].title }}
+          </h2>
+          <line-chart
+            v-if="!charts.line.line_4.loading"
+            :chart-data="charts.line.line_4.data"
+            :options="charts.line.line_4.options"
+            style="width: 99%"
+          ></line-chart>
+          <v-progress-circular
+            v-if="charts.line.line_4.loading"
+            size="48"
+            indeterminate
+            color="#639FF8"
+          ></v-progress-circular>
+        </v-card>
+      </v-flex>
+    </div>
+    <div class="d-flex mx-n2 mb-4">
+      <v-flex md8 class="mx-2">
+        <v-card class="pa-2" style="width: 100%">
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{
+                charts.vertical_bar.vertical_bar_1[getRequestType.value].title
+              }}
+            </h2>
+            <!-- <v-menu offset-y :close-on-content-click="false">
+              <template v-slot:activator="{on}">
+                <v-btn class="ml-2" color="primary--text" v-on="on" icon>
+                  <v-icon>mdi-camera-control</v-icon>
+                </v-btn>
+              </template>
+              <div
+                style="max-height: 250px; overflow-y: scroll; position: relative"
+              >
+                <v-list style="overflow-y: hidden">
+                  <v-list-item dense>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        <v-btn
+                          @click="toggleLabelsOfVerticalData()"
+                          class="white--text"
+                          style="background: #639FF8"
+                          >Включить все</v-btn
+                        >
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item
+                    v-for="(item, index) in charts.vertical_bar.vertical_bar_1
+                      .labels"
+                    :key="index"
+                    dense
+                  >
+                    <v-list-item-action>
+                      <v-checkbox
+                        v-model="item.active"
+                        color="#639FF8"
+                        @click.stop="changeVerticalData(item)"
+                      ></v-checkbox>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ item.label }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </div>
+            </v-menu> -->
+          </div>
+          <vertical-bar-chart
+            v-if="!charts.vertical_bar.vertical_bar_1.loading"
+            style="max-width: 99%"
+            :chart-data="charts.vertical_bar.vertical_bar_1.data"
+            :options="charts.vertical_bar.vertical_bar_1.options"
+          ></vertical-bar-chart>
+          <v-progress-circular
+            v-if="charts.vertical_bar.vertical_bar_1.loading"
+            size="48"
+            indeterminate
+            color="#639FF8"
+          ></v-progress-circular>
+        </v-card>
+      </v-flex>
+      <v-flex md4 class="mx-2">
+        <v-card class="pa-2" style="width: 100%;">
+          <h2 class="text-center">
+            {{ charts.vertical_bar.vertical_bar_2[getRequestType.value].title }}
+          </h2>
+          <vertical-bar-chart
+            v-if="
+              !charts.vertical_bar.vertical_bar_2[getRequestType.value].loading
+            "
+            :chart-data="
+              charts.vertical_bar.vertical_bar_2[getRequestType.value].data
+            "
+            :options="
+              charts.vertical_bar.vertical_bar_2[getRequestType.value].options
+            "
+          ></vertical-bar-chart>
+          <v-progress-circular
+            v-if="
+              charts.vertical_bar.vertical_bar_2[getRequestType.value].loading
+            "
+            size="48"
+            indeterminate
+            color="#639FF8"
+          ></v-progress-circular>
+        </v-card>
+      </v-flex>
     </div>
 
+    <!-- <v-card class="pa-2 mb-4" style="width: 100%">
+      <h2 class="text-center">
+        {{ charts.line.line_2[getRequestType.value].title }}
+      </h2>
+      <line-chart
+        v-if="!charts.line.line_2.loading"
+        :data="charts.line.line_2.data"
+      ></line-chart>
+      <v-progress-circular
+        v-if="charts.line.line_2.loading"
+        size="48"
+        indeterminate
+        color="#639FF8"
+      ></v-progress-circular>
+    </v-card> -->
+
+    <div class="mb-4 d-flex mx-n2">
+      <v-flex md12 class="ma-2 pb-4">
+        <v-card class="px-2 elevation-0" style="height: 100%">
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">Облако слов для бренда МТС</h2>
+            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+          <word-cloud
+            v-if="!cloud.loading"
+            :rotate="{from: -0, to: 0, numOfOrientation: 0}"
+            :wordPadding="2"
+            :margin="{top: 0, right: 0, bottom: 0, left: 0}"
+            :color="cloud.color"
+            :data="cloud.items"
+            nameKey="word"
+            valueKey="count"
+            :showTooltip="false"
+          >
+          </word-cloud>
+          <v-progress-circular
+            v-if="cloud.loading"
+            size="48"
+            indeterminate
+            color="#639FF8"
+          ></v-progress-circular>
+        </v-card>
+      </v-flex>
+    </div>
+
+    <div class="mb-4 d-flex mx-n2">
+      <v-flex md6 class="mx-2">
+        <v-card class="pa-2" style="width: 100%;">
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{ charts.horizontal_bar.youtube[getRequestType.value].title }}
+            </h2>
+            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+          <horizontal-bar-chart
+            v-if="!charts.horizontal_bar.youtube.loading"
+            :chart-data="charts.horizontal_bar.youtube.data"
+            style="width: 99%"
+          ></horizontal-bar-chart>
+          <v-progress-circular
+            v-if="charts.horizontal_bar.youtube.loading"
+            size="48"
+            indeterminate
+            color="#639FF8"
+          ></v-progress-circular>
+        </v-card>
+      </v-flex>
+      <v-flex md6 class="mx-2">
+        <v-card class="pa-2" style="width: 100%;">
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{ charts.horizontal_bar.instagram[getRequestType.value].title }}
+            </h2>
+            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+          <horizontal-bar-chart
+            v-if="!charts.horizontal_bar.instagram.loading"
+            :chart-data="charts.horizontal_bar.instagram.data"
+            style="width: 99%"
+          ></horizontal-bar-chart>
+          <v-progress-circular
+            v-if="charts.horizontal_bar.instagram.loading"
+            size="48"
+            indeterminate
+            color="#639FF8"
+          ></v-progress-circular>
+        </v-card>
+      </v-flex>
+    </div>
+
+    <v-layout class="pa-4 mx-n6" wrap>
+      <v-flex class="px-2" md6>
+        <v-card class="pa-2 mb-4" style="width: 100%">
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{ tables.video[getRequestType.value].title }}
+            </h2>
+            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+          <v-data-table
+            :headers="tables.video.headers"
+            :items="tables.video.items"
+            :items-per-page="5"
+            :loading="tables.video.loading"
+            class="elevation-0 transparent"
+            loading-text="Загрузка..."
+          >
+            <template v-slot:body="{items}">
+              <tbody>
+                <tr :key="item.link" v-for="item in items">
+                  <td
+                    :key="header.value"
+                    v-for="header in tables.video.headers"
+                  >
+                    <a
+                      :href="item[header.value]"
+                      v-if="header.value === 'yt_video_id'"
+                      >{{ item[header.value] | filterLength(20) }}</a
+                    >
+                    <span v-else>{{
+                      item[header.value] | filterLength(20)
+                    }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-flex>
+      <v-flex class="px-2" md6>
+        <v-card class="pa-2 mb-4" style="width: 100%">
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{ tables.posts[getRequestType.value].title }}
+            </h2>
+            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+
+          <v-data-table
+            :headers="tables.posts.headers"
+            :items="tables.posts.items"
+            :items-per-page="5"
+            :loading="tables.posts.loading"
+            class="elevation-0 transparent"
+            loading-text="Загрузка..."
+          >
+            <template v-slot:body="{items}">
+              <tbody>
+                <tr :key="item.link" v-for="item in items">
+                  <td
+                    :key="header.value"
+                    v-for="header in tables.posts.headers"
+                  >
+                    <a
+                      :href="item[header.value]"
+                      v-if="header.value === 'ig_post_id'"
+                      >{{ item[header.value] | filterLength(20) }}</a
+                    >
+                    <span v-else>{{
+                      item[header.value] | filterLength(20)
+                    }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </v-layout>
 </template>
 
 <script>
+import lineChart from '@/components/charts/line.js'
 import horizontalBarChart from '@/components/charts/horizontalBar.js'
+import verticalBarChart from '@/components/charts/verticalBar.js'
 import requestTypes from '@/components/request-types'
 
+import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
 
-//import HTTP from '@/api/http'
+import HTTP from '@/api/http'
 
+// import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 
 import json_1 from '@/assets/chartData/json_1.json'
@@ -69,12 +420,30 @@ import json_1_3 from '@/assets/chartData/json_1_3.json'
 import json_2_3 from '@/assets/chartData/json_2_3.json'
 import json_3_3 from '@/assets/chartData/json_3_3.json'
 
+import json_1_4 from '@/assets/chartData/json_1_4.json'
 
+import json_1_5 from '@/assets/chartData/json_1_5.json'
+import json_2_5 from '@/assets/chartData/json_2_5.json'
+import json_3_5 from '@/assets/chartData/json_3_5.json'
 
+import json_1_6 from '@/assets/chartData/json_1_6.json'
+import json_2_6 from '@/assets/chartData/json_2_6.json'
+import json_3_6 from '@/assets/chartData/json_3_6.json'
+
+import json_1_7 from '@/assets/chartData/json_1_7.json'
+import json_2_7 from '@/assets/chartData/json_2_7.json'
+import json_3_7 from '@/assets/chartData/json_3_7.json'
+
+import json_1_8 from '@/assets/chartData/json_1_8.json'
+import json_2_8 from '@/assets/chartData/json_2_8.json'
+import json_3_8 from '@/assets/chartData/json_3_8.json'
 
 export default {
   components: {
+    lineChart,
     horizontalBarChart,
+    verticalBarChart,
+    wordCloud,
     requestTypes,
     DatePicker
   },
@@ -1067,10 +1436,7 @@ export default {
       this.init()
     }
   },
-//const [start_date, end_date] = this.date_picker.dates
-  //const {data} = await HTTP.get(
-  //  `${this.getRequestType.value}/products?platform=youtube&start_date=${start_date}&end_date=${end_date}`
-  //)
+
   methods: {
     async init() {
       const mentions = [
@@ -1090,15 +1456,107 @@ export default {
       mentions.forEach(mention => {
         this.getMentions(mention)
       })
-
+      this.getCloudWords()
+      this.getHorizontalBarYoutube()
+      this.getHorizontalBarInstagram()
       this.getHorizontalBarMentions()
       this.getHorizontalBarCoeff()
 
       this.setDataOfVerticalBar()
 
+      this.getListPosts()
+      this.getListVideo()
+
+      this.getLineData()
+
+      this.charts.vertical_bar.vertical_bar_2[
+        this.getRequestType.value
+      ].loading = true
+      setTimeout(() => {
+        this.charts.vertical_bar.vertical_bar_2[
+          this.getRequestType.value
+        ].loading = false
+      }, 1000)
     },
+    // updateProgress(e) {
+    //   console.log(e)
+    // },
+    async getLineData() {
+      const {data: line_data} = this.charts.line.line_2
+      this.charts.line.line_2.loading = true
 
+      const [start_date, end_date] = this.date_picker.dates
+      const {data} = await HTTP.get(
+        `${this.getRequestType.value}/products?platform=youtube&start_date=${start_date}&end_date=${end_date}`
+      )
 
+      const getData = label => {
+        return line_data.labels.reduce((total, item) => {
+          if (data[0][item][label]) {
+            total.push(data[0][item][label])
+            return total
+          } else {
+            total.push(0)
+            return total
+          }
+        }, [])
+      }
+
+      const getRandomColor = () => {
+        const letters = '0123456789ABCDEF'
+        let color = '#'
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)]
+        }
+        return color
+      }
+
+      line_data.labels = [...new Set(Object.keys(data[0]))].reverse()
+      line_data.datasets = Object.keys(data[1]).map(label => ({
+        label,
+        fill: false,
+        borderColor: getRandomColor(),
+        data: getData(label)
+      }))
+
+      this.charts.line.line_2.loading = false
+    },
+    async getListPosts() {
+      this.tables.posts.loading = true
+
+      const jsons = {
+        mentions: json_1_8,
+        views: json_2_8,
+        comments: json_3_8
+      }
+
+      // const [start_date, end_date] = this.date_picker.dates
+      // const {data} = await HTTP.get(
+      //   `list/post/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
+      // )
+
+      this.tables.posts.items = jsons[this.getRequestType.value]
+      this.tables.posts.loading = false
+      // console.dir(data)
+    },
+    async getListVideo() {
+      this.tables.video.loading = true
+
+      const jsons = {
+        mentions: json_1_7,
+        views: json_2_7,
+        comments: json_3_7
+      }
+
+      // const [start_date, end_date] = this.date_picker.dates
+      // const {data} = await HTTP.get(
+      //   `list/video/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
+      // )
+
+      this.tables.video.items = jsons[this.getRequestType.value]
+      this.tables.video.loading = false
+      // console.dir(data)
+    },
     async getMentions({chart_name, platform}) {
       this.charts.line[chart_name].loading = true
 
@@ -1154,10 +1612,55 @@ export default {
       this.charts.line[chart_name].data = chart_data
       this.charts.line[chart_name].loading = false
     },
+    async getCloudWords() {
+      this.cloud.loading = true
+      // const [start_date, end_date] = this.date_picker.dates
+      // const {data} = await HTTP.get(
+      //   `wordcloud?brand=megafon&start_date=${start_date}&end_date=${end_date}`
+      // )
 
+      this.cloud.items = json_1_4.youtube
+      // this.cloud.items = data.slice(0, 100)
+      this.cloud.loading = false
+    },
+    async getPieData() {
+      this.charts.pie.loading = true
+
+      const [start_date, end_date] = this.date_picker.dates
+      const {data} = await HTTP.get(
+        `count/${this.getRequestType.value}/megafon?start_date=${start_date}&end_date=${end_date}`
+      )
+      const colors = ['#7FC29B', '#639FF8']
+      const labels = Object.keys(data)
+      const datasets = Object.values(data)
+
+      this.charts.pie.data = {
+        labels,
+        datasets: [
+          {
+            backgroundColor: colors,
+            data: datasets
+          }
+        ]
+      }
+
+      this.charts.pie.loading = false
+    },
+    async getSum(url) {
+      const [start_date, end_date] = this.date_picker.dates
+      const {data} = await HTTP.get(
+        `${this.getRequestType.value}/count?brand=${url}&start_date=${start_date}&end_date=${end_date}`
+      )
+      const sumMentions = Object.values(data).reduce(
+        (sum, item) => sum + item[0].count,
+        0
+      )
+      return sumMentions
+    },
     async getHorizontalBarMentions() {
       this.charts.horizontal_bar_1.loading = true
 
+      console.log(this.getRequestType.value, this.getRequestType.name)
 
       const jsons = {
         mentions: json_1,
@@ -1214,7 +1717,93 @@ export default {
 
       this.charts.horizontal_bar_2.loading = false
     },
+    async getHorizontalBarYoutube() {
+      this.charts.horizontal_bar.youtube.loading = true
 
+      const jsons = {
+        mentions: json_1_5,
+        views: json_2_5,
+        comments: json_3_5
+      }
+
+      // const [start_date, end_date] = this.date_picker.dates
+      // const {data} = await HTTP.get(
+      //   `list/channel/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
+      // )
+      const labels = jsons[this.getRequestType.value].map(
+        item => item.channel_name
+      )
+      const datasets = labels.map(label => {
+        return ['count'].reduce((total, item) => {
+          const channel_name = jsons[this.getRequestType.value].find(
+            obj => obj.channel_name === label
+          )
+          return total + parseFloat(channel_name[item] || 0)
+        }, 0)
+      })
+
+      this.charts.horizontal_bar.youtube.data = {
+        labels,
+        datasets: [
+          {
+            label: 'Соотношение',
+            backgroundColor: '#639FF8',
+            data: datasets
+          }
+        ]
+      }
+
+      console.log({
+        labels,
+        datasets: [
+          {
+            label: 'Соотношение',
+            backgroundColor: '#639FF8',
+            data: datasets
+          }
+        ]
+      })
+
+      this.charts.horizontal_bar.youtube.loading = false
+    },
+    async getHorizontalBarInstagram() {
+      this.charts.horizontal_bar.instagram.loading = true
+
+      const jsons = {
+        mentions: json_1_6,
+        views: json_2_6,
+        comments: json_3_6
+      }
+
+      // const [start_date, end_date] = this.date_picker.dates
+      // const {data} = await HTTP.get(
+      //   `list/user/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
+      // )
+      const labels = jsons[this.getRequestType.value].map(
+        item => item.user_name
+      )
+      const datasets = labels.map(label => {
+        return ['count'].reduce((total, item) => {
+          const user_name = jsons[this.getRequestType.value].find(
+            obj => obj.user_name === label
+          )
+          return total + parseFloat(user_name[item] || 0)
+        }, 0)
+      })
+
+      this.charts.horizontal_bar.instagram.data = {
+        labels,
+        datasets: [
+          {
+            label: 'Мегафон',
+            backgroundColor: '#639FF8',
+            data: datasets
+          }
+        ]
+      }
+
+      this.charts.horizontal_bar.instagram.loading = false
+    },
     async setDataOfVerticalBar() {
       this.charts.vertical_bar.vertical_bar_1.loading = true
 
