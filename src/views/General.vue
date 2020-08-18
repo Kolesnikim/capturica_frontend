@@ -49,7 +49,7 @@ import requestTypes from '@/components/request-types'
 
 import {mapGetters} from 'vuex'
 
-import HTTP from '@/api/http'
+//import HTTP from '@/api/http'
 
 import DatePicker from 'vue2-datepicker'
 
@@ -69,23 +69,8 @@ import json_1_3 from '@/assets/chartData/json_1_3.json'
 import json_2_3 from '@/assets/chartData/json_2_3.json'
 import json_3_3 from '@/assets/chartData/json_3_3.json'
 
-import json_1_4 from '@/assets/chartData/json_1_4.json'
 
-import json_1_5 from '@/assets/chartData/json_1_5.json'
-import json_2_5 from '@/assets/chartData/json_2_5.json'
-import json_3_5 from '@/assets/chartData/json_3_5.json'
 
-import json_1_6 from '@/assets/chartData/json_1_6.json'
-import json_2_6 from '@/assets/chartData/json_2_6.json'
-import json_3_6 from '@/assets/chartData/json_3_6.json'
-
-import json_1_7 from '@/assets/chartData/json_1_7.json'
-import json_2_7 from '@/assets/chartData/json_2_7.json'
-import json_3_7 from '@/assets/chartData/json_3_7.json'
-
-import json_1_8 from '@/assets/chartData/json_1_8.json'
-import json_2_8 from '@/assets/chartData/json_2_8.json'
-import json_3_8 from '@/assets/chartData/json_3_8.json'
 
 export default {
   components: {
@@ -1082,7 +1067,10 @@ export default {
       this.init()
     }
   },
-
+//const [start_date, end_date] = this.date_picker.dates
+  //const {data} = await HTTP.get(
+  //  `${this.getRequestType.value}/products?platform=youtube&start_date=${start_date}&end_date=${end_date}`
+  //)
   methods: {
     async init() {
       const mentions = [
@@ -1102,107 +1090,15 @@ export default {
       mentions.forEach(mention => {
         this.getMentions(mention)
       })
-      this.getCloudWords()
-      this.getHorizontalBarYoutube()
-      this.getHorizontalBarInstagram()
+
       this.getHorizontalBarMentions()
       this.getHorizontalBarCoeff()
 
       this.setDataOfVerticalBar()
 
-      this.getListPosts()
-      this.getListVideo()
-
-      this.getLineData()
-
-      this.charts.vertical_bar.vertical_bar_2[
-        this.getRequestType.value
-      ].loading = true
-      setTimeout(() => {
-        this.charts.vertical_bar.vertical_bar_2[
-          this.getRequestType.value
-        ].loading = false
-      }, 1000)
     },
-    // updateProgress(e) {
-    //   console.log(e)
-    // },
-    async getLineData() {
-      const {data: line_data} = this.charts.line.line_2
-      this.charts.line.line_2.loading = true
 
-      const [start_date, end_date] = this.date_picker.dates
-      const {data} = await HTTP.get(
-        `${this.getRequestType.value}/products?platform=youtube&start_date=${start_date}&end_date=${end_date}`
-      )
 
-      const getData = label => {
-        return line_data.labels.reduce((total, item) => {
-          if (data[0][item][label]) {
-            total.push(data[0][item][label])
-            return total
-          } else {
-            total.push(0)
-            return total
-          }
-        }, [])
-      }
-
-      const getRandomColor = () => {
-        const letters = '0123456789ABCDEF'
-        let color = '#'
-        for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)]
-        }
-        return color
-      }
-
-      line_data.labels = [...new Set(Object.keys(data[0]))].reverse()
-      line_data.datasets = Object.keys(data[1]).map(label => ({
-        label,
-        fill: false,
-        borderColor: getRandomColor(),
-        data: getData(label)
-      }))
-
-      this.charts.line.line_2.loading = false
-    },
-    async getListPosts() {
-      this.tables.posts.loading = true
-
-      const jsons = {
-        mentions: json_1_8,
-        views: json_2_8,
-        comments: json_3_8
-      }
-
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/post/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
-
-      this.tables.posts.items = jsons[this.getRequestType.value]
-      this.tables.posts.loading = false
-      // console.dir(data)
-    },
-    async getListVideo() {
-      this.tables.video.loading = true
-
-      const jsons = {
-        mentions: json_1_7,
-        views: json_2_7,
-        comments: json_3_7
-      }
-
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/video/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
-
-      this.tables.video.items = jsons[this.getRequestType.value]
-      this.tables.video.loading = false
-      // console.dir(data)
-    },
     async getMentions({chart_name, platform}) {
       this.charts.line[chart_name].loading = true
 
@@ -1258,55 +1154,10 @@ export default {
       this.charts.line[chart_name].data = chart_data
       this.charts.line[chart_name].loading = false
     },
-    async getCloudWords() {
-      this.cloud.loading = true
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `wordcloud?brand=megafon&start_date=${start_date}&end_date=${end_date}`
-      // )
 
-      this.cloud.items = json_1_4.youtube
-      // this.cloud.items = data.slice(0, 100)
-      this.cloud.loading = false
-    },
-    async getPieData() {
-      this.charts.pie.loading = true
-
-      const [start_date, end_date] = this.date_picker.dates
-      const {data} = await HTTP.get(
-        `count/${this.getRequestType.value}/megafon?start_date=${start_date}&end_date=${end_date}`
-      )
-      const colors = ['#7FC29B', '#639FF8']
-      const labels = Object.keys(data)
-      const datasets = Object.values(data)
-
-      this.charts.pie.data = {
-        labels,
-        datasets: [
-          {
-            backgroundColor: colors,
-            data: datasets
-          }
-        ]
-      }
-
-      this.charts.pie.loading = false
-    },
-    async getSum(url) {
-      const [start_date, end_date] = this.date_picker.dates
-      const {data} = await HTTP.get(
-        `${this.getRequestType.value}/count?brand=${url}&start_date=${start_date}&end_date=${end_date}`
-      )
-      const sumMentions = Object.values(data).reduce(
-        (sum, item) => sum + item[0].count,
-        0
-      )
-      return sumMentions
-    },
     async getHorizontalBarMentions() {
       this.charts.horizontal_bar_1.loading = true
 
-      console.log(this.getRequestType.value, this.getRequestType.name)
 
       const jsons = {
         mentions: json_1,
@@ -1363,93 +1214,7 @@ export default {
 
       this.charts.horizontal_bar_2.loading = false
     },
-    async getHorizontalBarYoutube() {
-      this.charts.horizontal_bar.youtube.loading = true
 
-      const jsons = {
-        mentions: json_1_5,
-        views: json_2_5,
-        comments: json_3_5
-      }
-
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/channel/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
-      const labels = jsons[this.getRequestType.value].map(
-        item => item.channel_name
-      )
-      const datasets = labels.map(label => {
-        return ['count'].reduce((total, item) => {
-          const channel_name = jsons[this.getRequestType.value].find(
-            obj => obj.channel_name === label
-          )
-          return total + parseFloat(channel_name[item] || 0)
-        }, 0)
-      })
-
-      this.charts.horizontal_bar.youtube.data = {
-        labels,
-        datasets: [
-          {
-            label: 'Соотношение',
-            backgroundColor: '#639FF8',
-            data: datasets
-          }
-        ]
-      }
-
-      console.log({
-        labels,
-        datasets: [
-          {
-            label: 'Соотношение',
-            backgroundColor: '#639FF8',
-            data: datasets
-          }
-        ]
-      })
-
-      this.charts.horizontal_bar.youtube.loading = false
-    },
-    async getHorizontalBarInstagram() {
-      this.charts.horizontal_bar.instagram.loading = true
-
-      const jsons = {
-        mentions: json_1_6,
-        views: json_2_6,
-        comments: json_3_6
-      }
-
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/user/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
-      const labels = jsons[this.getRequestType.value].map(
-        item => item.user_name
-      )
-      const datasets = labels.map(label => {
-        return ['count'].reduce((total, item) => {
-          const user_name = jsons[this.getRequestType.value].find(
-            obj => obj.user_name === label
-          )
-          return total + parseFloat(user_name[item] || 0)
-        }, 0)
-      })
-
-      this.charts.horizontal_bar.instagram.data = {
-        labels,
-        datasets: [
-          {
-            label: 'Мегафон',
-            backgroundColor: '#639FF8',
-            data: datasets
-          }
-        ]
-      }
-
-      this.charts.horizontal_bar.instagram.loading = false
-    },
     async setDataOfVerticalBar() {
       this.charts.vertical_bar.vertical_bar_1.loading = true
 
