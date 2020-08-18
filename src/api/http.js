@@ -2,12 +2,11 @@ import axios from 'axios'
 import router from '@/router'
 
 const HTTP = axios.create({
-  baseURL: '/api/v4'
+  baseURL: 'http://95.213.248.92:8000/api/v5'
 })
 
 HTTP.interceptors.response.use(
   response => {
-    // console.log(response.status)
     return response
   },
   err => {

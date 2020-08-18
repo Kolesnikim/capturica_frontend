@@ -1,14 +1,6 @@
 <template>
   <v-app>
     <v-app-bar v-if="$route.path !== '/auth'" app color="#3A4149" dark>
-      <v-layout class="justify-end align-center">
-        <div class="d-flex align-center">
-          <span>{{ getUserData.username }}</span>
-          <v-btn @click="logout()" icon>
-            <v-icon>mdi-run</v-icon>
-          </v-btn>
-        </div>
-      </v-layout>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -103,7 +95,6 @@
 </template>
 
 <script>
-import HTTP from '@/api/http'
 import {mapGetters} from 'vuex'
 
 export default {
@@ -154,12 +145,6 @@ export default {
   methods: {
     toggleDrawer() {
       this.drawer = !this.drawer
-    },
-    async logout() {
-      const {data} = await HTTP.post('logout')
-      if (data) {
-        this.$router.push('/auth')
-      }
     }
   }
 }
