@@ -4,7 +4,7 @@
       <h1>Упоминания</h1>
       <v-spacer></v-spacer>
       <date-picker
-        v-model="date_picker.dates"
+        v-model="dates"
         class="date-picker"
         type="date"
         range
@@ -403,18 +403,6 @@ import HTTP from '@/api/http'
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 
-import json_1 from '@/assets/chartData/json_1.json'
-import json_2 from '@/assets/chartData/json_2.json'
-import json_3 from '@/assets/chartData/json_3.json'
-
-import json_1_1 from '@/assets/chartData/json_1_1.json'
-import json_2_1 from '@/assets/chartData/json_2_1.json'
-import json_3_1 from '@/assets/chartData/json_3_1.json'
-
-import json_1_2 from '@/assets/chartData/json_1_2.json'
-import json_2_2 from '@/assets/chartData/json_2_2.json'
-import json_3_2 from '@/assets/chartData/json_3_2.json'
-
 import json_1_3 from '@/assets/chartData/json_1_3.json'
 import json_2_3 from '@/assets/chartData/json_2_3.json'
 import json_3_3 from '@/assets/chartData/json_3_3.json'
@@ -458,40 +446,7 @@ export default {
   },
 
   data: () => ({
-    date_picker: {
-      dates: [
-        // moment()
-        //   .subtract(1, 'months')
-        //   .format('YYYY-MM-DD'),
-        // moment().format('YYYY-MM-DD')
-        '2020-01-01',
-        '2020-02-01'
-      ],
-      shortcuts: [
-        {
-          text: 'Сегодня',
-          onClick: () => {
-            return [
-              // moment()
-              //   .subtract(1, 'days')
-              //   .format('YYYY-MM-DD'),
-              // moment()
-              //   .format('YYYY-MM-DD')
-              '2019-04-04',
-              '2019-04-05'
-            ]
-          }
-        },
-        {
-          text: 'Вчера',
-          onClick: () => {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24)
-            return date
-          }
-        }
-      ]
-    },
+    dates: ['2020-01-01', '2020-02-01'],
     charts: {
       bubble: {
         data: {
@@ -1484,7 +1439,7 @@ export default {
       const {data: line_data} = this.charts.line.line_2
       this.charts.line.line_2.loading = true
 
-      const [start_date, end_date] = this.date_picker.dates
+      const [start_date, end_date] = this.dates
       const {data} = await HTTP.get(
         `${this.getRequestType.value}/products?platform=youtube&start_date=${start_date}&end_date=${end_date}`
       )
@@ -1558,17 +1513,21 @@ export default {
     },
     async getMentions({chart_name, platform}) {
       this.charts.line[chart_name].loading = true
+      const reqName = this.getRequestType.value
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_2,
-        reach: json_2_2,
-        impressions: json_3_2
-      }
+      const jsons = {}
+      const {data} = await HTTP.get(
+        `megafon/${reqName}/date?start_date=${start_date}&end_date=${end_date}`
+      )
+
+      jsons[reqName] = data
+      //console.log(jsons)
 
       const brands_labels = ['мегафон', 'билайн', 'мтс', 'теле2']
 
       const colors = ['#7FC29B', '#F2DC5D', '#EA2B1F', '#0C090D']
-      const labels = [
+      let labels = [
         ...new Set([
           ...brands_labels.flatMap(label =>
             Object.keys(jsons[this.getRequestType.value][label])
@@ -1603,6 +1562,12 @@ export default {
         fill: false
       }))
 
+      labels = labels.map(label => {
+        label = label.split('T')
+        label.pop().toString()
+        return label
+      })
+
       const chart_data = {
         labels,
         datasets
@@ -1625,7 +1590,7 @@ export default {
     async getPieData() {
       this.charts.pie.loading = true
 
-      const [start_date, end_date] = this.date_picker.dates
+      const [start_date, end_date] = this.dates
       const {data} = await HTTP.get(
         `count/${this.getRequestType.value}/megafon?start_date=${start_date}&end_date=${end_date}`
       )
@@ -1646,7 +1611,7 @@ export default {
       this.charts.pie.loading = false
     },
     async getSum(url) {
-      const [start_date, end_date] = this.date_picker.dates
+      const [start_date, end_date] = this.dates
       const {data} = await HTTP.get(
         `${this.getRequestType.value}/count?brand=${url}&start_date=${start_date}&end_date=${end_date}`
       )
@@ -1658,14 +1623,15 @@ export default {
     },
     async getHorizontalBarMentions() {
       this.charts.horizontal_bar_1.loading = true
+      const reqName = this.getRequestType.value
+      const [start_date, end_date] = this.dates
 
-      console.log(this.getRequestType.value, this.getRequestType.name)
+      const jsons = {}
+      const {data} = await HTTP.get(
+        `megafon/${reqName}/count?start_date=${start_date}&end_date=${end_date}`
+      )
 
-      const jsons = {
-        mentions: json_1,
-        reach: json_2,
-        impressions: json_3
-      }
+      jsons[reqName] = data
 
       // const labels = Object.keys(jsons[this.getRequestType.value])
       const labels = ['мегафон', 'мтс', 'билайн', 'теле2']
@@ -1691,15 +1657,18 @@ export default {
       this.charts.horizontal_bar_1.loading = false
     },
     async getHorizontalBarCoeff() {
-      this.charts.horizontal_bar_2.loading = true
+      this.charts.horizontal_bar_1.loading = true
+      const reqName = this.getRequestType.value
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_1,
-        reach: json_2_1,
-        impressions: json_3_1
-      }
+      const jsons = {}
+      const {data} = await HTTP.get(
+        `megafon/${reqName}/count?start_date=${start_date}&end_date=${end_date}`
+      )
 
-      const obj = jsons[this.getRequestType.value]['мтс']
+      jsons[reqName] = data['мегафон']
+
+      const obj = jsons[reqName]
       const labels = Object.keys(obj)
       const sum_mentions = labels.map(label => obj[label].count)
 
