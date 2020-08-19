@@ -1623,20 +1623,23 @@ export default {
     },
     async getHorizontalBarMentions() {
       this.charts.horizontal_bar_1.loading = true
-      const reqName = this.getRequestType.value
       const [start_date, end_date] = this.dates
 
-      const jsons = {}
-      const {data} = await HTTP.get(
-        `megafon/${reqName}/count?start_date=${start_date}&end_date=${end_date}`
-      )
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
+      }
 
-      jsons[reqName] = data
+      const jsons = {}
+      await this.$store.dispatch('request', config)
+
+      jsons[config.action] = this.$store.getters[`get${config.action}`]
 
       // const labels = Object.keys(jsons[this.getRequestType.value])
       const labels = ['мегафон', 'мтс', 'билайн', 'теле2']
       const mentions = labels.map(label =>
-        Object.values(jsons[this.getRequestType.value][label]).reduce(
+        Object.values(jsons[config.action][label]).reduce(
           (total, item) => total + parseFloat(item.count),
           0
         )
