@@ -328,10 +328,6 @@ import HTTP from '@/api/http'
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 
-import json_1_3 from '@/assets/chartData/json_1_3.json'
-import json_2_3 from '@/assets/chartData/json_2_3.json'
-import json_3_3 from '@/assets/chartData/json_3_3.json'
-
 import json_1_4 from '@/assets/chartData/json_1_4.json'
 
 import json_1_5 from '@/assets/chartData/json_1_5.json'
@@ -1458,7 +1454,7 @@ export default {
       await this.$store.dispatch('request_coeff', config)
 
       jsons[config.action] = this.$store.getters[`get${config.action}_coeff`]
-      console.log(jsons)
+
       const obj = jsons[config.action]
       const labels = Object.keys(obj)
       const sum_mentions = labels.map(label => obj[label].count)
@@ -1565,18 +1561,21 @@ export default {
     },
     async setDataOfVerticalBar() {
       this.charts.vertical_bar.vertical_bar_1.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_3,
-        reach: json_2_3,
-        impressions: json_3_3
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
-      const labels = Object.keys(jsons[this.getRequestType.value])
+      const jsons = {}
+      await this.$store.dispatch('request_prod', config)
+
+      jsons[config.action] = this.$store.getters[`get${config.action}_prod`]
+      const labels = Object.keys(jsons[config.action])
       const operators = ['билайн', 'теле2', 'мегафон', 'мтс']
       const colors = ['#F2DC5D', '#0C090D', '#7FC29B', '#EA2B1F']
-
-      // console.log(labels)
 
       const datasets = operators.map((operator, index) => ({
         label: operator,

@@ -10,7 +10,10 @@ export default {
     impressions_coeff: {},
     mentions_date: {},
     reach_date: {},
-    impressions_date: {}
+    impressions_date: {},
+    mentions_prod: {},
+    reach_prod: {},
+    impressions_prod: {}
   },
   getters: {
     getmentions(state) {
@@ -39,6 +42,15 @@ export default {
     },
     getimpressions_date(state) {
       return state.impressions_date
+    },
+    getmentions_prod(state) {
+      return state.mentions_prod
+    },
+    getreach_prod(state) {
+      return state.reach_prod
+    },
+    getimpressions_prod(state) {
+      return state.impressions_prod
     }
   },
   mutations: {
@@ -68,6 +80,15 @@ export default {
     },
     setimpressions_date(state, payload) {
       state.impressions_date = payload
+    },
+    setmentions_prod(state, payload) {
+      state.mentions_prod = payload
+    },
+    setreach_prod(state, payload) {
+      state.reach_prod = payload
+    },
+    setimpressions_prod(state, payload) {
+      state.impressions_prod = payload
     }
   },
   actions: {
@@ -96,6 +117,19 @@ export default {
         .get(`megafon/${action}/date?start_date=${start}&end_date=${end}`)
         .then(response => {
           commit(`set${action}_date`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_prod({commit}, {action, start, end}) {
+      await http
+        .get(
+          `megafon/${action}/products/count?start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          console.log(response.data)
+          commit(`set${action}_prod`, response.data)
         })
         .catch(err => {
           console.warn(err.message)
