@@ -152,7 +152,7 @@
       <v-flex md12 class="ma-2 pb-4">
         <v-card class="px-2 elevation-0" style="height: 100%">
           <div class="d-flex justify-center align-center">
-            <h2 class="text-center">Облако слов для бренда МТС</h2>
+            <h2 class="text-center">Облако слов для бренда Мегафон</h2>
             <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
@@ -328,8 +328,6 @@ import HTTP from '@/api/http'
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 
-import json_1_4 from '@/assets/chartData/json_1_4.json'
-
 import json_1_5 from '@/assets/chartData/json_1_5.json'
 import json_2_5 from '@/assets/chartData/json_2_5.json'
 import json_3_5 from '@/assets/chartData/json_3_5.json'
@@ -367,7 +365,7 @@ export default {
   },
 
   data: () => ({
-    dates: ['2020-01-01', '2020-02-01'],
+    dates: ['2019-01-01', '2020-01-01'],
     charts: {
       bubble: {
         data: {
@@ -518,414 +516,11 @@ export default {
             title: 'Динамика вовлеченности по брендам'
           },
           loading: true,
-          data: {
-            labels: [
-              '2019-08-05',
-              '2019-08-12',
-              '2019-08-19',
-              '2019-08-26',
-              '2019-09-02',
-              '2019-09-09',
-              '2019-09-16',
-              '2019-09-23',
-              '2019-09-30',
-              '2019-10-07',
-              '2019-10-14',
-              '2019-10-21',
-              '2019-10-28',
-              '2019-11-04',
-              '2019-11-11',
-              '2019-11-18',
-              '2019-11-25',
-              '2019-12-02',
-              '2019-12-09',
-              '2019-12-16',
-              '2019-12-23',
-              '2019-12-30',
-              '2020-01-06',
-              '2020-01-13',
-              '2020-01-20',
-              '2020-01-27',
-              '2020-02-03',
-              '2020-02-10',
-              '2020-02-17',
-              '2020-02-24'
-            ],
-            datasets: [
-              {
-                label: '5g',
-                borderColor: '#4d089a',
-                fill: false,
-                data: [
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.14,
-                  0.03,
-                  0.03,
-                  0.05,
-                  0.03,
-                  0.0,
-                  0.03,
-                  0.0,
-                  0.05,
-                  0.08,
-                  0.05,
-                  0.03,
-                  0.24,
-                  0.03,
-                  0.05,
-                  0.03,
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.03,
-                  0.0,
-                  0.03,
-                  0.0,
-                  0.0
-                ]
-              },
-              {
-                label: 'cashback',
-                borderColor: '#1b262c',
-                fill: false,
-                data: [
-                  0.04,
-                  0.04,
-                  0.16,
-                  0.04,
-                  0.0,
-                  0.0,
-                  0.12,
-                  0.0,
-                  0.0,
-                  0.04,
-                  0.0,
-                  0.04,
-                  0.0,
-                  0.04,
-                  0.0,
-                  0.12,
-                  0.04,
-                  0.0,
-                  0.04,
-                  0.08,
-                  0.04,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.04,
-                  0.0,
-                  0.0,
-                  0.04,
-                  0.0
-                ]
-              },
-              {
-                label: 'банковская карта',
-                borderColor: '#ed6663',
-                fill: false,
-                data: [
-                  0.0,
-                  0.03,
-                  0.09,
-                  0.03,
-                  0.06,
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.03,
-                  0.09,
-                  0.06,
-                  0.03,
-                  0.0,
-                  0.09,
-                  0.09,
-                  0.03,
-                  0.06,
-                  0.03,
-                  0.03,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.06,
-                  0.0,
-                  0.09,
-                  0.0
-                ]
-              },
-              {
-                label: 'забугорище',
-                borderColor: '#ffa372',
-                fill: false,
-                data: [
-                  0.5,
-                  0.2,
-                  0.1,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.2,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              {
-                label: 'искусственный интеллект',
-                borderColor: '#f35588',
-                fill: false,
-                data: [
-                  0.02,
-                  0.0,
-                  0.0,
-                  0.02,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.02,
-                  0.04,
-                  0.02,
-                  0.0,
-                  0.02,
-                  0.06,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.02,
-                  0.09,
-                  0.11,
-                  0.06,
-                  0.11,
-                  0.11,
-                  0.02,
-                  0.04,
-                  0.04,
-                  0.04,
-                  0.02,
-                  0.09,
-                  0.02,
-                  0.02
-                ]
-              },
-              {
-                label: 'объединяй',
-                borderColor: '#05dfd7',
-                fill: false,
-                data: [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.25,
-                  0.0,
-                  0.42,
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              {
-                label: 'роуминг',
-                borderColor: '#a3f7bf',
-                fill: false,
-                data: [
-                  0.01,
-                  0.0,
-                  0.02,
-                  0.01,
-                  0.02,
-                  0.02,
-                  0.02,
-                  0.0,
-                  0.03,
-                  0.02,
-                  0.01,
-                  0.02,
-                  0.08,
-                  0.0,
-                  0.06,
-                  0.03,
-                  0.06,
-                  0.03,
-                  0.05,
-                  0.07,
-                  0.08,
-                  0.01,
-                  0.04,
-                  0.06,
-                  0.08,
-                  0.09,
-                  0.05,
-                  0.05,
-                  0.02,
-                  0.0
-                ]
-              },
-              {
-                label: 'самый быстрый',
-                borderColor: '#fff591',
-                fill: false,
-                data: [
-                  0.07,
-                  0.0,
-                  0.0,
-                  0.04,
-                  0.07,
-                  0.0,
-                  0.04,
-                  0.07,
-                  0.07,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.11,
-                  0.04,
-                  0.04,
-                  0.04,
-                  0.07,
-                  0.0,
-                  0.04,
-                  0.07,
-                  0.0,
-                  0.04,
-                  0.04,
-                  0.04,
-                  0.0,
-                  0.04,
-                  0.07,
-                  0.0
-                ]
-              },
-              {
-                label: 'тариф x',
-                borderColor: '#323edd',
-                fill: false,
-                data: [
-                  0.15,
-                  0.25,
-                  0.4,
-                  0.15,
-                  0.05,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              {
-                label: 'тарифище',
-                borderColor: '#dc2ade',
-                fill: false,
-                data: [
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.17,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.08,
-                  0.17,
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              }
-            ]
-          },
+          data: {},
           options: {
-            fill: false
+            fill: false,
+            responsive: true,
+            maintainAspectRatio: false
           }
         }
       },
@@ -1214,25 +809,33 @@ export default {
     //   console.log(e)
     // },
     async getLineData() {
-      const {data: line_data} = this.charts.line.line_2
       this.charts.line.line_2.loading = true
-
       const [start_date, end_date] = this.dates
-      const {data} = await HTTP.get(
-        `${this.getRequestType.value}/products?platform=youtube&start_date=${start_date}&end_date=${end_date}`
-      )
 
-      const getData = label => {
-        return line_data.labels.reduce((total, item) => {
-          if (data[0][item][label]) {
-            total.push(data[0][item][label])
-            return total
-          } else {
-            total.push(0)
-            return total
-          }
-        }, [])
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
+      const jsons = {}
+
+      await this.$store.dispatch('request_prod_date', config)
+      jsons[config.action] = this.$store.getters[
+        `get${config.action}_prod_date`
+      ]
+
+      let service_labels = [
+        ...new Set([...Object.keys(jsons[this.getRequestType.value])])
+      ]
+
+      let labels = [
+        ...new Set([
+          ...service_labels.flatMap(label =>
+            Object.keys(jsons[this.getRequestType.value][label])
+          )
+        ])
+      ]
+      console.log(labels)
 
       const getRandomColor = () => {
         const letters = '0123456789ABCDEF'
@@ -1242,14 +845,13 @@ export default {
         }
         return color
       }
+      console.log(getRandomColor)
 
-      line_data.labels = [...new Set(Object.keys(data[0]))].reverse()
-      line_data.datasets = Object.keys(data[1]).map(label => ({
-        label,
-        fill: false,
-        borderColor: getRandomColor(),
-        data: getData(label)
-      }))
+      labels = labels.map(label => {
+        label = label.split('T')
+        label.pop().toString()
+        return label
+      })
 
       this.charts.line.line_2.loading = false
     },
@@ -1303,8 +905,6 @@ export default {
       await this.$store.dispatch('request_date', config)
 
       jsons[config.action] = this.$store.getters[`get${config.action}_date`]
-      console.log(jsons[config.action])
-
       const brands_labels = ['мегафон', 'билайн', 'мтс', 'теле2']
 
       const colors = ['#7FC29B', '#F2DC5D', '#EA2B1F', '#0C090D']
@@ -1359,13 +959,16 @@ export default {
     },
     async getCloudWords() {
       this.cloud.loading = true
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `wordcloud?brand=megafon&start_date=${start_date}&end_date=${end_date}`
-      // )
+      const [start_date, end_date] = this.dates
 
-      this.cloud.items = json_1_4.youtube
-      // this.cloud.items = data.slice(0, 100)
+      const config = {
+        start: start_date,
+        end: end_date
+      }
+
+      await this.$store.dispatch('request_word_cloud', config)
+      this.cloud.items = this.$store.getters.get_word_cloud.youtube
+
       this.cloud.loading = false
     },
     async getPieData() {
@@ -1573,6 +1176,7 @@ export default {
       await this.$store.dispatch('request_prod', config)
 
       jsons[config.action] = this.$store.getters[`get${config.action}_prod`]
+
       const labels = Object.keys(jsons[config.action])
       const operators = ['билайн', 'теле2', 'мегафон', 'мтс']
       const colors = ['#F2DC5D', '#0C090D', '#7FC29B', '#EA2B1F']

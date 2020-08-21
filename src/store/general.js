@@ -13,7 +13,11 @@ export default {
     impressions_date: {},
     mentions_prod: {},
     reach_prod: {},
-    impressions_prod: {}
+    impressions_prod: {},
+    mentions_prod_date: {},
+    reach_prod_date: {},
+    impressions_prod_date: {},
+    word_cloud: {}
   },
   getters: {
     getmentions(state) {
@@ -51,6 +55,18 @@ export default {
     },
     getimpressions_prod(state) {
       return state.impressions_prod
+    },
+    getmentions_prod_date(state) {
+      return state.mentions_prod_date
+    },
+    getreach_prod_date(state) {
+      return state.reach_prod_date
+    },
+    getimpressions_prod_date(state) {
+      return state.impressions_prod_date
+    },
+    get_word_cloud(state) {
+      return state.word_cloud
     }
   },
   mutations: {
@@ -89,6 +105,18 @@ export default {
     },
     setimpressions_prod(state, payload) {
       state.impressions_prod = payload
+    },
+    setmentions_prod_date(state, payload) {
+      state.mentions_prod_date = payload
+    },
+    setreach_prod_date(state, payload) {
+      state.reach_prod_date = payload
+    },
+    setimpressions_prod_date(state, payload) {
+      state.impressions_prod_date = payload
+    },
+    set_word_cloud(state, payload) {
+      state.word_cloud = payload
     }
   },
   actions: {
@@ -128,8 +156,31 @@ export default {
           `megafon/${action}/products/count?start_date=${start}&end_date=${end}`
         )
         .then(response => {
-          console.log(response.data)
           commit(`set${action}_prod`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_prod_date({commit}, {action, start, end}) {
+      await http
+        .get(
+          `megafon/${action}/products/date?start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set${action}_prod_date`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_word_cloud({commit}, {start, end}) {
+      await http
+        .get(
+          `megafon/wordcloud?brand=мегафон&start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set_word_cloud`, response.data)
         })
         .catch(err => {
           console.warn(err.message)
