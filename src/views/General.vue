@@ -1661,17 +1661,20 @@ export default {
     },
     async getHorizontalBarCoeff() {
       this.charts.horizontal_bar_1.loading = true
-      const reqName = this.getRequestType.value
       const [start_date, end_date] = this.dates
 
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
+      }
+
       const jsons = {}
-      const {data} = await HTTP.get(
-        `megafon/${reqName}/count?start_date=${start_date}&end_date=${end_date}`
-      )
+      await this.$store.dispatch('request_coeff', config)
 
-      jsons[reqName] = data['мегафон']
-
-      const obj = jsons[reqName]
+      jsons[config.action] = this.$store.getters[`get${config.action}_coeff`]
+      console.log(jsons)
+      const obj = jsons[config.action]
       const labels = Object.keys(obj)
       const sum_mentions = labels.map(label => obj[label].count)
 
