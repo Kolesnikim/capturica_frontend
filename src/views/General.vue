@@ -113,101 +113,26 @@
         </v-card>
       </v-flex>
     </div>
-    <div class="d-flex mx-n2 mb-4">
-      <v-flex md8 class="mx-2">
-        <v-card class="pa-2" style="width: 100%">
-          <div class="d-flex justify-center align-center">
-            <h2 class="text-center">
-              {{
-                charts.vertical_bar.vertical_bar_1[getRequestType.value].title
-              }}
-            </h2>
-            <!-- <v-menu offset-y :close-on-content-click="false">
-              <template v-slot:activator="{on}">
-                <v-btn class="ml-2" color="primary--text" v-on="on" icon>
-                  <v-icon>mdi-camera-control</v-icon>
-                </v-btn>
-              </template>
-              <div
-                style="max-height: 250px; overflow-y: scroll; position: relative"
-              >
-                <v-list style="overflow-y: hidden">
-                  <v-list-item dense>
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        <v-btn
-                          @click="toggleLabelsOfVerticalData()"
-                          class="white--text"
-                          style="background: #639FF8"
-                          >Включить все</v-btn
-                        >
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item
-                    v-for="(item, index) in charts.vertical_bar.vertical_bar_1
-                      .labels"
-                    :key="index"
-                    dense
-                  >
-                    <v-list-item-action>
-                      <v-checkbox
-                        v-model="item.active"
-                        color="#639FF8"
-                        @click.stop="changeVerticalData(item)"
-                      ></v-checkbox>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                      <v-list-item-title>{{ item.label }}</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </div>
-            </v-menu> -->
-          </div>
-          <vertical-bar-chart
-            v-if="!charts.vertical_bar.vertical_bar_1.loading"
-            style="max-width: 99%"
-            :chart-data="charts.vertical_bar.vertical_bar_1.data"
-            :options="charts.vertical_bar.vertical_bar_1.options"
-          ></vertical-bar-chart>
-          <v-progress-circular
-            v-if="charts.vertical_bar.vertical_bar_1.loading"
-            size="48"
-            indeterminate
-            color="#639FF8"
-          ></v-progress-circular>
-        </v-card>
-      </v-flex>
-      <v-flex md4 class="mx-2">
-        <v-card class="pa-2" style="width: 100%;">
-          <h2 class="text-center">
-            {{ charts.vertical_bar.vertical_bar_2[getRequestType.value].title }}
-          </h2>
-          <vertical-bar-chart
-            v-if="
-              !charts.vertical_bar.vertical_bar_2[getRequestType.value].loading
-            "
-            :chart-data="
-              charts.vertical_bar.vertical_bar_2[getRequestType.value].data
-            "
-            :options="
-              charts.vertical_bar.vertical_bar_2[getRequestType.value].options
-            "
-          ></vertical-bar-chart>
-          <v-progress-circular
-            v-if="
-              charts.vertical_bar.vertical_bar_2[getRequestType.value].loading
-            "
-            size="48"
-            indeterminate
-            color="#639FF8"
-          ></v-progress-circular>
-        </v-card>
-      </v-flex>
-    </div>
 
-    <!-- <v-card class="pa-2 mb-4" style="width: 100%">
+    <v-card class="pa-2 mb-4" style="width: 100%">
+      <h2 class="text-center">
+        {{ charts.vertical_bar.vertical_bar_1[getRequestType.value].title }}
+      </h2>
+      <vertical-bar-chart
+        v-if="!charts.vertical_bar.vertical_bar_1.loading"
+        style="max-width: 99%"
+        :chart-data="charts.vertical_bar.vertical_bar_1.data"
+        :options="charts.vertical_bar.vertical_bar_1.options"
+      ></vertical-bar-chart>
+      <v-progress-circular
+        v-if="charts.vertical_bar.vertical_bar_1.loading"
+        size="48"
+        indeterminate
+        color="#639FF8"
+      ></v-progress-circular>
+    </v-card>
+
+    <v-card class="pa-2 mb-4" style="width: 100%">
       <h2 class="text-center">
         {{ charts.line.line_2[getRequestType.value].title }}
       </h2>
@@ -221,7 +146,7 @@
         indeterminate
         color="#639FF8"
       ></v-progress-circular>
-    </v-card> -->
+    </v-card>
 
     <div class="mb-4 d-flex mx-n2">
       <v-flex md12 class="ma-2 pb-4">
@@ -1069,140 +994,6 @@ export default {
               ]
             }
           }
-        },
-        vertical_bar_2: {
-          mentions: {
-            title: 'Упоминания слоганов',
-            loading: true,
-            data: {
-              labels: [
-                'начинается с тебя',
-                'другие правила',
-                'быть лучше каждый день',
-                'живи на яркой стороне'
-              ],
-              datasets: [
-                {
-                  label: 'билайн',
-                  backgroundColor: '#F2DC5D',
-                  data: [3, 1, 0, 173],
-                  stack: 1
-                },
-                {
-                  label: 'мегафон',
-                  backgroundColor: '#7FC29B',
-                  data: [142, 2, 0, 0],
-                  stack: 1
-                },
-                {
-                  label: 'мтс',
-                  backgroundColor: '#EA2B1F',
-                  data: [7, 1, 15, 2],
-                  stack: 1
-                },
-                {
-                  label: 'теле2',
-                  backgroundColor: '#0C090D',
-                  data: [1, 14, 0, 0],
-                  stack: 1
-                }
-              ]
-            }
-          },
-          reach: {
-            title: 'Охват по слоганам',
-            loading: true,
-            data: {
-              labels: [
-                'начинается с тебя',
-                'другие правила',
-                'быть лучше каждый день',
-                'живи на яркой стороне'
-              ],
-              datasets: [
-                {
-                  label: 'билайн',
-                  backgroundColor: '#F2DC5D',
-                  data: [342269, 7375, 0, 228300],
-                  stack: 1
-                },
-                {
-                  label: 'мегафон',
-                  backgroundColor: '#7FC29B',
-                  data: [351055456, 90619, 0, 1291],
-                  stack: 1
-                },
-                {
-                  label: 'мтс',
-                  backgroundColor: '#EA2B1F',
-                  data: [1555127, 90601, 4879769, 530],
-                  stack: 1
-                },
-                {
-                  label: 'теле2',
-                  backgroundColor: '#0C090D',
-                  data: [96762772, 115383605, 0, 0],
-                  stack: 1
-                }
-              ]
-            }
-          },
-          impressions: {
-            title: 'Вовлеченность по слоганам',
-            loading: true,
-            data: {
-              labels: [
-                'начинается с тебя',
-                'другие правила',
-                'быть лучше каждый день',
-                'живи на яркой стороне'
-              ],
-              datasets: [
-                {
-                  label: 'билайн',
-                  backgroundColor: '#F2DC5D',
-                  data: [3503, 357, 0, 7280],
-                  stack: 1
-                },
-                {
-                  label: 'мегафон',
-                  backgroundColor: '#7FC29B',
-                  data: [2152770, 2819, 0, 29],
-                  stack: 1
-                },
-                {
-                  label: 'мтс',
-                  backgroundColor: '#EA2B1F',
-                  data: [12670, 2817, 0, 2763],
-                  stack: 1
-                },
-                {
-                  label: 'теле2',
-                  backgroundColor: '#0C090D',
-                  data: [930289, 44552, 0, 0],
-                  stack: 1
-                }
-              ]
-            }
-          },
-          options: {
-            // onClick(e, i) {
-            //   const chart = i[0]
-            //   console.dir(chart._view.label)
-            // },
-            scales: {
-              xAxes: [
-                {
-                  stacked: true
-                }
-              ],
-              yAxes: [
-                {
-                  stacked: true
-                }
-              ]
-            }
-          }
         }
       },
       horizontal_bar: {
@@ -1422,15 +1213,6 @@ export default {
       this.getListVideo()
 
       this.getLineData()
-
-      this.charts.vertical_bar.vertical_bar_2[
-        this.getRequestType.value
-      ].loading = true
-      setTimeout(() => {
-        this.charts.vertical_bar.vertical_bar_2[
-          this.getRequestType.value
-        ].loading = false
-      }, 1000)
     },
     // updateProgress(e) {
     //   console.log(e)
@@ -1513,16 +1295,19 @@ export default {
     },
     async getMentions({chart_name, platform}) {
       this.charts.line[chart_name].loading = true
-      const reqName = this.getRequestType.value
       const [start_date, end_date] = this.dates
 
-      const jsons = {}
-      const {data} = await HTTP.get(
-        `megafon/${reqName}/date?start_date=${start_date}&end_date=${end_date}`
-      )
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
+      }
 
-      jsons[reqName] = data
-      //console.log(jsons)
+      const jsons = {}
+      await this.$store.dispatch('request_date', config)
+
+      jsons[config.action] = this.$store.getters[`get${config.action}_date`]
+      console.log(jsons[config.action])
 
       const brands_labels = ['мегафон', 'билайн', 'мтс', 'теле2']
 
