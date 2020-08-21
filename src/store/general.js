@@ -17,7 +17,10 @@ export default {
     mentions_prod_date: {},
     reach_prod_date: {},
     impressions_prod_date: {},
-    word_cloud: {}
+    word_cloud: {},
+    yt_ordered_mentions: {},
+    yt_ordered_reach: {},
+    yt_ordered_impressions: {}
   },
   getters: {
     getmentions(state) {
@@ -67,6 +70,15 @@ export default {
     },
     get_word_cloud(state) {
       return state.word_cloud
+    },
+    get_yt_ordered_mentions(state) {
+      return state.yt_ordered_mentions
+    },
+    get_yt_ordered_reach(state) {
+      return state.yt_ordered_reach
+    },
+    get_yt_ordered_impressions(state) {
+      return state.yt_ordered_impressions
     }
   },
   mutations: {
@@ -117,6 +129,15 @@ export default {
     },
     set_word_cloud(state, payload) {
       state.word_cloud = payload
+    },
+    set_yt_ordered_mentions(state, payload) {
+      state.yt_ordered_mentions = payload
+    },
+    set_yt_ordered_reach(state, payload) {
+      state.yt_ordered_reach = payload
+    },
+    set_yt_ordered_impressions(state, payload) {
+      state.yt_ordered_impressions = payload
     }
   },
   actions: {
@@ -181,6 +202,18 @@ export default {
         )
         .then(response => {
           commit(`set_word_cloud`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_yt_ordered({commit}, {action, start, end}) {
+      await http
+        .get(
+          `megafon/channel?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set_yt_ordered_${action}`, response.data)
         })
         .catch(err => {
           console.warn(err.message)

@@ -328,10 +328,6 @@ import HTTP from '@/api/http'
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 
-import json_1_5 from '@/assets/chartData/json_1_5.json'
-import json_2_5 from '@/assets/chartData/json_2_5.json'
-import json_3_5 from '@/assets/chartData/json_3_5.json'
-
 import json_1_6 from '@/assets/chartData/json_1_6.json'
 import json_2_6 from '@/assets/chartData/json_2_6.json'
 import json_3_6 from '@/assets/chartData/json_3_6.json'
@@ -1077,23 +1073,25 @@ export default {
     },
     async getHorizontalBarYoutube() {
       this.charts.horizontal_bar.youtube.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_5,
-        reach: json_2_5,
-        impressions: json_3_5
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/channel/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
-      const labels = jsons[this.getRequestType.value].map(
-        item => item.channel_name
-      )
+      const jsons = {}
+      await this.$store.dispatch('request_yt_ordered', config)
+
+      jsons[config.action] = this.$store.getters[
+        `get_yt_ordered_${config.action}`
+      ]
+      const labels = jsons[config.action].map(item => item.channel_name)
+
       const datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
-          const channel_name = jsons[this.getRequestType.value].find(
+          const channel_name = jsons[config.action].find(
             obj => obj.channel_name === label
           )
           return total + parseFloat(channel_name[item] || 0)
@@ -1110,18 +1108,6 @@ export default {
           }
         ]
       }
-
-      console.log({
-        labels,
-        datasets: [
-          {
-            label: 'Соотношение',
-            backgroundColor: '#639FF8',
-            data: datasets
-          }
-        ]
-      })
-
       this.charts.horizontal_bar.youtube.loading = false
     },
     async getHorizontalBarInstagram() {
