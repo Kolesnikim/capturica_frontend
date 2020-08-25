@@ -319,10 +319,12 @@
 </template>
 
 <script>
+import list from '@/views/Lists'
 import lineChart from '@/components/charts/line.js'
 import horizontalBarChart from '@/components/charts/horizontalBar.js'
 import verticalBarChart from '@/components/charts/verticalBar.js'
 import requestTypes from '@/components/request-types'
+console.log(list)
 
 import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
@@ -331,14 +333,6 @@ import HTTP from '@/api/http'
 
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
-
-import json_1_7 from '@/assets/chartData/json_1_7.json'
-import json_2_7 from '@/assets/chartData/json_2_7.json'
-import json_3_7 from '@/assets/chartData/json_3_7.json'
-
-import json_1_8 from '@/assets/chartData/json_1_8.json'
-import json_2_8 from '@/assets/chartData/json_2_8.json'
-import json_3_8 from '@/assets/chartData/json_3_8.json'
 
 export default {
   components: {
@@ -853,37 +847,42 @@ export default {
     },
     async getListPosts() {
       this.tables.posts.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_8,
-        reach: json_2_8,
-        impressions: json_3_8
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/post/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
+      const jsons = {}
+      await this.$store.dispatch('request_post_ordered', config)
 
-      this.tables.posts.items = jsons[this.getRequestType.value]
+      jsons[config.action] = this.$store.getters[
+        `get_post_ordered_${config.action}`
+      ]
+
+      this.tables.posts.items = jsons[config.action]
       this.tables.posts.loading = false
-      // console.dir(data)
     },
     async getListVideo() {
       this.tables.video.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_7,
-        reach: json_2_7,
-        impressions: json_3_7
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/video/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
+      const jsons = {}
+      await this.$store.dispatch('request_video_ordered', config)
 
-      this.tables.video.items = jsons[this.getRequestType.value]
+      jsons[config.action] = this.$store.getters[
+        `get_video_ordered_${config.action}`
+      ]
+
+      this.tables.video.items = jsons[config.action]
       this.tables.video.loading = false
       // console.dir(data)
     },

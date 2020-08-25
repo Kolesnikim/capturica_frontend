@@ -46,7 +46,8 @@ export default {
       Object.assign(
         {
           responsive: true,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
+          onClick: this.handleСlick
         },
         this.options,
         options
@@ -55,13 +56,17 @@ export default {
   },
 
   methods: {
-    goToTablesPage(e) {
+    handleСlick(e) {
       // console.log(this.$data._chart.getElementAtEvent)
       const point = this.$data._chart.getElementAtEvent(e)[0]
       if (point) {
         const start_date = this.$data._chart.data.labels[point._index]
+        const end_date = this.$data._chart.data.labels[point._index + 1]
+        console.log(start_date, end_date)
         const brand = this.$data._chart.data.datasets[point._datasetIndex].label
-        this.$router.push(`/tables?brand=${brand}&start_date=${start_date}`)
+        this.$router.push(
+          `/tables?brand=${brand}&start_date=${start_date}&end_date=${end_date}`
+        )
       }
     }
   }

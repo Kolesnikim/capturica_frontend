@@ -123,13 +123,20 @@ export default {
       this.getListVideo()
     },
     async getListPosts() {
-      const {data} = await HTTP.get('list/post/megafon')
+      const params = this.$route.query
+      const {data} = await HTTP.get(
+        `megafon/post?brand=${params.brand}&start_date=${params.start_date}&end_date=${params.end_date}`
+      )
+      console.log(data)
       this.tables.posts.items = data
       this.tables.posts.loading = false
       // console.dir(data)
     },
     async getListVideo() {
-      const {data} = await HTTP.get('list/video/megafon')
+      const params = this.$route.query
+      const {data} = await HTTP.get(
+        `megafon/video?brand=${params.brand}&start_date=${params.start_date}&end_date=${params.end_date}`
+      )
       this.tables.video.items = data
       this.tables.video.loading = false
       // console.dir(data)

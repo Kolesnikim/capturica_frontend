@@ -23,7 +23,13 @@ export default {
     yt_ordered_impressions: {},
     ig_ordered_mentions: {},
     ig_ordered_reach: {},
-    ig_ordered_impressions: {}
+    ig_ordered_impressions: {},
+    video_ordered_mentions: {},
+    video_ordered_reach: {},
+    video_ordered_impressions: {},
+    post_ordered_mentions: {},
+    post_ordered_reach: {},
+    post_ordered_impressions: {}
   },
   getters: {
     getmentions(state) {
@@ -91,6 +97,24 @@ export default {
     },
     get_ig_ordered_impressions(state) {
       return state.ig_ordered_impressions
+    },
+    get_video_ordered_mentions(state) {
+      return state.video_ordered_mentions
+    },
+    get_video_ordered_reach(state) {
+      return state.video_ordered_reach
+    },
+    get_video_ordered_impressions(state) {
+      return state.video_ordered_impressions
+    },
+    get_post_ordered_mentions(state) {
+      return state.post_ordered_mentions
+    },
+    get_post_ordered_reach(state) {
+      return state.post_ordered_reach
+    },
+    get_post_ordered_impressions(state) {
+      return state.post_ordered_impressions
     }
   },
   mutations: {
@@ -159,6 +183,24 @@ export default {
     },
     set_ig_ordered_impressions(state, payload) {
       state.ig_ordered_impressions = payload
+    },
+    set_video_ordered_mentions(state, payload) {
+      state.video_ordered_mentions = payload
+    },
+    set_video_ordered_reach(state, payload) {
+      state.video_ordered_reach = payload
+    },
+    set_video_ordered_impressions(state, payload) {
+      state.video_ordered_impressions = payload
+    },
+    set_post_ordered_mentions(state, payload) {
+      state.post_ordered_mentions = payload
+    },
+    set_post_ordered_reach(state, payload) {
+      state.post_ordered_reach = payload
+    },
+    set_post_ordered_impressions(state, payload) {
+      state.post_ordered_impressions = payload
     }
   },
   actions: {
@@ -247,6 +289,30 @@ export default {
         )
         .then(response => {
           commit(`set_ig_ordered_${action}`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_video_ordered({commit}, {action, start, end}) {
+      await http
+        .get(
+          `megafon/video?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set_video_ordered_${action}`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_post_ordered({commit}, {action, start, end}) {
+      await http
+        .get(
+          `megafon/post?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set_post_ordered_${action}`, response.data)
         })
         .catch(err => {
           console.warn(err.message)

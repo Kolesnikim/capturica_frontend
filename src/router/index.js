@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import General from '@/views/General'
+import Lists from '@/views/Lists'
 
 const views = require.context('@/views', true, /vue$/)
 const routes_views = views.keys().map(file => {
@@ -21,6 +22,10 @@ const routes = [
   {
     path: '/',
     component: General
+  },
+  {
+    path: '/tables',
+    component: Lists
   }
 ]
 
