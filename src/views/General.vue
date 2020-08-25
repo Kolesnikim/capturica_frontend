@@ -1,24 +1,28 @@
 <template>
   <v-layout class="d-flex pa-4" column>
-    <div class="d-flex mx-n2 mb-4 px-2 align-center">
-      <h1>Упоминания</h1>
-      <v-spacer></v-spacer>
-      <date-picker
-        v-model="dates"
-        class="date-picker"
-        type="date"
-        range
-        value-type="format"
-        format="YYYY-MM-DD"
-        placeholder="Выберите период"
-        confirm
-        confirm-text="Применить"
-        range-separator=" - "
-        :clearable="false"
-        @confirm="updateCharts($event)"
-      ></date-picker>
-    </div>
-    <request-types></request-types>
+    <v-card>
+      <v-app-bar dense flat tile class="relative">
+        <div class="spacer_1"></div>
+        <h1>Упоминания</h1>
+        <v-spacer></v-spacer>
+        <date-picker
+          v-model="dates"
+          class="date-picker"
+          type="date"
+          range
+          value-type="format"
+          format="YYYY-MM-DD"
+          placeholder="Выберите период"
+          confirm
+          confirm-text="Применить"
+          range-separator=" - "
+          :clearable="false"
+          @confirm="updateCharts($event)"
+        ></date-picker>
+      </v-app-bar>
+      <request-types class="mt-16"></request-types>
+    </v-card>
+
     <div class="d-flex mx-n2 mb-4">
       <v-flex md6 class="mx-2">
         <v-card class="pa-2" style="width: 100%">
@@ -327,10 +331,6 @@ import HTTP from '@/api/http'
 
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
-
-import json_1_6 from '@/assets/chartData/json_1_6.json'
-import json_2_6 from '@/assets/chartData/json_2_6.json'
-import json_3_6 from '@/assets/chartData/json_3_6.json'
 
 import json_1_7 from '@/assets/chartData/json_1_7.json'
 import json_2_7 from '@/assets/chartData/json_2_7.json'
@@ -1112,20 +1112,22 @@ export default {
     },
     async getHorizontalBarInstagram() {
       this.charts.horizontal_bar.instagram.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_6,
-        reach: json_2_6,
-        impressions: json_3_6
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/user/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
-      const labels = jsons[this.getRequestType.value].map(
-        item => item.user_name
-      )
+      const jsons = {}
+      await this.$store.dispatch('request_ig_ordered', config)
+
+      jsons[config.action] = this.$store.getters[
+        `get_ig_ordered_${config.action}`
+      ]
+
+      const labels = jsons[config.action].map(item => item.user_name)
       const datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
           const user_name = jsons[this.getRequestType.value].find(
@@ -1215,6 +1217,12 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.spacer_1
+  width: 200px
+.relative
+  position: fixed
+  top: 80px
+  z-index: 1
 .total
   height: 100px
   &--red

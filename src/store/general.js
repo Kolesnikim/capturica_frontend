@@ -20,7 +20,10 @@ export default {
     word_cloud: {},
     yt_ordered_mentions: {},
     yt_ordered_reach: {},
-    yt_ordered_impressions: {}
+    yt_ordered_impressions: {},
+    ig_ordered_mentions: {},
+    ig_ordered_reach: {},
+    ig_ordered_impressions: {}
   },
   getters: {
     getmentions(state) {
@@ -79,6 +82,15 @@ export default {
     },
     get_yt_ordered_impressions(state) {
       return state.yt_ordered_impressions
+    },
+    get_ig_ordered_mentions(state) {
+      return state.ig_ordered_mentions
+    },
+    get_ig_ordered_reach(state) {
+      return state.ig_ordered_reach
+    },
+    get_ig_ordered_impressions(state) {
+      return state.ig_ordered_impressions
     }
   },
   mutations: {
@@ -138,6 +150,15 @@ export default {
     },
     set_yt_ordered_impressions(state, payload) {
       state.yt_ordered_impressions = payload
+    },
+    set_ig_ordered_mentions(state, payload) {
+      state.ig_ordered_mentions = payload
+    },
+    set_ig_ordered_reach(state, payload) {
+      state.ig_ordered_reach = payload
+    },
+    set_ig_ordered_impressions(state, payload) {
+      state.ig_ordered_impressions = payload
     }
   },
   actions: {
@@ -214,6 +235,18 @@ export default {
         )
         .then(response => {
           commit(`set_yt_ordered_${action}`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_ig_ordered({commit}, {action, start, end}) {
+      await http
+        .get(
+          `megafon/user?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set_ig_ordered_${action}`, response.data)
         })
         .catch(err => {
           console.warn(err.message)

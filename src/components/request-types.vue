@@ -1,6 +1,12 @@
 <template>
   <div class="d-flex mx-n2 mb-4">
-    <v-flex class="px-2" md4 v-for="(item, index) in tabs" :key="index">
+    <v-flex
+      class="px-2"
+      md4
+      v-for="(item, index) in tabs"
+      :key="index"
+      absolute
+    >
       <v-btn
         style="width: 100%"
         :class="[
