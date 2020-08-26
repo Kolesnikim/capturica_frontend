@@ -46,11 +46,24 @@ export default {
       Object.assign(
         {
           responsive: true,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
+          onClick: this.handleClickVertical
         },
         this.options,
         options
       )
     )
+  },
+  methods: {
+    handleClickVertical(e) {
+      const point = this.$data._chart.getElementAtEvent(e)[0]
+      if (point) {
+        const [start_date, end_date] = this.$store.getters.getDates
+        const product = this.$data._chart.data.labels[point._index]
+        this.$router.push(
+          `/tables?product=${product}&start_date=${start_date}&end_date=${end_date}`
+        )
+      }
+    }
   }
 }

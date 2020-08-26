@@ -2,22 +2,22 @@
   <v-layout class="pa-4 mx-n2" wrap>
     <v-flex class="px-2" md6>
       <v-card class="pa-2 mb-4" style="width: 100%">
-        <h2 class="text-center">Список упоминаний в постах</h2>
+        <h2 class="text-center">Видео в YT</h2>
         <v-data-table
-          :headers="tables.posts.headers"
-          :items="tables.posts.items"
+          :headers="tables.video.headers"
+          :items="tables.video.items"
           :items-per-page="15"
-          :loading="tables.posts.loading"
+          :loading="tables.video.loading"
           class="elevation-0 transparent"
           loading-text="Загрузка..."
         >
           <template v-slot:body="{items}">
             <tbody>
               <tr :key="item.link" v-for="item in items">
-                <td :key="header.value" v-for="header in tables.posts.headers">
+                <td :key="header.value" v-for="header in tables.video.headers">
                   <a
-                    :href="item[header.value]"
-                    v-if="header.value === 'link'"
+                    :href="`http://youtu.be/${item[header.value]}`"
+                    v-if="header.value === 'yt_video_id'"
                     >{{ item[header.value] | filterLength(20) }}</a
                   >
                   <span v-else>{{
@@ -32,22 +32,22 @@
     </v-flex>
     <v-flex class="px-2" md6>
       <v-card class="pa-2 mb-4" style="width: 100%">
-        <h2 class="text-center">Список упоминаний в видео</h2>
+        <h2 class="text-center">Посты в IG</h2>
         <v-data-table
-          :headers="tables.video.headers"
-          :items="tables.video.items"
+          :headers="tables.posts.headers"
+          :items="tables.posts.items"
           :items-per-page="15"
-          :loading="tables.video.loading"
+          :loading="tables.posts.loading"
           class="elevation-0 transparent"
           loading-text="Загрузка..."
         >
           <template v-slot:body="{items}">
             <tbody>
               <tr :key="item.link" v-for="item in items">
-                <td :key="header.value" v-for="header in tables.video.headers">
+                <td :key="header.value" v-for="header in tables.posts.headers">
                   <a
                     :href="item[header.value]"
-                    v-if="header.value === 'link'"
+                    v-if="header.value === 'ig_post_id'"
                     >{{ item[header.value] | filterLength(20) }}</a
                   >
                   <span v-else>{{
@@ -82,14 +82,16 @@ export default {
       posts: {
         headers: [
           {
-            text: 'user_name',
+            text: 'Имя пользователя',
             align: 'left',
             sortable: false,
             value: 'user_name'
           },
-          {text: 'Description', value: 'description'},
-          {text: 'Published', value: 'published'},
-          {text: 'Link', value: 'link'}
+          {text: 'Описание', value: 'description'},
+          {text: 'Ссылка', value: 'ig_post_id'},
+          {text: 'Просмотры', value: 'views'},
+          {text: 'Лайки', value: 'likes'},
+          {text: 'Комментариев', value: 'comments'}
         ],
         items: [],
         loading: true
@@ -97,15 +99,16 @@ export default {
       video: {
         headers: [
           {
-            text: 'Name',
+            text: 'Название канала',
             align: 'left',
             sortable: false,
-            value: 'name'
+            value: 'channel_name'
           },
-          {text: 'Title', value: 'title'},
-          {text: 'Published', value: 'published'},
-          {text: 'Link', value: 'link'},
-          {text: 'Mentions', value: 'mentions'}
+          {text: 'Название', value: 'title'},
+          {text: 'Ссылка', value: 'yt_video_id'},
+          {text: 'Охват', value: 'views'},
+          {text: 'Вовлечения', value: 'comments'},
+          {text: 'Упоминания', value: 'mentions'}
         ],
         items: [],
         loading: true
@@ -124,18 +127,19 @@ export default {
     },
     async getListPosts() {
       const params = this.$route.query
+      const brandOrProd = params.brand ? 'brand' : 'product'
       const {data} = await HTTP.get(
-        `megafon/post?brand=${params.brand}&start_date=${params.start_date}&end_date=${params.end_date}`
+        `megafon/post?${brandOrProd}=${params[brandOrProd]}&start_date=${params.start_date}&end_date=${params.end_date}`
       )
-      console.log(data)
       this.tables.posts.items = data
       this.tables.posts.loading = false
       // console.dir(data)
     },
     async getListVideo() {
       const params = this.$route.query
+      const brandOrProd = params.brand ? 'brand' : 'product'
       const {data} = await HTTP.get(
-        `megafon/video?brand=${params.brand}&start_date=${params.start_date}&end_date=${params.end_date}`
+        `megafon/video?${brandOrProd}=${params[brandOrProd]}&start_date=${params.start_date}&end_date=${params.end_date}`
       )
       this.tables.video.items = data
       this.tables.video.loading = false

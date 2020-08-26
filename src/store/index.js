@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import general from './general'
+import dates from './dates'
 
 Vue.use(Vuex)
 
@@ -25,5 +26,5 @@ export default new Vuex.Store({
     }
   },
   actions: {},
-  modules: {general}
+  modules: {general, dates}
 })

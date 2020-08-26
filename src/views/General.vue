@@ -143,6 +143,7 @@
       <line-chart
         v-if="!charts.line.line_2.loading"
         :data="charts.line.line_2.data"
+        :options="charts.line.line_2.options"
       ></line-chart>
       <v-progress-circular
         v-if="charts.line.line_2.loading"
@@ -259,7 +260,7 @@
                     v-for="header in tables.video.headers"
                   >
                     <a
-                      :href="item[header.value]"
+                      :href="`http://youtu.be/${item[header.value]}`"
                       v-if="header.value === 'yt_video_id'"
                       >{{ item[header.value] | filterLength(20) }}</a
                     >
@@ -319,12 +320,10 @@
 </template>
 
 <script>
-import list from '@/views/Lists'
 import lineChart from '@/components/charts/line.js'
 import horizontalBarChart from '@/components/charts/horizontalBar.js'
 import verticalBarChart from '@/components/charts/verticalBar.js'
 import requestTypes from '@/components/request-types'
-console.log(list)
 
 import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
@@ -355,7 +354,6 @@ export default {
   },
 
   data: () => ({
-    dates: ['2019-01-01', '2020-01-01'],
     charts: {
       bubble: {
         data: {
@@ -657,10 +655,10 @@ export default {
           title: 'Список упоминаний IG'
         },
         reach: {
-          title: 'Список упоминаний IG'
+          title: 'Список охвата IG'
         },
         impressions: {
-          title: 'Список упоминаний IG'
+          title: 'Список вовлечений IG'
         },
         headers: [
           {
@@ -705,10 +703,10 @@ export default {
           title: 'Список упоминаний YT'
         },
         reach: {
-          title: 'Список упоминаний YT'
+          title: 'Список охвата YT'
         },
         impressions: {
-          title: 'Список упоминаний YT'
+          title: 'Список вовлечений YT'
         },
         headers: [
           {
@@ -751,7 +749,15 @@ export default {
     }
   }),
   computed: {
-    ...mapGetters(['getRequestType'])
+    ...mapGetters(['getRequestType']),
+    dates: {
+      get() {
+        return this.$store.getters.getDates
+      },
+      set(value) {
+        this.$store.dispatch('setDates', value)
+      }
+    }
   },
 
   created() {
@@ -821,36 +827,60 @@ export default {
       let labels = [
         ...new Set([
           ...service_labels.flatMap(label =>
-            Object.keys(jsons[this.getRequestType.value][label])
+            Object.keys(jsons[config.action][label])
           )
         ])
       ]
-      console.log(labels)
 
-      const getRandomColor = () => {
-        const letters = '0123456789ABCDEF'
-        let color = '#'
-        for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)]
-        }
-        return color
+      const getData = label => {
+        const data = []
+        labels.forEach(date => {
+          let data_1 = 0
+          for (let operator in jsons[config.action][label][date]) {
+            const {instagram = {count: 0}, youtube = {count: 0}} =
+              jsons[config.action][label][date][operator] || {}
+            const sum = instagram.count + youtube.count
+            data_1 += sum
+          }
+          data.push(data_1)
+        })
+        return data
       }
-      console.log(getRandomColor)
+      const green = 'green'
 
+      const datasets = service_labels.map(label => ({
+        label,
+        backgroundColor: green,
+        borderColor: green,
+        data: getData(label),
+        fill: false
+      }))
       labels = labels.map(label => {
         label = label.split('T')
         label.pop().toString()
         return label
       })
 
+      const chart_data = {
+        labels,
+        datasets
+      }
+
+      this.charts.line.line_2.data = chart_data
       this.charts.line.line_2.loading = false
+      console.log(this.charts.line.line_1.data)
+      console.log(this.charts.line.line_2.data)
     },
     async getListPosts() {
       this.tables.posts.loading = true
       const [start_date, end_date] = this.dates
 
+      let action = 'mentions'
+      if (this.getRequestType.value === 'reach') action = 'views'
+      else if (this.getRequestType.value === 'impressions') action = 'comments'
+
       const config = {
-        action: this.getRequestType.value,
+        action: action,
         start: start_date,
         end: end_date
       }
@@ -869,8 +899,12 @@ export default {
       this.tables.video.loading = true
       const [start_date, end_date] = this.dates
 
+      let action = 'mentions'
+      if (this.getRequestType.value === 'reach') action = 'views'
+      else if (this.getRequestType.value === 'impressions') action = 'comments'
+
       const config = {
-        action: this.getRequestType.value,
+        action: action,
         start: start_date,
         end: end_date
       }
@@ -1074,8 +1108,12 @@ export default {
       this.charts.horizontal_bar.youtube.loading = true
       const [start_date, end_date] = this.dates
 
+      let action = 'mentions'
+      if (this.getRequestType.value === 'reach') action = 'views'
+      else if (this.getRequestType.value === 'impressions') action = 'comments'
+
       const config = {
-        action: this.getRequestType.value,
+        action: action,
         start: start_date,
         end: end_date
       }
@@ -1088,7 +1126,7 @@ export default {
       ]
       const labels = jsons[config.action].map(item => item.channel_name)
 
-      const datasets = labels.map(label => {
+      let datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
           const channel_name = jsons[config.action].find(
             obj => obj.channel_name === label
@@ -1096,7 +1134,7 @@ export default {
           return total + parseFloat(channel_name[item] || 0)
         }, 0)
       })
-
+      datasets = datasets.sort((i, j) => j - i)
       this.charts.horizontal_bar.youtube.data = {
         labels,
         datasets: [
@@ -1113,8 +1151,12 @@ export default {
       this.charts.horizontal_bar.instagram.loading = true
       const [start_date, end_date] = this.dates
 
+      let action = 'mentions'
+      if (this.getRequestType.value === 'reach') action = 'views'
+      else if (this.getRequestType.value === 'impressions') action = 'comments'
+
       const config = {
-        action: this.getRequestType.value,
+        action: action,
         start: start_date,
         end: end_date
       }
@@ -1127,14 +1169,15 @@ export default {
       ]
 
       const labels = jsons[config.action].map(item => item.user_name)
-      const datasets = labels.map(label => {
+      let datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
-          const user_name = jsons[this.getRequestType.value].find(
+          const user_name = jsons[config.action].find(
             obj => obj.user_name === label
           )
           return total + parseFloat(user_name[item] || 0)
         }, 0)
       })
+      datasets = datasets.sort((i, j) => j - i)
 
       this.charts.horizontal_bar.instagram.data = {
         labels,

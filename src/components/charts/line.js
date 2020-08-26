@@ -62,7 +62,6 @@ export default {
       if (point) {
         const start_date = this.$data._chart.data.labels[point._index]
         const end_date = this.$data._chart.data.labels[point._index + 1]
-        console.log(start_date, end_date)
         const brand = this.$data._chart.data.datasets[point._datasetIndex].label
         this.$router.push(
           `/tables?brand=${brand}&start_date=${start_date}&end_date=${end_date}`
