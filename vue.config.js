@@ -1,8 +1,8 @@
 module.exports = {
   devServer: {
     proxy: {
-      '^/api/v4': {
-        target: 'http://5.178.85.92:9999'
+      '^/api/v5': {
+        target: 'http://95.213.248.92:8000'
       }
     }
     // proxy: [{

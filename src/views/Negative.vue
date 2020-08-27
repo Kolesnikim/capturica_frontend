@@ -328,8 +328,6 @@ import requestTypes from '@/components/request-types'
 import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
 
-import HTTP from '@/api/http'
-
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 
@@ -1006,40 +1004,7 @@ export default {
 
       this.cloud.loading = false
     },
-    async getPieData() {
-      this.charts.pie.loading = true
 
-      const [start_date, end_date] = this.dates
-      const {data} = await HTTP.get(
-        `count/${this.getRequestType.value}/megafon?start_date=${start_date}&end_date=${end_date}`
-      )
-      const colors = ['#7FC29B', '#639FF8']
-      const labels = Object.keys(data)
-      const datasets = Object.values(data)
-
-      this.charts.pie.data = {
-        labels,
-        datasets: [
-          {
-            backgroundColor: colors,
-            data: datasets
-          }
-        ]
-      }
-
-      this.charts.pie.loading = false
-    },
-    async getSum(url) {
-      const [start_date, end_date] = this.dates
-      const {data} = await HTTP.get(
-        `${this.getRequestType.value}/count?brand=${url}&start_date=${start_date}&end_date=${end_date}`
-      )
-      const sumMentions = Object.values(data).reduce(
-        (sum, item) => sum + item[0].count,
-        0
-      )
-      return sumMentions
-    },
     async getHorizontalBarMentions() {
       this.charts.horizontal_bar_1.loading = true
       const [start_date, end_date] = this.dates
