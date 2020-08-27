@@ -127,7 +127,7 @@ export default {
             title: 'Негативные',
             icon: 'mdi-thumb-down-outline',
             to: '/negative',
-            disabled: true
+            disabled: false
           }
         ]
       }

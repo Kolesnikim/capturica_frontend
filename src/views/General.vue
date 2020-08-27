@@ -142,7 +142,7 @@
       </h2>
       <line-chart
         v-if="!charts.line.line_2.loading"
-        :data="charts.line.line_2.data"
+        :chart-data="charts.line.line_2.data"
         :options="charts.line.line_2.options"
       ></line-chart>
       <v-progress-circular
@@ -820,9 +820,7 @@ export default {
         `get${config.action}_prod_date`
       ]
 
-      let service_labels = [
-        ...new Set([...Object.keys(jsons[this.getRequestType.value])])
-      ]
+      let service_labels = [...new Set([...Object.keys(jsons[config.action])])]
 
       let labels = [
         ...new Set([
@@ -846,12 +844,20 @@ export default {
         })
         return data
       }
-      const green = 'green'
+      const getRandomColor = () => {
+        const letters = '0123456789ABCDEF'
+        let color = '#'
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)]
+        }
+        return color
+      }
+      const colors = service_labels.map(() => getRandomColor)
 
-      const datasets = service_labels.map(label => ({
+      const datasets = service_labels.map((label, index) => ({
         label,
-        backgroundColor: green,
-        borderColor: green,
+        backgroundColor: colors[index],
+        borderColor: colors[index],
         data: getData(label),
         fill: false
       }))
@@ -868,8 +874,6 @@ export default {
 
       this.charts.line.line_2.data = chart_data
       this.charts.line.line_2.loading = false
-      console.log(this.charts.line.line_1.data)
-      console.log(this.charts.line.line_2.data)
     },
     async getListPosts() {
       this.tables.posts.loading = true
@@ -940,7 +944,7 @@ export default {
       let labels = [
         ...new Set([
           ...brands_labels.flatMap(label =>
-            Object.keys(jsons[this.getRequestType.value][label])
+            Object.keys(jsons[config.action][label])
           )
         ])
       ]
@@ -949,7 +953,7 @@ export default {
         const data = []
         labels.forEach(date => {
           const {instagram = {count: 0}, youtube = {count: 0}} =
-            jsons[this.getRequestType.value][label][date] || {}
+            jsons[config.action][label][date] || {}
           const obj = {
             instagram,
             youtube
@@ -1218,25 +1222,21 @@ export default {
         data: labels.map(label => {
           let sum = 0
           if (
-            jsons[this.getRequestType.value] &&
-            jsons[this.getRequestType.value][label] &&
-            jsons[this.getRequestType.value][label][operator] &&
-            jsons[this.getRequestType.value][label][operator].youtube
+            jsons[config.action] &&
+            jsons[config.action][label] &&
+            jsons[config.action][label][operator] &&
+            jsons[config.action][label][operator].youtube
           ) {
-            sum +=
-              jsons[this.getRequestType.value][label][operator].youtube.count ||
-              0
+            sum += jsons[config.action][label][operator].youtube.count || 0
           }
 
           if (
-            jsons[this.getRequestType.value] &&
-            jsons[this.getRequestType.value][label] &&
-            jsons[this.getRequestType.value][label][operator] &&
-            jsons[this.getRequestType.value][label][operator].instagram
+            jsons[config.action] &&
+            jsons[config.action][label] &&
+            jsons[config.action][label][operator] &&
+            jsons[config.action][label][operator].instagram
           ) {
-            sum +=
-              jsons[this.getRequestType.value][label][operator].instagram
-                .count || 0
+            sum += jsons[config.action][label][operator].instagram.count || 0
           }
 
           return sum

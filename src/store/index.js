@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import general from './general'
+import positive from './positive'
+import negative from './negative'
+
 import dates from './dates'
 
 Vue.use(Vuex)
@@ -26,5 +29,5 @@ export default new Vuex.Store({
     }
   },
   actions: {},
-  modules: {general, dates}
+  modules: {general, positive, negative, dates}
 })

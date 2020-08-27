@@ -1,24 +1,28 @@
 <template>
   <v-layout class="d-flex pa-4" column>
-    <div class="d-flex mx-n2 mb-4 px-2 align-center">
-      <h1>Позитивные упоминания</h1>
-      <v-spacer></v-spacer>
-      <date-picker
-        v-model="date_picker.dates"
-        class="date-picker"
-        type="date"
-        range
-        disabled="true"
-        value-type="format"
-        format="YYYY-MM-DD"
-        placeholder="Выберите период"
-        confirm
-        confirm-text="Применить"
-        range-separator=" - "
-        :clearable="false"
-        @confirm="updateCharts($event)"
-      ></date-picker>
-    </div>
+    <v-card>
+      <v-app-bar dense flat tile class="relative">
+        <div class="spacer_1"></div>
+        <h1>Негативная тональность</h1>
+        <v-spacer></v-spacer>
+        <date-picker
+          v-model="dates"
+          class="date-picker"
+          type="date"
+          range
+          value-type="format"
+          format="YYYY-MM-DD"
+          placeholder="Выберите период"
+          confirm
+          confirm-text="Применить"
+          range-separator=" - "
+          :clearable="false"
+          @confirm="updateCharts($event)"
+        ></date-picker>
+      </v-app-bar>
+      <request-types class="mt-16"></request-types>
+    </v-card>
+
     <div class="d-flex mx-n2 mb-4">
       <v-flex md6 class="mx-2">
         <v-card class="pa-2" style="width: 100%">
@@ -57,7 +61,7 @@
         </v-card>
       </v-flex>
     </div>
-    <v-card class="pa-2 mb-4" style="width: 100%" disabled="true">
+    <v-card class="pa-2 mb-4" style="width: 100%">
       <h2 class="text-center">
         {{ charts.line.line_1[getRequestType.value].title }}
       </h2>
@@ -75,7 +79,7 @@
     </v-card>
     <div class="d-flex mx-n2 mb-4">
       <v-flex md6 class="mx-2">
-        <v-card class="pa-2 mb-4" style="width: 100%" disabled="true">
+        <v-card class="pa-2 mb-4" style="width: 100%">
           <h2 class="text-center">
             {{ charts.line.line_3[getRequestType.value].title }}
           </h2>
@@ -94,7 +98,7 @@
         </v-card>
       </v-flex>
       <v-flex md6 class="mx-2">
-        <v-card class="pa-2 mb-4" style="width: 100%" disabled="true">
+        <v-card class="pa-2 mb-4" style="width: 100%">
           <h2 class="text-center">
             {{ charts.line.line_4[getRequestType.value].title }}
           </h2>
@@ -113,24 +117,65 @@
         </v-card>
       </v-flex>
     </div>
-    <div class="d-flex mx-n2 mb-4">
-      <v-flex md12 class="mx-2">
-        <v-card class="pa-2" style="width: 100%" disabled="true">
+
+    <v-card class="pa-2 mb-4" style="width: 100%">
+      <h2 class="text-center">
+        {{ charts.vertical_bar.vertical_bar_1[getRequestType.value].title }}
+      </h2>
+      <vertical-bar-chart
+        v-if="!charts.vertical_bar.vertical_bar_1.loading"
+        style="max-width: 99%"
+        :chart-data="charts.vertical_bar.vertical_bar_1.data"
+        :options="charts.vertical_bar.vertical_bar_1.options"
+      ></vertical-bar-chart>
+      <v-progress-circular
+        v-if="charts.vertical_bar.vertical_bar_1.loading"
+        size="48"
+        indeterminate
+        color="#639FF8"
+      ></v-progress-circular>
+    </v-card>
+
+    <v-card class="pa-2 mb-4" style="width: 100%">
+      <h2 class="text-center">
+        {{ charts.line.line_2[getRequestType.value].title }}
+      </h2>
+      <line-chart
+        v-if="!charts.line.line_2.loading"
+        :chart-data="charts.line.line_2.data"
+        :options="charts.line.line_2.options"
+      ></line-chart>
+      <v-progress-circular
+        v-if="charts.line.line_2.loading"
+        size="48"
+        indeterminate
+        color="#639FF8"
+      ></v-progress-circular>
+    </v-card>
+
+    <div class="mb-4 d-flex mx-n2">
+      <v-flex md12 class="ma-2 pb-4">
+        <v-card class="px-2 elevation-0" style="height: 100%">
           <div class="d-flex justify-center align-center">
-            <h2 class="text-center">
-              {{
-                charts.vertical_bar.vertical_bar_1[getRequestType.value].title
-              }}
-            </h2>
+            <h2 class="text-center">Облако слов для бренда Мегафон</h2>
+            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
           </div>
-          <vertical-bar-chart
-            v-if="!charts.vertical_bar.vertical_bar_1.loading"
-            style="max-width: 99%"
-            :chart-data="charts.vertical_bar.vertical_bar_1.data"
-            :options="charts.vertical_bar.vertical_bar_1.options"
-          ></vertical-bar-chart>
+          <word-cloud
+            v-if="!cloud.loading"
+            :rotate="{from: -0, to: 0, numOfOrientation: 0}"
+            :wordPadding="2"
+            :margin="{top: 0, right: 0, bottom: 0, left: 0}"
+            :color="cloud.color"
+            :data="cloud.items"
+            nameKey="word"
+            valueKey="count"
+            :showTooltip="false"
+          >
+          </word-cloud>
           <v-progress-circular
-            v-if="charts.vertical_bar.vertical_bar_1.loading"
+            v-if="cloud.loading"
             size="48"
             indeterminate
             color="#639FF8"
@@ -141,7 +186,7 @@
 
     <div class="mb-4 d-flex mx-n2">
       <v-flex md6 class="mx-2">
-        <v-card class="pa-2" style="width: 100%;" disabled="true">
+        <v-card class="pa-2" style="width: 100%;">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">
               {{ charts.horizontal_bar.youtube[getRequestType.value].title }}
@@ -164,7 +209,7 @@
         </v-card>
       </v-flex>
       <v-flex md6 class="mx-2">
-        <v-card class="pa-2" style="width: 100%;" disabled="true">
+        <v-card class="pa-2" style="width: 100%;">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">
               {{ charts.horizontal_bar.instagram[getRequestType.value].title }}
@@ -215,7 +260,7 @@
                     v-for="header in tables.video.headers"
                   >
                     <a
-                      :href="item[header.value]"
+                      :href="`http://youtu.be/${item[header.value]}`"
                       v-if="header.value === 'yt_video_id'"
                       >{{ item[header.value] | filterLength(20) }}</a
                     >
@@ -278,9 +323,9 @@
 import lineChart from '@/components/charts/line.js'
 import horizontalBarChart from '@/components/charts/horizontalBar.js'
 import verticalBarChart from '@/components/charts/verticalBar.js'
-// import requestTypes from '@/components/request-types'
+import requestTypes from '@/components/request-types'
 
-// import wordCloud from 'vue-wordcloud'
+import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
 
 import HTTP from '@/api/http'
@@ -288,50 +333,13 @@ import HTTP from '@/api/http'
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 
-import json_1_14 from '@/assets/chartData/json_1_14.json'
-import json_1_15 from '@/assets/chartData/json_1_15.json'
-
-import json_1_16 from '@/assets/chartData/json_1_16.json'
-// import json_2 from '@/assets/chartData/json_2.json'
-// import json_3 from '@/assets/chartData/json_3.json'
-
-import json_1_17 from '@/assets/chartData/json_1_17.json'
-// import json_2_1 from '@/assets/chartData/json_2_1.json'
-// import json_3_1 from '@/assets/chartData/json_3_1.json'
-
-import json_1_18 from '@/assets/chartData/json_1_18.json'
-// import json_2_2 from '@/assets/chartData/json_2_2.json'
-// import json_3_2 from '@/assets/chartData/json_3_2.json'
-
-import json_1_19 from '@/assets/chartData/json_1_19.json'
-// import json_2_3 from '@/assets/chartData/json_2_3.json'
-// import json_3_3 from '@/assets/chartData/json_3_3.json'
-
-import json_1_20 from '@/assets/chartData/json_1_20.json'
-
-import json_1_21 from '@/assets/chartData/json_1_21.json'
-// import json_2_5 from '@/assets/chartData/json_2_5.json'
-// import json_3_5 from '@/assets/chartData/json_3_5.json'
-//
-import json_1_22 from '@/assets/chartData/json_1_22.json'
-// import json_2_6 from '@/assets/chartData/json_2_6.json'
-// import json_3_6 from '@/assets/chartData/json_3_6.json'
-
-// import json_1_7 from '@/assets/chartData/json_1_7.json'
-// import json_2_7 from '@/assets/chartData/json_2_7.json'
-// import json_3_7 from '@/assets/chartData/json_3_7.json'
-
-// import json_1_8 from '@/assets/chartData/json_1_8.json'
-// import json_2_8 from '@/assets/chartData/json_2_8.json'
-// import json_3_8 from '@/assets/chartData/json_3_8.json'
-
 export default {
   components: {
     lineChart,
     horizontalBarChart,
     verticalBarChart,
-    // wordCloud,
-    // requestTypes,
+    wordCloud,
+    requestTypes,
     DatePicker
   },
 
@@ -346,40 +354,6 @@ export default {
   },
 
   data: () => ({
-    date_picker: {
-      dates: [
-        // moment()
-        //   .subtract(1, 'months')
-        //   .format('YYYY-MM-DD'),
-        // moment().format('YYYY-MM-DD')
-        '2020-01-01',
-        '2020-02-01'
-      ],
-      shortcuts: [
-        {
-          text: 'Сегодня',
-          onClick: () => {
-            return [
-              // moment()
-              //   .subtract(1, 'days')
-              //   .format('YYYY-MM-DD'),
-              // moment()
-              //   .format('YYYY-MM-DD')
-              '2019-04-04',
-              '2019-04-05'
-            ]
-          }
-        },
-        {
-          text: 'Вчера',
-          onClick: () => {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24)
-            return date
-          }
-        }
-      ]
-    },
     charts: {
       bubble: {
         data: {
@@ -467,13 +441,13 @@ export default {
       line: {
         line_1: {
           mentions: {
-            title: 'Позитивные упоминания брендов'
+            title: 'Упоминания брендов'
           },
-          views: {
-            title: 'Позитивные упоминания брендов'
+          reach: {
+            title: 'Охват по брендам'
           },
-          comments: {
-            title: 'Позитивные упоминания брендов'
+          impressions: {
+            title: 'Вовлеченность по брендам'
           },
           data: {},
           loading: true,
@@ -487,11 +461,11 @@ export default {
           mentions: {
             title: 'Упоминания брендов YT'
           },
-          views: {
-            title: 'Упоминания брендов YT'
+          reach: {
+            title: 'Охват по брендам YT'
           },
-          comments: {
-            title: 'Упоминания брендов YT'
+          impressions: {
+            title: 'Вовлеченность по брендам YT'
           },
           data: {},
           loading: true,
@@ -505,11 +479,11 @@ export default {
           mentions: {
             title: 'Упоминания брендов IG'
           },
-          views: {
-            title: 'Упоминания брендов IG'
+          reach: {
+            title: 'Охват по брендам IG'
           },
-          comments: {
-            title: 'Упоминания брендов IG'
+          impressions: {
+            title: 'Вовлеченность по брендам IG'
           },
           data: {},
           loading: true,
@@ -523,434 +497,31 @@ export default {
           mentions: {
             title: 'Динамика упоминаний брендов'
           },
-          views: {
-            title: 'Динамика упоминаний брендов'
+          reach: {
+            title: 'Динамика охвата по брендам'
           },
-          comments: {
-            title: 'Динамика упоминаний брендов'
+          impressions: {
+            title: 'Динамика вовлеченности по брендам'
           },
           loading: true,
-          data: {
-            labels: [
-              '2019-08-05',
-              '2019-08-12',
-              '2019-08-19',
-              '2019-08-26',
-              '2019-09-02',
-              '2019-09-09',
-              '2019-09-16',
-              '2019-09-23',
-              '2019-09-30',
-              '2019-10-07',
-              '2019-10-14',
-              '2019-10-21',
-              '2019-10-28',
-              '2019-11-04',
-              '2019-11-11',
-              '2019-11-18',
-              '2019-11-25',
-              '2019-12-02',
-              '2019-12-09',
-              '2019-12-16',
-              '2019-12-23',
-              '2019-12-30',
-              '2020-01-06',
-              '2020-01-13',
-              '2020-01-20',
-              '2020-01-27',
-              '2020-02-03',
-              '2020-02-10',
-              '2020-02-17',
-              '2020-02-24'
-            ],
-            datasets: [
-              {
-                label: '5g',
-                borderColor: '#4d089a',
-                fill: false,
-                data: [
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.14,
-                  0.03,
-                  0.03,
-                  0.05,
-                  0.03,
-                  0.0,
-                  0.03,
-                  0.0,
-                  0.05,
-                  0.08,
-                  0.05,
-                  0.03,
-                  0.24,
-                  0.03,
-                  0.05,
-                  0.03,
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.03,
-                  0.0,
-                  0.03,
-                  0.0,
-                  0.0
-                ]
-              },
-              {
-                label: 'cashback',
-                borderColor: '#1b262c',
-                fill: false,
-                data: [
-                  0.04,
-                  0.04,
-                  0.16,
-                  0.04,
-                  0.0,
-                  0.0,
-                  0.12,
-                  0.0,
-                  0.0,
-                  0.04,
-                  0.0,
-                  0.04,
-                  0.0,
-                  0.04,
-                  0.0,
-                  0.12,
-                  0.04,
-                  0.0,
-                  0.04,
-                  0.08,
-                  0.04,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.04,
-                  0.0,
-                  0.0,
-                  0.04,
-                  0.0
-                ]
-              },
-              {
-                label: 'банковская карта',
-                borderColor: '#ed6663',
-                fill: false,
-                data: [
-                  0.0,
-                  0.03,
-                  0.09,
-                  0.03,
-                  0.06,
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.03,
-                  0.03,
-                  0.09,
-                  0.06,
-                  0.03,
-                  0.0,
-                  0.09,
-                  0.09,
-                  0.03,
-                  0.06,
-                  0.03,
-                  0.03,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.06,
-                  0.0,
-                  0.09,
-                  0.0
-                ]
-              },
-              {
-                label: 'забугорище',
-                borderColor: '#ffa372',
-                fill: false,
-                data: [
-                  0.5,
-                  0.2,
-                  0.1,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.2,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              {
-                label: 'искусственный интеллект',
-                borderColor: '#f35588',
-                fill: false,
-                data: [
-                  0.02,
-                  0.0,
-                  0.0,
-                  0.02,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.02,
-                  0.04,
-                  0.02,
-                  0.0,
-                  0.02,
-                  0.06,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.02,
-                  0.09,
-                  0.11,
-                  0.06,
-                  0.11,
-                  0.11,
-                  0.02,
-                  0.04,
-                  0.04,
-                  0.04,
-                  0.02,
-                  0.09,
-                  0.02,
-                  0.02
-                ]
-              },
-              {
-                label: 'объединяй',
-                borderColor: '#05dfd7',
-                fill: false,
-                data: [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.25,
-                  0.0,
-                  0.42,
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              {
-                label: 'роуминг',
-                borderColor: '#a3f7bf',
-                fill: false,
-                data: [
-                  0.01,
-                  0.0,
-                  0.02,
-                  0.01,
-                  0.02,
-                  0.02,
-                  0.02,
-                  0.0,
-                  0.03,
-                  0.02,
-                  0.01,
-                  0.02,
-                  0.08,
-                  0.0,
-                  0.06,
-                  0.03,
-                  0.06,
-                  0.03,
-                  0.05,
-                  0.07,
-                  0.08,
-                  0.01,
-                  0.04,
-                  0.06,
-                  0.08,
-                  0.09,
-                  0.05,
-                  0.05,
-                  0.02,
-                  0.0
-                ]
-              },
-              {
-                label: 'самый быстрый',
-                borderColor: '#fff591',
-                fill: false,
-                data: [
-                  0.07,
-                  0.0,
-                  0.0,
-                  0.04,
-                  0.07,
-                  0.0,
-                  0.04,
-                  0.07,
-                  0.07,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.11,
-                  0.04,
-                  0.04,
-                  0.04,
-                  0.07,
-                  0.0,
-                  0.04,
-                  0.07,
-                  0.0,
-                  0.04,
-                  0.04,
-                  0.04,
-                  0.0,
-                  0.04,
-                  0.07,
-                  0.0
-                ]
-              },
-              {
-                label: 'тариф x',
-                borderColor: '#323edd',
-                fill: false,
-                data: [
-                  0.15,
-                  0.25,
-                  0.4,
-                  0.15,
-                  0.05,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              {
-                label: 'тарифище',
-                borderColor: '#dc2ade',
-                fill: false,
-                data: [
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.17,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.08,
-                  0.0,
-                  0.08,
-                  0.17,
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              }
-            ]
-          },
+          data: {},
           options: {
-            fill: false
+            fill: false,
+            responsive: true,
+            maintainAspectRatio: false
           }
         }
       },
       vertical_bar: {
         vertical_bar_1: {
           mentions: {
-            title: 'Позитивные упоминания продуктов брендов'
+            title: 'Упоминания продуктов брендов'
           },
-          views: {
-            title: 'Позитивные упоминания продуктов брендов'
+          reach: {
+            title: 'Охват по упоминаниям продуктов'
           },
-          comments: {
-            title: 'Позитивные упоминания продуктов брендов'
+          impressions: {
+            title: 'Вовлеченность по упоминаниям продуктов'
           },
           loading: true,
           labels: [],
@@ -1002,140 +573,6 @@ export default {
               ]
             }
           }
-        },
-        vertical_bar_2: {
-          mentions: {
-            title: 'Упоминания слоганов',
-            loading: true,
-            data: {
-              labels: [
-                'начинается с тебя',
-                'другие правила',
-                'быть лучше каждый день',
-                'живи на яркой стороне'
-              ],
-              datasets: [
-                {
-                  label: 'билайн',
-                  backgroundColor: '#F2DC5D',
-                  data: [3, 1, 0, 173],
-                  stack: 1
-                },
-                {
-                  label: 'мегафон',
-                  backgroundColor: '#7FC29B',
-                  data: [142, 2, 0, 0],
-                  stack: 1
-                },
-                {
-                  label: 'мтс',
-                  backgroundColor: '#EA2B1F',
-                  data: [7, 1, 15, 2],
-                  stack: 1
-                },
-                {
-                  label: 'теле2',
-                  backgroundColor: '#0C090D',
-                  data: [1, 14, 0, 0],
-                  stack: 1
-                }
-              ]
-            }
-          },
-          views: {
-            title: 'Слоганы',
-            loading: true,
-            data: {
-              labels: [
-                'начинается с тебя',
-                'другие правила',
-                'быть лучше каждый день',
-                'живи на яркой стороне'
-              ],
-              datasets: [
-                {
-                  label: 'билайн',
-                  backgroundColor: '#F2DC5D',
-                  data: [342269, 7375, 0, 228300],
-                  stack: 1
-                },
-                {
-                  label: 'мегафон',
-                  backgroundColor: '#7FC29B',
-                  data: [351055456, 90619, 0, 1291],
-                  stack: 1
-                },
-                {
-                  label: 'мтс',
-                  backgroundColor: '#EA2B1F',
-                  data: [1555127, 90601, 4879769, 530],
-                  stack: 1
-                },
-                {
-                  label: 'теле2',
-                  backgroundColor: '#0C090D',
-                  data: [96762772, 115383605, 0, 0],
-                  stack: 1
-                }
-              ]
-            }
-          },
-          comments: {
-            title: 'Вовлеченность по слоганам',
-            loading: true,
-            data: {
-              labels: [
-                'начинается с тебя',
-                'другие правила',
-                'быть лучше каждый день',
-                'живи на яркой стороне'
-              ],
-              datasets: [
-                {
-                  label: 'билайн',
-                  backgroundColor: '#F2DC5D',
-                  data: [3503, 357, 0, 7280],
-                  stack: 1
-                },
-                {
-                  label: 'мегафон',
-                  backgroundColor: '#7FC29B',
-                  data: [2152770, 2819, 0, 29],
-                  stack: 1
-                },
-                {
-                  label: 'мтс',
-                  backgroundColor: '#EA2B1F',
-                  data: [12670, 2817, 0, 2763],
-                  stack: 1
-                },
-                {
-                  label: 'теле2',
-                  backgroundColor: '#0C090D',
-                  data: [930289, 44552, 0, 0],
-                  stack: 1
-                }
-              ]
-            }
-          },
-          options: {
-            // onClick(e, i) {
-            //   const chart = i[0]
-            //   console.dir(chart._view.label)
-            // },
-            scales: {
-              xAxes: [
-                {
-                  stacked: true
-                }
-              ],
-              yAxes: [
-                {
-                  stacked: true
-                }
-              ]
-            }
-          }
         }
       },
       horizontal_bar: {
@@ -1143,10 +580,10 @@ export default {
           mentions: {
             title: 'Топ каналов по упоминаниям YT'
           },
-          views: {
+          reach: {
             title: 'Топ каналов по охвату YT'
           },
-          comments: {
+          impressions: {
             title: 'Топ каналов по вовлеченности YT'
           },
           loading: true,
@@ -1157,10 +594,10 @@ export default {
           mentions: {
             title: 'Топ каналов по упоминаниям IG'
           },
-          views: {
+          reach: {
             title: 'Топ каналов по охвату IG'
           },
-          comments: {
+          impressions: {
             title: 'Топ каналов по вовлеченности IG'
           },
           loading: true,
@@ -1170,13 +607,13 @@ export default {
       },
       horizontal_bar_1: {
         mentions: {
-          title: 'Позитивных упоминаний брендов'
+          title: 'Общее количество упоминаний брендов'
         },
-        views: {
-          title: 'Позитивных упоминаний брендов'
+        reach: {
+          title: 'Общий охват упоминаний брендов'
         },
-        comments: {
-          title: 'Позитивных упоминаний брендов'
+        impressions: {
+          title: 'Общая вовлеченность упоминаний брендов'
         },
         loading: true,
         data: {},
@@ -1184,13 +621,13 @@ export default {
       },
       horizontal_bar_2: {
         mentions: {
-          title: 'Соотношение позитивных упоминаний'
+          title: 'Соотношение упоминаний'
         },
-        views: {
-          title: 'Соотношение позитивных упоминаний'
+        reach: {
+          title: 'Соотношение охвата'
         },
-        comments: {
-          title: 'Соотношение позитивных упоминаний'
+        impressions: {
+          title: 'Соотношение вовлеченности'
         },
         loading: true,
         data: {},
@@ -1217,11 +654,11 @@ export default {
         mentions: {
           title: 'Список упоминаний IG'
         },
-        views: {
-          title: 'Список упоминаний IG'
+        reach: {
+          title: 'Список охвата IG'
         },
-        comments: {
-          title: 'Список упоминаний IG'
+        impressions: {
+          title: 'Список вовлечений IG'
         },
         headers: [
           {
@@ -1265,11 +702,11 @@ export default {
         mentions: {
           title: 'Список упоминаний YT'
         },
-        views: {
-          title: 'Список упоминаний YT'
+        reach: {
+          title: 'Список охвата YT'
         },
-        comments: {
-          title: 'Список упоминаний YT'
+        impressions: {
+          title: 'Список вовлечений YT'
         },
         headers: [
           {
@@ -1312,7 +749,15 @@ export default {
     }
   }),
   computed: {
-    ...mapGetters(['getRequestType'])
+    ...mapGetters(['getRequestType']),
+    dates: {
+      get() {
+        return this.$store.getters.getDates
+      },
+      set(value) {
+        this.$store.dispatch('setDates', value)
+      }
+    }
   },
 
   created() {
@@ -1355,40 +800,50 @@ export default {
       this.getListVideo()
 
       this.getLineData()
-
-      this.charts.vertical_bar.vertical_bar_2[
-        this.getRequestType.value
-      ].loading = true
-      setTimeout(() => {
-        this.charts.vertical_bar.vertical_bar_2[
-          this.getRequestType.value
-        ].loading = false
-      }, 1000)
     },
     // updateProgress(e) {
     //   console.log(e)
     // },
     async getLineData() {
-      const {data: line_data} = this.charts.line.line_2
       this.charts.line.line_2.loading = true
+      const [start_date, end_date] = this.dates
 
-      const [start_date, end_date] = this.date_picker.dates
-      const {data} = await HTTP.get(
-        `${this.getRequestType.value}/products?platform=youtube&start_date=${start_date}&end_date=${end_date}`
-      )
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
+      }
+      const jsons = {}
+
+      await this.$store.dispatch('posit_request_prod_date', config)
+      jsons[config.action] = this.$store.getters[
+        `posit_get${config.action}_prod_date`
+      ]
+
+      let service_labels = [...new Set([...Object.keys(jsons[config.action])])]
+
+      let labels = [
+        ...new Set([
+          ...service_labels.flatMap(label =>
+            Object.keys(jsons[config.action][label])
+          )
+        ])
+      ]
 
       const getData = label => {
-        return line_data.labels.reduce((total, item) => {
-          if (data[0][item][label]) {
-            total.push(data[0][item][label])
-            return total
-          } else {
-            total.push(0)
-            return total
+        const data = []
+        labels.forEach(date => {
+          let data_1 = 0
+          for (let operator in jsons[config.action][label][date]) {
+            const {instagram = {count: 0}, youtube = {count: 0}} =
+              jsons[config.action][label][date][operator] || {}
+            const sum = instagram.count + youtube.count
+            data_1 += sum
           }
-        }, [])
+          data.push(data_1)
+        })
+        return data
       }
-
       const getRandomColor = () => {
         const letters = '0123456789ABCDEF'
         let color = '#'
@@ -1397,69 +852,101 @@ export default {
         }
         return color
       }
+      const colors = service_labels.map(() => getRandomColor)
 
-      line_data.labels = [...new Set(Object.keys(data[0]))].reverse()
-      line_data.datasets = Object.keys(data[1]).map(label => ({
+      const datasets = service_labels.map((label, index) => ({
         label,
-        fill: false,
-        borderColor: getRandomColor(),
-        data: getData(label)
+        backgroundColor: colors[index],
+        borderColor: colors[index],
+        data: getData(label),
+        fill: false
       }))
+      labels = labels.map(label => {
+        label = label.split('T')
+        label.pop().toString()
+        return label
+      })
 
+      const chart_data = {
+        labels,
+        datasets
+      }
+
+      this.charts.line.line_2.data = chart_data
       this.charts.line.line_2.loading = false
     },
     async getListPosts() {
       this.tables.posts.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_15,
-        views: json_1_15,
-        comments: json_1_15
+      let action = 'mentions'
+      if (this.getRequestType.value === 'reach') action = 'views'
+      else if (this.getRequestType.value === 'impressions') action = 'comments'
+
+      const config = {
+        action: action,
+        start: start_date,
+        end: end_date
       }
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/post/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
+      const jsons = {}
+      await this.$store.dispatch('posit_request_post_ordered', config)
 
-      this.tables.posts.items = jsons[this.getRequestType.value]
+      jsons[config.action] = this.$store.getters[
+        `posit_get_post_ordered_${config.action}`
+      ]
+
+      this.tables.posts.items = jsons[config.action]
       this.tables.posts.loading = false
-      // console.dir(data)
     },
     async getListVideo() {
       this.tables.video.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_14,
-        views: json_1_14,
-        comments: json_1_14
+      let action = 'mentions'
+      if (this.getRequestType.value === 'reach') action = 'views'
+      else if (this.getRequestType.value === 'impressions') action = 'comments'
+
+      const config = {
+        action: action,
+        start: start_date,
+        end: end_date
       }
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/video/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
+      const jsons = {}
+      await this.$store.dispatch('posit_request_video_ordered', config)
 
-      this.tables.video.items = jsons[this.getRequestType.value]
+      jsons[config.action] = this.$store.getters[
+        `posit_get_video_ordered_${config.action}`
+      ]
+
+      this.tables.video.items = jsons[config.action]
       this.tables.video.loading = false
       // console.dir(data)
     },
     async getMentions({chart_name, platform}) {
       this.charts.line[chart_name].loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_18,
-        views: json_1_18,
-        comments: json_1_18
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
+      const jsons = {}
+      await this.$store.dispatch('posit_request_date', config)
+
+      jsons[config.action] = this.$store.getters[
+        `posit_get${config.action}_date`
+      ]
       const brands_labels = ['мегафон', 'билайн', 'мтс', 'теле2']
 
       const colors = ['#7FC29B', '#F2DC5D', '#EA2B1F', '#0C090D']
-      const labels = [
+      let labels = [
         ...new Set([
           ...brands_labels.flatMap(label =>
-            Object.keys(jsons[this.getRequestType.value][label])
+            Object.keys(jsons[config.action][label])
           )
         ])
       ]
@@ -1468,7 +955,7 @@ export default {
         const data = []
         labels.forEach(date => {
           const {instagram = {count: 0}, youtube = {count: 0}} =
-            jsons[this.getRequestType.value][label][date] || {}
+            jsons[config.action][label][date] || {}
           const obj = {
             instagram,
             youtube
@@ -1491,6 +978,12 @@ export default {
         fill: false
       }))
 
+      labels = labels.map(label => {
+        label = label.split('T')
+        label.pop().toString()
+        return label
+      })
+
       const chart_data = {
         labels,
         datasets
@@ -1501,19 +994,22 @@ export default {
     },
     async getCloudWords() {
       this.cloud.loading = true
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `wordcloud?brand=megafon&start_date=${start_date}&end_date=${end_date}`
-      // )
+      const [start_date, end_date] = this.dates
 
-      this.cloud.items = json_1_20.youtube
-      // this.cloud.items = data.slice(0, 100)
+      const config = {
+        start: start_date,
+        end: end_date
+      }
+
+      await this.$store.dispatch('posit_request_word_cloud', config)
+      this.cloud.items = this.$store.getters.posit_get_word_cloud.youtube
+
       this.cloud.loading = false
     },
     async getPieData() {
       this.charts.pie.loading = true
 
-      const [start_date, end_date] = this.date_picker.dates
+      const [start_date, end_date] = this.dates
       const {data} = await HTTP.get(
         `count/${this.getRequestType.value}/megafon?start_date=${start_date}&end_date=${end_date}`
       )
@@ -1534,7 +1030,7 @@ export default {
       this.charts.pie.loading = false
     },
     async getSum(url) {
-      const [start_date, end_date] = this.date_picker.dates
+      const [start_date, end_date] = this.dates
       const {data} = await HTTP.get(
         `${this.getRequestType.value}/count?brand=${url}&start_date=${start_date}&end_date=${end_date}`
       )
@@ -1546,19 +1042,22 @@ export default {
     },
     async getHorizontalBarMentions() {
       this.charts.horizontal_bar_1.loading = true
+      const [start_date, end_date] = this.dates
 
-      console.log(this.getRequestType.value, this.getRequestType.name)
-
-      const jsons = {
-        mentions: json_1_16,
-        views: json_1_16,
-        comments: json_1_16
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
-      // const labels = Object.keys(jsons[this.getRequestType.value])
+      const jsons = {}
+      await this.$store.dispatch('posit_request', config)
+
+      jsons[config.action] = this.$store.getters[`posit_get${config.action}`]
+
       const labels = ['мегафон', 'мтс', 'билайн', 'теле2']
       const mentions = labels.map(label =>
-        Object.values(jsons[this.getRequestType.value][label]).reduce(
+        Object.values(jsons[config.action][label]).reduce(
           (total, item) => total + parseFloat(item.count),
           0
         )
@@ -1579,15 +1078,23 @@ export default {
       this.charts.horizontal_bar_1.loading = false
     },
     async getHorizontalBarCoeff() {
-      this.charts.horizontal_bar_2.loading = true
+      this.charts.horizontal_bar_1.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_17,
-        views: json_1_17,
-        comments: json_1_17
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
-      const obj = jsons[this.getRequestType.value]['мтс']
+      const jsons = {}
+      await this.$store.dispatch('posit_request_coeff', config)
+
+      jsons[config.action] = this.$store.getters[
+        `posit_get${config.action}_coeff`
+      ]
+
+      const obj = jsons[config.action]
       const labels = Object.keys(obj)
       const sum_mentions = labels.map(label => obj[label].count)
 
@@ -1606,29 +1113,35 @@ export default {
     },
     async getHorizontalBarYoutube() {
       this.charts.horizontal_bar.youtube.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_21,
-        views: json_1_21,
-        comments: json_1_21
+      let action = 'mentions'
+      if (this.getRequestType.value === 'reach') action = 'views'
+      else if (this.getRequestType.value === 'impressions') action = 'comments'
+
+      const config = {
+        action: action,
+        start: start_date,
+        end: end_date
       }
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/channel/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
-      const labels = jsons[this.getRequestType.value].map(
-        item => item.channel_name
-      )
-      const datasets = labels.map(label => {
+      const jsons = {}
+      await this.$store.dispatch('posit_request_yt_ordered', config)
+
+      jsons[config.action] = this.$store.getters[
+        `posit_get_yt_ordered_${config.action}`
+      ]
+      const labels = jsons[config.action].map(item => item.channel_name)
+
+      let datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
-          const channel_name = jsons[this.getRequestType.value].find(
+          const channel_name = jsons[config.action].find(
             obj => obj.channel_name === label
           )
           return total + parseFloat(channel_name[item] || 0)
         }, 0)
       })
-
+      datasets = datasets.sort((i, j) => j - i)
       this.charts.horizontal_bar.youtube.data = {
         labels,
         datasets: [
@@ -1639,44 +1152,39 @@ export default {
           }
         ]
       }
-
-      console.log({
-        labels,
-        datasets: [
-          {
-            label: 'Соотношение',
-            backgroundColor: '#639FF8',
-            data: datasets
-          }
-        ]
-      })
-
       this.charts.horizontal_bar.youtube.loading = false
     },
     async getHorizontalBarInstagram() {
       this.charts.horizontal_bar.instagram.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_22,
-        views: json_1_22,
-        comments: json_1_22
+      let action = 'mentions'
+      if (this.getRequestType.value === 'reach') action = 'views'
+      else if (this.getRequestType.value === 'impressions') action = 'comments'
+
+      const config = {
+        action: action,
+        start: start_date,
+        end: end_date
       }
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/user/megafon/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // )
-      const labels = jsons[this.getRequestType.value].map(
-        item => item.user_name
-      )
-      const datasets = labels.map(label => {
+      const jsons = {}
+      await this.$store.dispatch('posit_request_ig_ordered', config)
+
+      jsons[config.action] = this.$store.getters[
+        `posit_get_ig_ordered_${config.action}`
+      ]
+
+      const labels = jsons[config.action].map(item => item.user_name)
+      let datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
-          const user_name = jsons[this.getRequestType.value].find(
+          const user_name = jsons[config.action].find(
             obj => obj.user_name === label
           )
           return total + parseFloat(user_name[item] || 0)
         }, 0)
       })
+      datasets = datasets.sort((i, j) => j - i)
 
       this.charts.horizontal_bar.instagram.data = {
         labels,
@@ -1693,18 +1201,24 @@ export default {
     },
     async setDataOfVerticalBar() {
       this.charts.vertical_bar.vertical_bar_1.loading = true
+      const [start_date, end_date] = this.dates
 
-      const jsons = {
-        mentions: json_1_19,
-        views: json_1_19,
-        comments: json_1_19
+      const config = {
+        action: this.getRequestType.value,
+        start: start_date,
+        end: end_date
       }
 
-      const labels = Object.keys(jsons[this.getRequestType.value])
+      const jsons = {}
+      await this.$store.dispatch('posit_request_prod', config)
+
+      jsons[config.action] = this.$store.getters[
+        `posit_get${config.action}_prod`
+      ]
+
+      const labels = Object.keys(jsons[config.action])
       const operators = ['билайн', 'теле2', 'мегафон', 'мтс']
       const colors = ['#F2DC5D', '#0C090D', '#7FC29B', '#EA2B1F']
-
-      // console.log(labels)
 
       const datasets = operators.map((operator, index) => ({
         label: operator,
@@ -1713,25 +1227,21 @@ export default {
         data: labels.map(label => {
           let sum = 0
           if (
-            jsons[this.getRequestType.value] &&
-            jsons[this.getRequestType.value][label] &&
-            jsons[this.getRequestType.value][label][operator] &&
-            jsons[this.getRequestType.value][label][operator].youtube
+            jsons[config.action] &&
+            jsons[config.action][label] &&
+            jsons[config.action][label][operator] &&
+            jsons[config.action][label][operator].youtube
           ) {
-            sum +=
-              jsons[this.getRequestType.value][label][operator].youtube.count ||
-              0
+            sum += jsons[config.action][label][operator].youtube.count || 0
           }
 
           if (
-            jsons[this.getRequestType.value] &&
-            jsons[this.getRequestType.value][label] &&
-            jsons[this.getRequestType.value][label][operator] &&
-            jsons[this.getRequestType.value][label][operator].instagram
+            jsons[config.action] &&
+            jsons[config.action][label] &&
+            jsons[config.action][label][operator] &&
+            jsons[config.action][label][operator].instagram
           ) {
-            sum +=
-              jsons[this.getRequestType.value][label][operator].instagram
-                .count || 0
+            sum += jsons[config.action][label][operator].instagram.count || 0
           }
 
           return sum
@@ -1754,9 +1264,14 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.spacer_1
+  width: 200px
+.relative
+  position: fixed
+  top: 80px
+  z-index: 1
 .total
-    height: 100px
-
-    &--red
-        background: linear-gradient(45deg, #e55353, #d93737)
+  height: 100px
+  &--red
+    background: linear-gradient(45deg,#e55353,#d93737)
 </style>
