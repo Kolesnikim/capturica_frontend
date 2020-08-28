@@ -4,11 +4,10 @@
       <h1>Упоминания конкурентов</h1>
       <v-spacer></v-spacer>
       <date-picker
-        v-model="date_picker.dates"
+        v-model="dates"
         class="date-picker"
         type="date"
         range
-        disabled="True"
         value-type="format"
         format="YYYY-MM-DD"
         placeholder="Выберите период"
@@ -39,7 +38,7 @@
             column
             fill-height
           >
-            <h2>Мегафон</h2>
+            <h2>МТС</h2>
           </v-layout>
         </v-card>
       </v-flex>
@@ -86,7 +85,6 @@
         <v-card
           class="pa-2 elevation-0 d-flex justify-center aling-center"
           style="width: 100%; height: 100%; min-height: 300px"
-          disabled="True"
         >
           <word-cloud
             :color="cloud.mts.color"
@@ -113,7 +111,6 @@
         <v-card
           class="pa-2 elevation-0 d-flex justify-center aling-center"
           style="width: 100%; height: 100%; min-height: 300px"
-          disabled="True"
         >
           <word-cloud
             :color="cloud.tele2.color"
@@ -155,11 +152,7 @@
         </v-card>
       </v-flex>
       <v-flex class="mx-2" md4>
-        <v-card
-          class="pa-2"
-          style="width: 100%; min-height: 300px"
-          disabled="True"
-        >
+        <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <h2 class="text-center">Топ каналов YT</h2>
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.channel_mts.data"
@@ -174,11 +167,7 @@
         </v-card>
       </v-flex>
       <v-flex class="mx-2" md4>
-        <v-card
-          class="pa-2"
-          style="width: 100%; min-height: 300px"
-          disabled="True"
-        >
+        <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <h2 class="text-center">Топ каналов YT</h2>
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.channel_tele2.data"
@@ -211,11 +200,7 @@
         </v-card>
       </v-flex>
       <v-flex class="mx-2" md4>
-        <v-card
-          class="pa-2"
-          style="width: 100%; min-height: 300px"
-          disabled="True"
-        >
+        <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <h2 class="text-center">Топ каналов IG</h2>
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.user_mts.data"
@@ -230,11 +215,7 @@
         </v-card>
       </v-flex>
       <v-flex class="mx-2" md4>
-        <v-card
-          class="pa-2"
-          style="width: 100%; min-height: 300px"
-          disabled="True"
-        >
+        <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <h2 class="text-center">Топ каналов IG</h2>
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.user_tele2.data"
@@ -371,7 +352,7 @@
 
 <script>
 import horizontalBarChart from '@/components/charts/horizontalBar.js'
-// import VueWordCloud from "vuewordcloud";
+
 import HTTP from '@/api/http'
 import wordCloud from 'vue-wordcloud'
 
@@ -382,44 +363,9 @@ import {mapGetters} from 'vuex'
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
 
-// import json_1_5 from '@/assets/chartData/json_1_5.json'
-// import json_2_5 from '@/assets/chartData/json_2_5.json'
-// import json_3_5 from '@/assets/chartData/json_3_5.json'
-//
-// import json_1_6 from '@/assets/chartData/json_1_6.json'
-// import json_2_6 from '@/assets/chartData/json_2_6.json'
-// import json_3_6 from '@/assets/chartData/json_3_6.json'
-//
-// import json_1_7 from '@/assets/chartData/json_1_7.json'
-// import json_2_7 from '@/assets/chartData/json_2_7.json'
-// import json_3_7 from '@/assets/chartData/json_3_7.json'
-
-// import json_1_8 from '@/assets/chartData/json_1_8.json'
-// import json_2_8 from '@/assets/chartData/json_2_8.json'
-// import json_3_8 from '@/assets/chartData/json_3_8.json'
-
-import json_1_9 from '@/assets/chartData/json_1_9.json'
-import json_2_9 from '@/assets/chartData/json_2_9.json'
-import json_3_9 from '@/assets/chartData/json_3_9.json'
-
-import json_1_10 from '@/assets/chartData/json_1_10.json'
-import json_2_10 from '@/assets/chartData/json_2_10.json'
-import json_3_10 from '@/assets/chartData/json_3_10.json'
-
-import json_1_11 from '@/assets/chartData/json_1_11.json'
-import json_2_11 from '@/assets/chartData/json_2_11.json'
-import json_3_11 from '@/assets/chartData/json_3_11.json'
-
-import json_1_12 from '@/assets/chartData/json_1_12.json'
-import json_2_12 from '@/assets/chartData/json_2_12.json'
-import json_3_12 from '@/assets/chartData/json_3_12.json'
-
-import json_1_13 from '@/assets/chartData/json_1_13.json'
-
 export default {
   components: {
     horizontalBarChart,
-    // [VueWordCloud.name]: VueWordCloud
     wordCloud,
     requestTypes,
     DatePicker
@@ -436,16 +382,6 @@ export default {
   },
 
   data: () => ({
-    date_picker: {
-      dates: [
-        // moment()
-        //   .subtract(1, 'months')
-        //   .format('YYYY-MM-DD'),
-        // moment().format('YYYY-MM-DD')
-        '2020-01-01',
-        '2020-02-01'
-      ]
-    },
     charts: {
       horizontal_bar: {
         channel_beeline: {
@@ -506,7 +442,7 @@ export default {
       posts: {
         beeline: {
           disabled: false,
-          failed: true,
+          failed: false,
           headers: [
             {
               text: 'Имя пользователя',
@@ -546,8 +482,8 @@ export default {
           loading: true
         },
         mts: {
-          disabled: true,
-          failed: true,
+          disabled: false,
+          failed: false,
           headers: [
             {
               text: 'Имя пользователя',
@@ -587,8 +523,8 @@ export default {
           loading: true
         },
         tele2: {
-          disabled: true,
-          failed: true,
+          disabled: false,
+          failed: false,
           headers: [
             {
               text: 'Имя пользователя',
@@ -668,7 +604,7 @@ export default {
           loading: true
         },
         mts: {
-          disabled: true,
+          disabled: false,
           headers: [
             {
               text: 'Имя пользователя',
@@ -708,7 +644,7 @@ export default {
           loading: true
         },
         tele2: {
-          disabled: true,
+          disabled: false,
           headers: [
             {
               text: 'Имя пользователя',
@@ -751,7 +687,15 @@ export default {
     }
   }),
   computed: {
-    ...mapGetters(['getRequestType'])
+    ...mapGetters(['getRequestType']),
+    dates: {
+      get() {
+        return this.$store.getters.getDates
+      },
+      set(value) {
+        this.$store.dispatch('setDates', value)
+      }
+    }
   },
 
   mounted() {
@@ -767,46 +711,52 @@ export default {
     init() {
       const horizontalBarDatas = [
         {
-          url: `channel/beeline/${this.getRequestType.value}`,
+          operator: 'билайн',
           column: 'channel_name',
           prop: 'channel_beeline',
           platform: 'youtube',
-          field: 'channel_name'
+          field: 'channel_name',
+          type: 'channel'
         },
         {
-          url: `channel/mts/${this.getRequestType.value}`,
+          operator: 'мтс',
           column: 'channel_name',
           prop: 'channel_mts',
           platform: 'youtube',
-          field: 'channel_name'
+          field: 'channel_name',
+          type: 'channel'
         },
         {
-          url: `channel/tele2/${this.getRequestType.value}`,
+          operator: 'теле2',
           column: 'channel_name',
           prop: 'channel_tele2',
           platform: 'youtube',
-          field: 'channel_name'
+          field: 'channel_name',
+          type: 'channel'
         },
         {
-          url: `user/beeline/${this.getRequestType.value}`,
+          operator: 'билайн',
           column: 'user_name',
           prop: 'user_beeline',
           platform: 'instagram',
-          field: 'user_name'
+          field: 'user_name',
+          type: 'user'
         },
         {
-          url: `user/mts/${this.getRequestType.value}`,
+          operator: 'мтс',
           column: 'user_name',
           prop: 'user_mts',
           platform: 'instagram',
-          field: 'user_name'
+          field: 'user_name',
+          type: 'user'
         },
         {
-          url: `user/tele2/${this.getRequestType.value}`,
+          operator: 'теле2',
           column: 'user_name',
           prop: 'user_tele2',
           platform: 'instagram',
-          field: 'user_name'
+          field: 'user_name',
+          type: 'user'
         }
       ]
       horizontalBarDatas.forEach(item => {
@@ -818,48 +768,36 @@ export default {
       //   this.getSumMentions(url)
       // })
 
-      const cloudWords = ['beeline', 'mts', 'tele2']
-      cloudWords.forEach(url => {
-        this.getCloudWords(url)
+      const cloudWords = [
+        {operatorRus: 'билайн', operatorEng: 'beeline'},
+        {operatorRus: 'мтс', operatorEng: 'mts'},
+        {operatorRus: 'теле2', operatorEng: 'tele2'}
+      ]
+      cloudWords.forEach(operator => {
+        this.getCloudWords(operator)
       })
 
-      const tables = ['beeline', 'mts', 'tele2']
+      const tables = [
+        {operatorRus: 'билайн', operatorEng: 'beeline'},
+        {operatorRus: 'мтс', operatorEng: 'mts'},
+        {operatorRus: 'теле2', operatorEng: 'tele2'}
+      ]
       tables.forEach(operator => {
         this.getListPosts(operator)
         this.getListVideo(operator)
       })
     },
-    async getHorizontalBarData({prop, platform, field}) {
+    async getHorizontalBarData({prop, field, operator, type}) {
       this.charts.horizontal_bar[prop].loading = true
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/${url}?start_date=${start_date}&end_date=${end_date}`
-      // )
-      // const prop = url.replace(/(\w+)\/(\w+)\/(\w+)/, '$1_$2')
-      // const labels = data.map(item => item[column])
-      // const datasets = data.map(item => item.mentions)
-
-      const jsons = {
-        youtube: {
-          mentions: json_1_11,
-          views: json_2_11,
-          comments: json_3_11
-        },
-        instagram: {
-          mentions: json_1_12,
-          views: json_2_12,
-          comments: json_3_12
-        }
-      }
-
-      const labels = jsons[platform][this.getRequestType.value].map(
-        item => item[field]
+      const [start_date, end_date] = this.$store.getters.getDates
+      const {data} = await HTTP.get(
+        `megafon/${type}?brand=${operator}&order_by=${this.getRequestType.value}&start_date=${start_date}&end_date=${end_date}`
       )
+      const labels = data.map(item => item[field])
+
       const datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
-          const obj = jsons[platform][this.getRequestType.value].find(
-            obj => obj[field] === label
-          )
+          const obj = data.find(obj => obj[field] === label)
           return total + parseFloat(obj[item] || 0)
         }, 0)
       })
@@ -878,7 +816,7 @@ export default {
       this.charts.horizontal_bar[prop].loading = false
     },
     async getSumMentions(url) {
-      const [start_date, end_date] = this.date_picker.dates
+      const [start_date, end_date] = this.dates
       const {data} = await HTTP.get(
         `count/mentions/${url}?start_date=${start_date}&end_date=${end_date}`
       )
@@ -888,53 +826,38 @@ export default {
       )
       this.count_mentions[url] = sumMentions
     },
-    async getCloudWords(url) {
-      this.cloud[url].loading = true
+    async getCloudWords({operatorRus, operatorEng}) {
+      this.cloud[operatorEng].loading = true
 
-      this.cloud.mts.items = [...json_1_13.youtube]
-      this.cloud.beeline.items = [...json_1_13.youtube]
-      this.cloud.tele2.items = [...json_1_13.youtube]
-
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `wordcloud?brand=${url}&start_date=${start_date}&end_date=${end_date}`
-      // )
-      // this.cloud[url].items = data.slice(0, 100)
-      this.cloud[url].loading = false
+      const [start_date, end_date] = this.dates
+      const {data} = await HTTP.get(
+        `megafon/wordcloud?brand=${operatorRus}&start_date=${start_date}&end_date=${end_date}`
+      )
+      this.cloud[operatorEng].items = data.youtube
+      this.cloud[operatorEng].loading = false
     },
+
     async getListPosts(operator) {
-      this.tables.posts[operator].loading = true
+      this.tables.posts[operator.operatorEng].loading = true
 
-      const jsons = {
-        mentions: json_1_10,
-        views: json_2_10,
-        comments: json_3_10
-      }
+      const [start_date, end_date] = this.dates
+      const {data} = await HTTP.get(
+        `megafon/post?brand=${operator.operatorRus}&order_by=${this.getRequestType.value}&start_date=${start_date}&end_date=${end_date}`
+      )
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/post/${operator}/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // ).catch(() => (this.tables.posts[operator].failed = true))
-
-      this.tables.posts[operator].items = [...jsons[this.getRequestType.value]]
-      this.tables.posts[operator].loading = false
+      this.tables.posts[operator.operatorEng].items = data
+      this.tables.posts[operator.operatorEng].loading = false
     },
     async getListVideo(operator) {
-      this.tables.video[operator].loading = true
+      this.tables.video[operator.operatorEng].loading = true
 
-      const jsons = {
-        mentions: json_1_9,
-        views: json_2_9,
-        comments: json_3_9
-      }
+      const [start_date, end_date] = this.dates
+      const {data} = await HTTP.get(
+        `megafon/video?brand=${operator.operatorRus}&order_by=${this.getRequestType.value}&start_date=${start_date}&end_date=${end_date}`
+      )
 
-      // const [start_date, end_date] = this.date_picker.dates
-      // const {data} = await HTTP.get(
-      //   `list/video/${operator}/${this.getRequestType.value}?start_date=${start_date}&end_date=${end_date}`
-      // ).catch(() => (this.tables.video[operator].failed = true))
-
-      this.tables.video[operator].items = [...jsons[this.getRequestType.value]]
-      this.tables.video[operator].loading = false
+      this.tables.video[operator.operatorEng].items = data
+      this.tables.video[operator.operatorEng].loading = false
     },
     updateCharts() {
       this.init()
