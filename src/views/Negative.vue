@@ -26,9 +26,19 @@
     <div class="d-flex mx-n2 mb-4">
       <v-flex md6 class="mx-2">
         <v-card class="pa-2" style="width: 100%">
-          <h2 class="text-center">
-            {{ charts.horizontal_bar_1[getRequestType.value].title }}
-          </h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{ charts.horizontal_bar_1[getRequestType.value].title }}
+            </h2>
+            <v-btn
+              @click="export_request"
+              class="ml-2"
+              color="primary--text"
+              icon
+            >
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
           <horizontal-bar-chart
             v-if="!charts.horizontal_bar_1.loading"
             :chart-data="charts.horizontal_bar_1.data"
@@ -44,9 +54,19 @@
       </v-flex>
       <v-flex md6 class="mx-2">
         <v-card class="pa-2" style="width: 100%">
-          <h2 class="text-center">
-            {{ charts.horizontal_bar_2[getRequestType.value].title }}
-          </h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{ charts.horizontal_bar_2[getRequestType.value].title }}
+            </h2>
+            <v-btn
+              @click="export_request"
+              class="ml-2"
+              color="primary--text"
+              icon
+            >
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
           <horizontal-bar-chart
             v-if="!charts.horizontal_bar_2.loading"
             :chart-data="charts.horizontal_bar_2.data"
@@ -62,9 +82,14 @@
       </v-flex>
     </div>
     <v-card class="pa-2 mb-4" style="width: 100%">
-      <h2 class="text-center">
-        {{ charts.line.line_1[getRequestType.value].title }}
-      </h2>
+      <div class="d-flex justify-center align-center">
+        <h2 class="text-center">
+          {{ charts.line.line_1[getRequestType.value].title }}
+        </h2>
+        <v-btn @click="export_request" class="ml-2" color="primary--text" icon>
+          <v-icon class="">mdi-download</v-icon>
+        </v-btn>
+      </div>
       <line-chart
         v-if="!charts.line.line_1.loading"
         :chart-data="charts.line.line_1.data"
@@ -80,9 +105,19 @@
     <div class="d-flex mx-n2 mb-4">
       <v-flex md6 class="mx-2">
         <v-card class="pa-2 mb-4" style="width: 100%">
-          <h2 class="text-center">
-            {{ charts.line.line_3[getRequestType.value].title }}
-          </h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{ charts.line.line_3[getRequestType.value].title }}
+            </h2>
+            <v-btn
+              @click="export_request"
+              class="ml-2"
+              color="primary--text"
+              icon
+            >
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
           <line-chart
             v-if="!charts.line.line_3.loading"
             :chart-data="charts.line.line_3.data"
@@ -99,9 +134,19 @@
       </v-flex>
       <v-flex md6 class="mx-2">
         <v-card class="pa-2 mb-4" style="width: 100%">
-          <h2 class="text-center">
-            {{ charts.line.line_4[getRequestType.value].title }}
-          </h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">
+              {{ charts.line.line_4[getRequestType.value].title }}
+            </h2>
+            <v-btn
+              @click="export_request"
+              class="ml-2"
+              color="primary--text"
+              icon
+            >
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
           <line-chart
             v-if="!charts.line.line_4.loading"
             :chart-data="charts.line.line_4.data"
@@ -119,9 +164,14 @@
     </div>
 
     <v-card class="pa-2 mb-4" style="width: 100%">
-      <h2 class="text-center">
-        {{ charts.vertical_bar.vertical_bar_1[getRequestType.value].title }}
-      </h2>
+      <div class="d-flex justify-center align-center">
+        <h2 class="text-center">
+          {{ charts.vertical_bar.vertical_bar_1[getRequestType.value].title }}
+        </h2>
+        <v-btn @click="export_request" class="ml-2" color="primary--text" icon>
+          <v-icon class="">mdi-download</v-icon>
+        </v-btn>
+      </div>
       <vertical-bar-chart
         v-if="!charts.vertical_bar.vertical_bar_1.loading"
         style="max-width: 99%"
@@ -137,9 +187,14 @@
     </v-card>
 
     <v-card class="pa-2 mb-4" style="width: 100%">
-      <h2 class="text-center">
-        {{ charts.line.line_2[getRequestType.value].title }}
-      </h2>
+      <div class="d-flex justify-center align-center">
+        <h2 class="text-center">
+          {{ charts.line.line_2[getRequestType.value].title }}
+        </h2>
+        <v-btn @click="export_request" class="ml-2" color="primary--text" icon>
+          <v-icon class="">mdi-download</v-icon>
+        </v-btn>
+      </div>
       <line-chart
         v-if="!charts.line.line_2.loading"
         :chart-data="charts.line.line_2.data"
@@ -158,7 +213,13 @@
         <v-card class="px-2 elevation-0" style="height: 100%">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">Облако слов для бренда Мегафон</h2>
-            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+
+            <v-btn
+              @click="export_request"
+              class="ml-2"
+              color="primary--text"
+              icon
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -191,7 +252,7 @@
             <h2 class="text-center">
               {{ charts.horizontal_bar.youtube[getRequestType.value].title }}
             </h2>
-            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+            <v-btn class="ml-2" color="primary--text" icon>
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -214,7 +275,7 @@
             <h2 class="text-center">
               {{ charts.horizontal_bar.instagram[getRequestType.value].title }}
             </h2>
-            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+            <v-btn class="ml-2" color="primary--text" icon>
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -240,7 +301,7 @@
             <h2 class="text-center">
               {{ tables.video[getRequestType.value].title }}
             </h2>
-            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+            <v-btn class="ml-2" color="primary--text" icon>
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -280,7 +341,7 @@
             <h2 class="text-center">
               {{ tables.posts[getRequestType.value].title }}
             </h2>
-            <v-btn disabled="disabled" class="ml-2" color="primary--text" icon>
+            <v-btn class="ml-2" color="primary--text" icon>
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>

@@ -138,8 +138,13 @@ export default {
     async getListVideo() {
       const params = this.$route.query
       const brandOrProd = params.brand ? 'brand' : 'product'
+
+      let sentiment = params.sentiment
+      let sentimentStr = ''
+      if (sentiment) sentimentStr = `&sentiment=${sentiment}`
+
       const {data} = await HTTP.get(
-        `megafon/video?${brandOrProd}=${params[brandOrProd]}&start_date=${params.start_date}&end_date=${params.end_date}`
+        `megafon/video?${brandOrProd}=${params[brandOrProd]}&start_date=${params.start_date}&end_date=${params.end_date}${sentimentStr}`
       )
       this.tables.video.items = data
       this.tables.video.loading = false

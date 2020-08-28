@@ -59,12 +59,18 @@ export default {
     handleСlick(e) {
       // console.log(this.$data._chart.getElementAtEvent)
       const point = this.$data._chart.getElementAtEvent(e)[0]
+      const sentiments = this.$route.fullPath.slice(1)
+
+      let sentiment = ''
+      if (sentiments === 'positive') sentiment = `&sentiment=${sentiments}`
+      else if (sentiments === 'negative') sentiment = `&sentiment=${sentiments}`
+
       if (point) {
         const start_date = this.$data._chart.data.labels[point._index]
         const end_date = this.$data._chart.data.labels[point._index + 1]
         const brand = this.$data._chart.data.datasets[point._datasetIndex].label
         this.$router.push(
-          `/tables?brand=${brand}&start_date=${start_date}&end_date=${end_date}`
+          `/tables?brand=${brand}&start_date=${start_date}&end_date=${end_date}${sentiment}`
         )
       }
     }

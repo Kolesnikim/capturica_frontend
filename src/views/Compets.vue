@@ -1,24 +1,27 @@
 <template>
   <v-layout class="d-flex pa-4" column>
-    <div class="d-flex mx-n2 mb-4 px-2 align-center">
-      <h1>Упоминания конкурентов</h1>
-      <v-spacer></v-spacer>
-      <date-picker
-        v-model="dates"
-        class="date-picker"
-        type="date"
-        range
-        value-type="format"
-        format="YYYY-MM-DD"
-        placeholder="Выберите период"
-        confirm
-        confirm-text="Применить"
-        range-separator=" - "
-        :clearable="false"
-        @confirm="updateCharts($event)"
-      ></date-picker>
-    </div>
-    <request-types></request-types>
+    <v-card class="mb-6">
+      <v-app-bar dense flat tile class="relative">
+        <div class="spacer_1"></div>
+        <h1>Упоминания конкурентов</h1>
+        <v-spacer></v-spacer>
+        <date-picker
+          v-model="dates"
+          class="date-picker"
+          type="date"
+          range
+          value-type="format"
+          format="YYYY-MM-DD"
+          placeholder="Выберите период"
+          confirm
+          confirm-text="Применить"
+          range-separator=" - "
+          :clearable="false"
+          @confirm="updateCharts($event)"
+        ></date-picker>
+      </v-app-bar>
+      <request-types class="mt-16"></request-types>
+    </v-card>
     <div class="d-flex mx-n2 mb-4">
       <v-flex class="mx-2" md4>
         <v-card class="total total--blue" style="background: #639FF8">
@@ -79,6 +82,11 @@
             style="height: 100%"
             v-if="cloud.beeline.loading"
           ></v-progress-circular>
+          <div class="float-right">
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
         </v-card>
       </v-flex>
       <v-flex class="ma-2" md4>
@@ -105,6 +113,11 @@
             style="height: 100%"
             v-if="cloud.mts.loading"
           ></v-progress-circular>
+          <div class="float-right">
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
         </v-card>
       </v-flex>
       <v-flex class="ma-2" md4>
@@ -131,6 +144,11 @@
             style="height: 100%"
             v-if="cloud.tele2.loading"
           ></v-progress-circular>
+          <div class="float-right">
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
         </v-card>
       </v-flex>
     </div>
@@ -138,7 +156,13 @@
     <div class="mb-6 d-flex mx-n2">
       <v-flex class="mx-2" md4>
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
-          <h2 class="text-center">Топ каналов YT</h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">Топ каналов YT</h2>
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.channel_beeline.data"
             v-if="!charts.horizontal_bar.channel_beeline.loading"
@@ -153,7 +177,13 @@
       </v-flex>
       <v-flex class="mx-2" md4>
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
-          <h2 class="text-center">Топ каналов YT</h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">Топ каналов YT</h2>
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.channel_mts.data"
             v-if="!charts.horizontal_bar.channel_mts.loading"
@@ -168,7 +198,13 @@
       </v-flex>
       <v-flex class="mx-2" md4>
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
-          <h2 class="text-center">Топ каналов YT</h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">Топ каналов YT</h2>
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.channel_tele2.data"
             v-if="!charts.horizontal_bar.channel_tele2.loading"
@@ -186,7 +222,13 @@
     <div class="mb-6 d-flex mx-n2">
       <v-flex class="mx-2" md4>
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
-          <h2 class="text-center">Топ каналов IG</h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">Топ каналов IG</h2>
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.user_beeline.data"
             v-if="!charts.horizontal_bar.user_beeline.loading"
@@ -201,7 +243,13 @@
       </v-flex>
       <v-flex class="mx-2" md4>
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
-          <h2 class="text-center">Топ каналов IG</h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">Топ каналов IG</h2>
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.user_mts.data"
             v-if="!charts.horizontal_bar.user_mts.loading"
@@ -216,7 +264,13 @@
       </v-flex>
       <v-flex class="mx-2" md4>
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
-          <h2 class="text-center">Топ каналов IG</h2>
+          <div class="d-flex justify-center align-center">
+            <h2 class="text-center">Топ каналов IG</h2>
+            <v-btn class="ml-2" color="primary--text" icon>
+              <v-icon class="">mdi-download</v-icon>
+            </v-btn>
+          </div>
+
           <horizontal-bar-chart
             :chart-data="charts.horizontal_bar.user_tele2.data"
             v-if="!charts.horizontal_bar.user_tele2.loading"
@@ -247,12 +301,7 @@
           >
             <div class="d-flex justify-center align-center">
               <h2 class="text-center">Список упоминаний в видео</h2>
-              <v-btn
-                disabled="disabled"
-                class="ml-2"
-                color="primary--text"
-                icon
-              >
+              <v-btn class="ml-2" color="primary--text" icon>
                 <v-icon class="">mdi-download</v-icon>
               </v-btn>
             </div>
@@ -305,12 +354,7 @@
           >
             <div class="d-flex justify-center align-center">
               <h2 class="text-center">Список упоминаний в постах</h2>
-              <v-btn
-                disabled="disabled"
-                class="ml-2"
-                color="primary--text"
-                icon
-              >
+              <v-btn class="ml-2" color="primary--text" icon>
                 <v-icon class="">mdi-download</v-icon>
               </v-btn>
             </div>
@@ -384,6 +428,15 @@ export default {
   data: () => ({
     charts: {
       horizontal_bar: {
+        mentions: {
+          title: 'Упоминания'
+        },
+        reach: {
+          title: 'Охват'
+        },
+        impressions: {
+          title: 'Вовлеченность'
+        },
         channel_beeline: {
           loading: true,
           data: {},
@@ -806,7 +859,7 @@ export default {
         labels,
         datasets: [
           {
-            label: this.getRequestType.value,
+            label: this.charts.horizontal_bar[this.getRequestType.value].title,
             backgroundColor: '#639FF8',
             data: datasets
           }
@@ -867,6 +920,12 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.spacer_1
+  width: 200px
+.relative
+  position: fixed
+  top: 80px
+  z-index: 1
 .total
     height: 100
 
