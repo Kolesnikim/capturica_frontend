@@ -3,7 +3,7 @@
     <v-card>
       <v-app-bar dense flat tile class="relative">
         <div class="spacer_1"></div>
-        <h1>Негативная тональность</h1>
+        <h1>Позитивная тональность</h1>
         <v-spacer></v-spacer>
         <date-picker
           v-model="dates"
@@ -877,12 +877,8 @@ export default {
       this.tables.posts.loading = true
       const [start_date, end_date] = this.dates
 
-      let action = 'mentions'
-      if (this.getRequestType.value === 'reach') action = 'views'
-      else if (this.getRequestType.value === 'impressions') action = 'comments'
-
       const config = {
-        action: action,
+        action: this.getRequestType.value,
         start: start_date,
         end: end_date
       }
@@ -901,12 +897,8 @@ export default {
       this.tables.video.loading = true
       const [start_date, end_date] = this.dates
 
-      let action = 'mentions'
-      if (this.getRequestType.value === 'reach') action = 'views'
-      else if (this.getRequestType.value === 'impressions') action = 'comments'
-
       const config = {
-        action: action,
+        action: this.getRequestType.value,
         start: start_date,
         end: end_date
       }
@@ -1079,12 +1071,8 @@ export default {
       this.charts.horizontal_bar.youtube.loading = true
       const [start_date, end_date] = this.dates
 
-      let action = 'mentions'
-      if (this.getRequestType.value === 'reach') action = 'views'
-      else if (this.getRequestType.value === 'impressions') action = 'comments'
-
       const config = {
-        action: action,
+        action: this.getRequestType.value,
         start: start_date,
         end: end_date
       }
@@ -1122,12 +1110,8 @@ export default {
       this.charts.horizontal_bar.instagram.loading = true
       const [start_date, end_date] = this.dates
 
-      let action = 'mentions'
-      if (this.getRequestType.value === 'reach') action = 'views'
-      else if (this.getRequestType.value === 'impressions') action = 'comments'
-
       const config = {
-        action: action,
+        action: this.getRequestType.value,
         start: start_date,
         end: end_date
       }

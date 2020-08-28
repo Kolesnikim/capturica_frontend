@@ -19,17 +19,17 @@ export default {
     posit_impressions_prod_date: {},
     posit_word_cloud: {},
     posit_yt_ordered_mentions: {},
-    posit_yt_ordered_views: {},
-    posit_yt_ordered_comments: {},
+    posit_yt_ordered_reach: {},
+    posit_yt_ordered_impressions: {},
     posit_ig_ordered_mentions: {},
-    posit_ig_ordered_views: {},
-    posit_ig_ordered_comments: {},
+    posit_ig_ordered_reach: {},
+    posit_ig_ordered_impressions: {},
     posit_video_ordered_mentions: {},
-    posit_video_ordered_views: {},
-    posit_video_ordered_comments: {},
+    posit_video_ordered_reach: {},
+    posit_video_ordered_impressions: {},
     posit_post_ordered_mentions: {},
-    posit_post_ordered_views: {},
-    posit_post_ordered_comments: {}
+    posit_post_ordered_reach: {},
+    posit_post_ordered_impressions: {}
   },
   getters: {
     posit_getmentions(state) {
@@ -83,38 +83,38 @@ export default {
     posit_get_yt_ordered_mentions(state) {
       return state.posit_yt_ordered_mentions
     },
-    posit_get_yt_ordered_views(state) {
-      return state.posit_yt_ordered_views
+    posit_get_yt_ordered_reach(state) {
+      return state.posit_yt_ordered_reach
     },
-    posit_get_yt_ordered_comments(state) {
-      return state.posit_yt_ordered_comments
+    posit_get_yt_ordered_impressions(state) {
+      return state.posit_yt_ordered_impressions
     },
     posit_get_ig_ordered_mentions(state) {
       return state.posit_ig_ordered_mentions
     },
-    posit_get_ig_ordered_views(state) {
-      return state.posit_ig_ordered_views
+    posit_get_ig_ordered_reach(state) {
+      return state.posit_ig_ordered_reach
     },
-    posit_get_ig_ordered_comments(state) {
-      return state.posit_ig_ordered_comments
+    posit_get_ig_ordered_impressions(state) {
+      return state.posit_ig_ordered_impressions
     },
     posit_get_video_ordered_mentions(state) {
       return state.posit_video_ordered_mentions
     },
-    posit_get_video_ordered_views(state) {
-      return state.posit_video_ordered_views
+    posit_get_video_ordered_reach(state) {
+      return state.posit_video_ordered_reach
     },
-    posit_get_video_ordered_comments(state) {
-      return state.posit_video_ordered_comments
+    posit_get_video_ordered_impressions(state) {
+      return state.posit_video_ordered_impressions
     },
     posit_get_post_ordered_mentions(state) {
       return state.posit_post_ordered_mentions
     },
-    posit_get_post_ordered_views(state) {
-      return state.posit_post_ordered_views
+    posit_get_post_ordered_reach(state) {
+      return state.posit_post_ordered_reach
     },
-    posit_get_post_ordered_comments(state) {
-      return state.posit_post_ordered_comments
+    posit_get_post_ordered_impressions(state) {
+      return state.posit_post_ordered_impressions
     }
   },
   mutations: {
@@ -169,38 +169,38 @@ export default {
     posit_set_yt_ordered_mentions(state, payload) {
       state.posit_yt_ordered_mentions = payload
     },
-    posit_set_yt_ordered_views(state, payload) {
-      state.posit_yt_ordered_views = payload
+    posit_set_yt_ordered_reach(state, payload) {
+      state.posit_yt_ordered_reach = payload
     },
-    posit_set_yt_ordered_comments(state, payload) {
-      state.posit_yt_ordered_comments = payload
+    posit_set_yt_ordered_impressions(state, payload) {
+      state.posit_yt_ordered_impressions = payload
     },
     posit_set_ig_ordered_mentions(state, payload) {
       state.posit_ig_ordered_mentions = payload
     },
-    posit_set_ig_ordered_views(state, payload) {
-      state.posit_ig_ordered_views = payload
+    posit_set_ig_ordered_reach(state, payload) {
+      state.posit_ig_ordered_reach = payload
     },
-    posit_set_ig_ordered_comments(state, payload) {
-      state.posit_ig_ordered_comments = payload
+    posit_set_ig_ordered_impressions(state, payload) {
+      state.posit_ig_ordered_impressions = payload
     },
     posit_set_video_ordered_mentions(state, payload) {
       state.posit_video_ordered_mentions = payload
     },
-    posit_set_video_ordered_views(state, payload) {
-      state.posit_video_ordered_views = payload
+    posit_set_video_ordered_reach(state, payload) {
+      state.posit_video_ordered_reach = payload
     },
-    posit_set_video_ordered_comments(state, payload) {
-      state.posit_video_ordered_comments = payload
+    posit_set_video_ordered_impressions(state, payload) {
+      state.posit_video_ordered_impressions = payload
     },
     posit_set_post_ordered_mentions(state, payload) {
       state.posit_post_ordered_mentions = payload
     },
-    posit_set_post_ordered_views(state, payload) {
-      state.posit_post_ordered_views = payload
+    posit_set_post_ordered_reach(state, payload) {
+      state.posit_post_ordered_reach = payload
     },
-    posit_set_post_ordered_comments(state, payload) {
-      state.posit_post_ordered_comments = payload
+    posit_set_post_ordered_impressions(state, payload) {
+      state.posit_post_ordered_impressions = payload
     }
   },
   actions: {

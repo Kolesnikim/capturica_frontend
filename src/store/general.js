@@ -19,17 +19,17 @@ export default {
     impressions_prod_date: {},
     word_cloud: {},
     yt_ordered_mentions: {},
-    yt_ordered_views: {},
-    yt_ordered_comments: {},
+    yt_ordered_reach: {},
+    yt_ordered_impressions: {},
     ig_ordered_mentions: {},
-    ig_ordered_views: {},
-    ig_ordered_comments: {},
+    ig_ordered_reach: {},
+    ig_ordered_impressions: {},
     video_ordered_mentions: {},
-    video_ordered_views: {},
-    video_ordered_comments: {},
+    video_ordered_reach: {},
+    video_ordered_impressions: {},
     post_ordered_mentions: {},
-    post_ordered_views: {},
-    post_ordered_comments: {}
+    post_ordered_reach: {},
+    post_ordered_impressions: {}
   },
   getters: {
     getmentions(state) {
@@ -83,38 +83,38 @@ export default {
     get_yt_ordered_mentions(state) {
       return state.yt_ordered_mentions
     },
-    get_yt_ordered_views(state) {
-      return state.yt_ordered_views
+    get_yt_ordered_reach(state) {
+      return state.yt_ordered_reach
     },
-    get_yt_ordered_comments(state) {
-      return state.yt_ordered_comments
+    get_yt_ordered_impressions(state) {
+      return state.yt_ordered_impressions
     },
     get_ig_ordered_mentions(state) {
       return state.ig_ordered_mentions
     },
-    get_ig_ordered_views(state) {
-      return state.ig_ordered_views
+    get_ig_ordered_reach(state) {
+      return state.ig_ordered_reach
     },
-    get_ig_ordered_comments(state) {
-      return state.ig_ordered_comments
+    get_ig_ordered_impressions(state) {
+      return state.ig_ordered_impressions
     },
     get_video_ordered_mentions(state) {
       return state.video_ordered_mentions
     },
-    get_video_ordered_views(state) {
-      return state.video_ordered_views
+    get_video_ordered_reach(state) {
+      return state.video_ordered_reach
     },
-    get_video_ordered_comments(state) {
-      return state.video_ordered_comments
+    get_video_ordered_impressions(state) {
+      return state.video_ordered_impressions
     },
     get_post_ordered_mentions(state) {
       return state.post_ordered_mentions
     },
-    get_post_ordered_views(state) {
-      return state.post_ordered_views
+    get_post_ordered_reach(state) {
+      return state.post_ordered_reach
     },
-    get_post_ordered_comments(state) {
-      return state.post_ordered_comments
+    get_post_ordered_impressions(state) {
+      return state.post_ordered_impressions
     }
   },
   mutations: {
@@ -169,38 +169,38 @@ export default {
     set_yt_ordered_mentions(state, payload) {
       state.yt_ordered_mentions = payload
     },
-    set_yt_ordered_views(state, payload) {
-      state.yt_ordered_views = payload
+    set_yt_ordered_reach(state, payload) {
+      state.yt_ordered_reach = payload
     },
-    set_yt_ordered_comments(state, payload) {
-      state.yt_ordered_comments = payload
+    set_yt_ordered_impressions(state, payload) {
+      state.yt_ordered_impressions = payload
     },
     set_ig_ordered_mentions(state, payload) {
       state.ig_ordered_mentions = payload
     },
-    set_ig_ordered_views(state, payload) {
-      state.ig_ordered_views = payload
+    set_ig_ordered_reach(state, payload) {
+      state.ig_ordered_reach = payload
     },
-    set_ig_ordered_comments(state, payload) {
-      state.ig_ordered_comments = payload
+    set_ig_ordered_impressions(state, payload) {
+      state.ig_ordered_impressions = payload
     },
     set_video_ordered_mentions(state, payload) {
       state.video_ordered_mentions = payload
     },
-    set_video_ordered_views(state, payload) {
-      state.video_ordered_views = payload
+    set_video_ordered_reach(state, payload) {
+      state.video_ordered_reach = payload
     },
-    set_video_ordered_comments(state, payload) {
-      state.video_ordered_comments = payload
+    set_video_ordered_impressions(state, payload) {
+      state.video_ordered_impressions = payload
     },
     set_post_ordered_mentions(state, payload) {
       state.post_ordered_mentions = payload
     },
-    set_post_ordered_views(state, payload) {
-      state.post_ordered_views = payload
+    set_post_ordered_reach(state, payload) {
+      state.post_ordered_reach = payload
     },
-    set_post_ordered_comments(state, payload) {
-      state.post_ordered_comments = payload
+    set_post_ordered_impressions(state, payload) {
+      state.post_ordered_impressions = payload
     }
   },
   actions: {

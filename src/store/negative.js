@@ -19,17 +19,17 @@ export default {
     negat_impressions_prod_date: {},
     negat_word_cloud: {},
     negat_yt_ordered_mentions: {},
-    negat_yt_ordered_views: {},
-    negat_yt_ordered_comments: {},
+    negat_yt_ordered_reach: {},
+    negat_yt_ordered_impressions: {},
     negat_ig_ordered_mentions: {},
-    negat_ig_ordered_views: {},
-    negat_ig_ordered_comments: {},
+    negat_ig_ordered_reach: {},
+    negat_ig_ordered_impressions: {},
     negat_video_ordered_mentions: {},
-    negat_video_ordered_views: {},
-    negat_video_ordered_comments: {},
+    negat_video_ordered_reach: {},
+    negat_video_ordered_impressions: {},
     negat_post_ordered_mentions: {},
-    negat_post_ordered_views: {},
-    negat_post_ordered_comments: {}
+    negat_post_ordered_reach: {},
+    negat_post_ordered_impressions: {}
   },
   getters: {
     negat_getmentions(state) {
@@ -83,38 +83,38 @@ export default {
     negat_get_yt_ordered_mentions(state) {
       return state.negat_yt_ordered_mentions
     },
-    negat_get_yt_ordered_views(state) {
-      return state.negat_yt_ordered_views
+    negat_get_yt_ordered_reach(state) {
+      return state.negat_yt_ordered_reach
     },
-    negat_get_yt_ordered_comments(state) {
-      return state.negat_yt_ordered_comments
+    negat_get_yt_ordered_impressions(state) {
+      return state.negat_yt_ordered_impressions
     },
     negat_get_ig_ordered_mentions(state) {
       return state.negat_ig_ordered_mentions
     },
-    negat_get_ig_ordered_views(state) {
-      return state.negat_ig_ordered_views
+    negat_get_ig_ordered_reach(state) {
+      return state.negat_ig_ordered_reach
     },
-    negat_get_ig_ordered_comments(state) {
-      return state.negat_ig_ordered_comments
+    negat_get_ig_ordered_impressions(state) {
+      return state.negat_ig_ordered_impressions
     },
     negat_get_video_ordered_mentions(state) {
       return state.negat_video_ordered_mentions
     },
-    negat_get_video_ordered_views(state) {
-      return state.negat_video_ordered_views
+    negat_get_video_ordered_reach(state) {
+      return state.negat_video_ordered_reach
     },
-    negat_get_video_ordered_comments(state) {
-      return state.negat_video_ordered_comments
+    negat_get_video_ordered_impressions(state) {
+      return state.negat_video_ordered_impressions
     },
     negat_get_post_ordered_mentions(state) {
       return state.negat_post_ordered_mentions
     },
-    negat_get_post_ordered_views(state) {
-      return state.negat_post_ordered_views
+    negat_get_post_ordered_reach(state) {
+      return state.negat_post_ordered_reach
     },
-    negat_get_post_ordered_comments(state) {
-      return state.negat_post_ordered_comments
+    negat_get_post_ordered_impressions(state) {
+      return state.negat_post_ordered_impressions
     }
   },
   mutations: {
@@ -169,38 +169,38 @@ export default {
     negat_set_yt_ordered_mentions(state, payload) {
       state.negat_yt_ordered_mentions = payload
     },
-    negat_set_yt_ordered_views(state, payload) {
-      state.negat_yt_ordered_views = payload
+    negat_set_yt_ordered_reach(state, payload) {
+      state.negat_yt_ordered_reach = payload
     },
-    negat_set_yt_ordered_comments(state, payload) {
-      state.negat_yt_ordered_comments = payload
+    negat_set_yt_ordered_impressions(state, payload) {
+      state.negat_yt_ordered_impressions = payload
     },
     negat_set_ig_ordered_mentions(state, payload) {
       state.negat_ig_ordered_mentions = payload
     },
-    negat_set_ig_ordered_views(state, payload) {
-      state.negat_ig_ordered_views = payload
+    negat_set_ig_ordered_reach(state, payload) {
+      state.negat_ig_ordered_reach = payload
     },
-    negat_set_ig_ordered_comments(state, payload) {
-      state.negat_ig_ordered_comments = payload
+    negat_set_ig_ordered_impressions(state, payload) {
+      state.negat_ig_ordered_impressions = payload
     },
     negat_set_video_ordered_mentions(state, payload) {
       state.negat_video_ordered_mentions = payload
     },
-    negat_set_video_ordered_views(state, payload) {
-      state.negat_video_ordered_views = payload
+    negat_set_video_ordered_reach(state, payload) {
+      state.negat_video_ordered_reach = payload
     },
-    negat_set_video_ordered_comments(state, payload) {
-      state.negat_video_ordered_comments = payload
+    negat_set_video_ordered_impressions(state, payload) {
+      state.negat_video_ordered_impressions = payload
     },
     negat_set_post_ordered_mentions(state, payload) {
       state.negat_post_ordered_mentions = payload
     },
-    negat_set_post_ordered_views(state, payload) {
-      state.negat_post_ordered_views = payload
+    negat_set_post_ordered_reach(state, payload) {
+      state.negat_post_ordered_reach = payload
     },
-    negat_set_post_ordered_comments(state, payload) {
-      state.negat_post_ordered_comments = payload
+    negat_set_post_ordered_impressions(state, payload) {
+      state.negat_post_ordered_impressions = payload
     }
   },
   actions: {
