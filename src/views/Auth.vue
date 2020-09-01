@@ -35,22 +35,21 @@ import HTTP from '@/api/http'
 
 export default {
   data: () => ({
-    form: {}
+    form: {
+      username: '',
+      password: ''
+    }
   }),
 
   methods: {
     async logIn() {
-      const {data: authData} = await HTTP.post('login', this.form)
+      const {data: authData} = await HTTP.post('megafon/login', this.form)
       if (authData) {
         this.$router.push('/')
         this.$store.commit('SET_USER_DATA', {
           username: this.form.username
         })
       }
-      // const {username, password} = this.form
-      // if (username === 'test' && password === 'test') {
-      //   this.$router.push('/')
-      // }
     }
   }
 }

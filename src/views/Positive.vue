@@ -31,7 +31,7 @@
               {{ charts.horizontal_bar_1[getRequestType.value].title }}
             </h2>
             <v-btn
-              @click="posit_export_request"
+              @click="export_request"
               class="ml-2"
               color="primary--text"
               icon
@@ -59,7 +59,7 @@
               {{ charts.horizontal_bar_2[getRequestType.value].title }}
             </h2>
             <v-btn
-              @click="posit_export_request_coeff"
+              @click="export_request_coeff"
               class="ml-2"
               color="primary--text"
               icon
@@ -87,7 +87,7 @@
           {{ charts.line.line_1[getRequestType.value].title }}
         </h2>
         <v-btn
-          @click="posit_export_request_date"
+          @click="export_request_date"
           class="ml-2"
           color="primary--text"
           icon
@@ -158,7 +158,7 @@
           {{ charts.vertical_bar.vertical_bar_1[getRequestType.value].title }}
         </h2>
         <v-btn
-          @click="posit_export_request_prod"
+          @click="export_request_prod"
           class="ml-2"
           color="primary--text"
           icon
@@ -186,7 +186,7 @@
           {{ charts.line.line_2[getRequestType.value].title }}
         </h2>
         <v-btn
-          @click="posit_export_request_prod_date"
+          @click="export_request_prod_date"
           class="ml-2"
           color="primary--text"
           icon
@@ -213,7 +213,7 @@
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">Облако слов для бренда Мегафон</h2>
             <v-btn
-              @click="posit_export_wordcloud"
+              @click="export_wordcloud"
               class="ml-2"
               color="primary--text"
               icon
@@ -251,7 +251,7 @@
               {{ charts.horizontal_bar.youtube[getRequestType.value].title }}
             </h2>
             <v-btn
-              @click="posit_request_yt_ordered_exp"
+              @click="request_yt_ordered_exp"
               class="ml-2"
               color="primary--text"
               icon
@@ -279,7 +279,7 @@
               {{ charts.horizontal_bar.instagram[getRequestType.value].title }}
             </h2>
             <v-btn
-              @click="posit_request_ig_ordered_exp"
+              @click="request_ig_ordered_exp"
               class="ml-2"
               color="primary--text"
               icon
@@ -310,7 +310,7 @@
               {{ tables.video[getRequestType.value].title }}
             </h2>
             <v-btn
-              @click="posit_request_video_ordered_exp"
+              @click="request_video_ordered_exp"
               class="ml-2"
               color="primary--text"
               icon
@@ -355,7 +355,7 @@
               {{ tables.posts[getRequestType.value].title }}
             </h2>
             <v-btn
-              @click="posit_request_post_ordered_exp"
+              @click="request_post_ordered_exp"
               class="ml-2"
               color="primary--text"
               icon
@@ -849,7 +849,7 @@ export default {
   },
 
   methods: {
-    async posit_export_request() {
+    async export_request() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http
@@ -863,7 +863,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_export_request_coeff() {
+    async export_request_coeff() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http
@@ -877,7 +877,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_export_request_date() {
+    async export_request_date() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http
@@ -891,7 +891,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_export_request_prod() {
+    async export_request_prod() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http
@@ -905,7 +905,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_export_request_prod_date() {
+    async export_request_prod_date() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http
@@ -919,7 +919,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_export_wordcloud() {
+    async export_wordcloud() {
       const [start, end] = this.dates
       await http
         .get(
@@ -929,7 +929,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_request_yt_ordered_exp() {
+    async request_yt_ordered_exp() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http
@@ -940,7 +940,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_request_ig_ordered_exp() {
+    async request_ig_ordered_exp() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http
@@ -951,7 +951,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_request_video_ordered_exp() {
+    async request_video_ordered_exp() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http
@@ -962,7 +962,7 @@ export default {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
         })
     },
-    async posit_request_post_ordered_exp() {
+    async request_post_ordered_exp() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
       await http

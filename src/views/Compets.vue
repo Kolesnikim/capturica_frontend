@@ -83,7 +83,12 @@
             v-if="cloud.beeline.loading"
           ></v-progress-circular>
           <div class="float-right">
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_wordcloud_beeline"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -114,7 +119,12 @@
             v-if="cloud.mts.loading"
           ></v-progress-circular>
           <div class="float-right">
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_wordcloud_mts"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -145,7 +155,12 @@
             v-if="cloud.tele2.loading"
           ></v-progress-circular>
           <div class="float-right">
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_wordcloud_tele2"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -406,6 +421,8 @@ import {mapGetters} from 'vuex'
 
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
+import http from '@/api/http'
+import fileDownload from 'js-file-download'
 
 export default {
   components: {
@@ -761,6 +778,45 @@ export default {
   },
 
   methods: {
+    async export_wordcloud_beeline() {
+      const [start, end] = this.dates
+      await http
+        .get(
+          `megafon/wordcloud?brand=билайн&start_date=${start}&end_date=${end}&export_format=csv`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_wordcloud_mts() {
+      const [start, end] = this.dates
+      await http
+        .get(
+          `megafon/wordcloud?brand=мтс&start_date=${start}&end_date=${end}&export_format=csv`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_wordcloud_tele2() {
+      const [start, end] = this.dates
+      await http
+        .get(
+          `megafon/wordcloud?brand=теле2&start_date=${start}&end_date=${end}&export_format=csv`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
     init() {
       const horizontalBarDatas = [
         {
@@ -769,7 +825,8 @@ export default {
           prop: 'channel_beeline',
           platform: 'youtube',
           field: 'channel_name',
-          type: 'channel'
+          type: 'channel',
+          operatorEng: 'beeline'
         },
         {
           operator: 'мтс',
@@ -777,7 +834,8 @@ export default {
           prop: 'channel_mts',
           platform: 'youtube',
           field: 'channel_name',
-          type: 'channel'
+          type: 'channel',
+          operatorEng: 'mts'
         },
         {
           operator: 'теле2',
@@ -785,7 +843,8 @@ export default {
           prop: 'channel_tele2',
           platform: 'youtube',
           field: 'channel_name',
-          type: 'channel'
+          type: 'channel',
+          operatorEng: 'tele2'
         },
         {
           operator: 'билайн',
@@ -793,7 +852,8 @@ export default {
           prop: 'user_beeline',
           platform: 'instagram',
           field: 'user_name',
-          type: 'user'
+          type: 'user',
+          operatorEng: 'beeline'
         },
         {
           operator: 'мтс',
@@ -801,7 +861,8 @@ export default {
           prop: 'user_mts',
           platform: 'instagram',
           field: 'user_name',
-          type: 'user'
+          type: 'user',
+          operatorEng: 'mts'
         },
         {
           operator: 'теле2',
@@ -809,17 +870,13 @@ export default {
           prop: 'user_tele2',
           platform: 'instagram',
           field: 'user_name',
-          type: 'user'
+          type: 'user',
+          operatorEng: 'tele2'
         }
       ]
       horizontalBarDatas.forEach(item => {
         this.getHorizontalBarData(item)
       })
-
-      // const countMentions = ['beeline', 'mts', 'tele2']
-      // countMentions.forEach(url => {
-      //   this.getSumMentions(url)
-      // })
 
       const cloudWords = [
         {operatorRus: 'билайн', operatorEng: 'beeline'},
@@ -840,12 +897,21 @@ export default {
         this.getListVideo(operator)
       })
     },
-    async getHorizontalBarData({prop, field, operator, type}) {
+    async getHorizontalBarData({prop, field, operator, type, operatorEng}) {
       this.charts.horizontal_bar[prop].loading = true
       const [start_date, end_date] = this.$store.getters.getDates
-      const {data} = await HTTP.get(
-        `megafon/${type}?brand=${operator}&order_by=${this.getRequestType.value}&start_date=${start_date}&end_date=${end_date}`
-      )
+      const config = {
+        start: start_date,
+        end: end_date,
+        action: this.getRequestType.value,
+        type,
+        operator,
+        operatorEng
+      }
+      await this.$store.dispatch('request_bar_charts', config)
+      const data = this.$store.getters[
+        `get_horizontal_bar_${operatorEng}_${type}`
+      ]
       const labels = data.map(item => item[field])
 
       const datasets = labels.map(label => {
@@ -882,10 +948,16 @@ export default {
     async getCloudWords({operatorRus, operatorEng}) {
       this.cloud[operatorEng].loading = true
 
-      const [start_date, end_date] = this.dates
-      const {data} = await HTTP.get(
-        `megafon/wordcloud?brand=${operatorRus}&start_date=${start_date}&end_date=${end_date}`
-      )
+      const [start, end] = this.dates
+
+      const config = {
+        start,
+        end,
+        operatorRus,
+        operatorEng
+      }
+      await this.$store.dispatch('request_cloud_word', config)
+      const data = this.$store.getters[`get_wordcloud_${operatorEng}`]
       this.cloud[operatorEng].items = data.youtube
       this.cloud[operatorEng].loading = false
     },
@@ -893,21 +965,21 @@ export default {
     async getListPosts(operator) {
       this.tables.posts[operator.operatorEng].loading = true
 
-      const [start_date, end_date] = this.dates
-      const {data} = await HTTP.get(
-        `megafon/post?brand=${operator.operatorRus}&order_by=${this.getRequestType.value}&start_date=${start_date}&end_date=${end_date}`
-      )
+      const [start, end] = this.dates
+      const config = {start, end, action: this.getRequestType.value, operator}
+      await this.$store.dispatch('request_posts', config)
+      const data = this.$store.getters[`get_posts_${operator.operatorEng}`]
 
       this.tables.posts[operator.operatorEng].items = data
       this.tables.posts[operator.operatorEng].loading = false
     },
     async getListVideo(operator) {
       this.tables.video[operator.operatorEng].loading = true
+      const [start, end] = this.dates
 
-      const [start_date, end_date] = this.dates
-      const {data} = await HTTP.get(
-        `megafon/video?brand=${operator.operatorRus}&order_by=${this.getRequestType.value}&start_date=${start_date}&end_date=${end_date}`
-      )
+      const config = {start, end, action: this.getRequestType.value, operator}
+      await this.$store.dispatch('request_video', config)
+      const data = this.$store.getters[`get_video_${operator.operatorEng}`]
 
       this.tables.video[operator.operatorEng].items = data
       this.tables.video[operator.operatorEng].loading = false
@@ -927,7 +999,7 @@ export default {
   top: 80px
   z-index: 1
 .total
-    height: 100
+    height: 100%
 
     // &--blue
     // background: #B35041

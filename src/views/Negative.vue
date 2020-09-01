@@ -59,7 +59,7 @@
               {{ charts.horizontal_bar_2[getRequestType.value].title }}
             </h2>
             <v-btn
-              @click="export_request"
+              @click="export_request_coeff"
               class="ml-2"
               color="primary--text"
               icon
@@ -86,7 +86,12 @@
         <h2 class="text-center">
           {{ charts.line.line_1[getRequestType.value].title }}
         </h2>
-        <v-btn @click="export_request" class="ml-2" color="primary--text" icon>
+        <v-btn
+          @click="export_request_date"
+          class="ml-2"
+          color="primary--text"
+          icon
+        >
           <v-icon class="">mdi-download</v-icon>
         </v-btn>
       </div>
@@ -109,14 +114,6 @@
             <h2 class="text-center">
               {{ charts.line.line_3[getRequestType.value].title }}
             </h2>
-            <v-btn
-              @click="export_request"
-              class="ml-2"
-              color="primary--text"
-              icon
-            >
-              <v-icon class="">mdi-download</v-icon>
-            </v-btn>
           </div>
           <line-chart
             v-if="!charts.line.line_3.loading"
@@ -138,14 +135,6 @@
             <h2 class="text-center">
               {{ charts.line.line_4[getRequestType.value].title }}
             </h2>
-            <v-btn
-              @click="export_request"
-              class="ml-2"
-              color="primary--text"
-              icon
-            >
-              <v-icon class="">mdi-download</v-icon>
-            </v-btn>
           </div>
           <line-chart
             v-if="!charts.line.line_4.loading"
@@ -168,7 +157,12 @@
         <h2 class="text-center">
           {{ charts.vertical_bar.vertical_bar_1[getRequestType.value].title }}
         </h2>
-        <v-btn @click="export_request" class="ml-2" color="primary--text" icon>
+        <v-btn
+          @click="export_request_prod"
+          class="ml-2"
+          color="primary--text"
+          icon
+        >
           <v-icon class="">mdi-download</v-icon>
         </v-btn>
       </div>
@@ -191,7 +185,12 @@
         <h2 class="text-center">
           {{ charts.line.line_2[getRequestType.value].title }}
         </h2>
-        <v-btn @click="export_request" class="ml-2" color="primary--text" icon>
+        <v-btn
+          @click="export_request_prod_date"
+          class="ml-2"
+          color="primary--text"
+          icon
+        >
           <v-icon class="">mdi-download</v-icon>
         </v-btn>
       </div>
@@ -215,7 +214,7 @@
             <h2 class="text-center">Облако слов для бренда Мегафон</h2>
 
             <v-btn
-              @click="export_request"
+              @click="export_wordcloud"
               class="ml-2"
               color="primary--text"
               icon
@@ -252,7 +251,12 @@
             <h2 class="text-center">
               {{ charts.horizontal_bar.youtube[getRequestType.value].title }}
             </h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="request_yt_ordered_exp"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -275,7 +279,12 @@
             <h2 class="text-center">
               {{ charts.horizontal_bar.instagram[getRequestType.value].title }}
             </h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="request_ig_ordered_exp"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -301,7 +310,12 @@
             <h2 class="text-center">
               {{ tables.video[getRequestType.value].title }}
             </h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="request_video_ordered_exp"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -341,7 +355,12 @@
             <h2 class="text-center">
               {{ tables.posts[getRequestType.value].title }}
             </h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="request_post_ordered_exp"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -391,6 +410,8 @@ import {mapGetters} from 'vuex'
 
 // import moment from 'moment'
 import DatePicker from 'vue2-datepicker'
+import http from '@/api/http'
+import fileDownload from 'js-file-download'
 
 export default {
   components: {
@@ -829,6 +850,130 @@ export default {
   },
 
   methods: {
+    async export_request() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/${action}/count?start_date=${start}&end_date=${end}&export_format=csv&sentiment=negative`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_request_coeff() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/${action}/count?start_date=${start}&end_date=${end}&brand=мегафон&export_format=csv&sentiment=negative`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_request_date() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/${action}/date?start_date=${start}&end_date=${end}&export_format=csv&sentiment=negative`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_request_prod() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/${action}/products/count?start_date=${start}&end_date=${end}&export_format=csv&sentiment=negative`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_request_prod_date() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/${action}/products/date?start_date=${start}&end_date=${end}&export_format=csv&sentiment=negative`,
+          {
+            responseType: 'blob'
+          }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_wordcloud() {
+      const [start, end] = this.dates
+      await http
+        .get(
+          `megafon/wordcloud?brand=мегафон&start_date=${start}&end_date=${end}&export_format=&sentiment=negative`
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async request_yt_ordered_exp() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/channel?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}&export_format=csv&sentiment=negative`
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async request_ig_ordered_exp() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/user?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}&export_format=csv&sentiment=negative`
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async request_video_ordered_exp() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/video?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}&export_format=csv&sentiment=negative`
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async request_post_ordered_exp() {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/post?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}&export_format=csv&sentiment=negative`
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
     async init() {
       const mentions = [
         {

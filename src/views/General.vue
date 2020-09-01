@@ -184,7 +184,7 @@
           {{ charts.line.line_2[getRequestType.value].title }}
         </h2>
         <v-btn
-          @click="request_ig_ordered_exp"
+          @click="export_request_prod_date"
           class="ml-2"
           color="primary--text"
           icon

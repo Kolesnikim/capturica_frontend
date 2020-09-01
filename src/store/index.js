@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import general from './general'
 import positive from './positive'
 import negative from './negative'
+import compets from './compets'
 
 import dates from './dates'
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_USER_DATA: (state, payload) => {
+      console.log(payload)
       state.user_data = payload
     },
     SET_REQUEST_TYPE: (state, payload) => {
@@ -29,5 +31,5 @@ export default new Vuex.Store({
     }
   },
   actions: {},
-  modules: {general, positive, negative, dates}
+  modules: {general, positive, negative, dates, compets}
 })
