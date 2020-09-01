@@ -173,7 +173,12 @@
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">Топ каналов YT</h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_bars_channel('билайн')"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -194,7 +199,12 @@
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">Топ каналов YT</h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_bars_channel('мтс')"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -215,7 +225,12 @@
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">Топ каналов YT</h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_bars_channel('теле2')"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -239,7 +254,12 @@
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">Топ каналов IG</h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_bars_user('билайн')"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -260,7 +280,12 @@
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">Топ каналов IG</h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_bars_user('мтс')"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -281,7 +306,12 @@
         <v-card class="pa-2" style="width: 100%; min-height: 300px">
           <div class="d-flex justify-center align-center">
             <h2 class="text-center">Топ каналов IG</h2>
-            <v-btn class="ml-2" color="primary--text" icon>
+            <v-btn
+              class="ml-2"
+              color="primary--text"
+              icon
+              @click="export_bars_user('теле2')"
+            >
               <v-icon class="">mdi-download</v-icon>
             </v-btn>
           </div>
@@ -316,7 +346,12 @@
           >
             <div class="d-flex justify-center align-center">
               <h2 class="text-center">Список упоминаний в видео</h2>
-              <v-btn class="ml-2" color="primary--text" icon>
+              <v-btn
+                class="ml-2"
+                color="primary--text"
+                icon
+                @click="export_table_video(name)"
+              >
                 <v-icon class="">mdi-download</v-icon>
               </v-btn>
             </div>
@@ -369,7 +404,12 @@
           >
             <div class="d-flex justify-center align-center">
               <h2 class="text-center">Список упоминаний в постах</h2>
-              <v-btn class="ml-2" color="primary--text" icon>
+              <v-btn
+                class="ml-2"
+                color="primary--text"
+                icon
+                @click="export_table_post(name)"
+              >
                 <v-icon class="">mdi-download</v-icon>
               </v-btn>
             </div>
@@ -443,6 +483,7 @@ export default {
   },
 
   data: () => ({
+    operators: [{beeline: 'билайн'}, {mts: 'мтс'}, {tele2: 'теле2'}],
     charts: {
       horizontal_bar: {
         mentions: {
@@ -812,6 +853,62 @@ export default {
           {
             responseType: 'blob'
           }
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_bars_channel(operator) {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/channel?brand=${operator}&order_by=${action}&start_date=${start}&end_date=${end}&export_format=csv`
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_bars_user(operator) {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+      await http
+        .get(
+          `megafon/user?brand=${operator}&order_by=${action}&start_date=${start}&end_date=${end}&export_format=csv`
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_table_video(operator) {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+
+      let operatorQuery = ''
+      operatorQuery = operator === 'beeline' ? 'билайн' : ''
+      operatorQuery = operator === 'mts' ? 'мтс' : ''
+      operatorQuery = operator === 'tele2' ? 'теле2' : ''
+
+      await http
+        .get(
+          `megafon/video?brand=${operatorQuery}&order_by=${action}&start_date=${start}&end_date=${end}&export_format=csv`
+        )
+        .then(response => {
+          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
+        })
+    },
+    async export_table_post(operator) {
+      const [start, end] = this.dates
+      const action = this.getRequestType.value
+
+      let operatorQuery = ''
+      operatorQuery = operator === 'beeline' ? 'билайн' : ''
+      operatorQuery = operator === 'mts' ? 'мтс' : ''
+      operatorQuery = operator === 'tele2' ? 'теле2' : ''
+
+      await http
+        .get(
+          `megafon/post?brand=${operatorQuery}&order_by=${action}&start_date=${start}&end_date=${end}&export_format=csv`
         )
         .then(response => {
           fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
