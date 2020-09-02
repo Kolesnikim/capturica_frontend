@@ -25,102 +25,9 @@
 
     <div class="d-flex mx-n2 mb-4">
       <horizontal-bar1></horizontal-bar1>
-      <v-flex md6 class="mx-2">
-        <v-card class="pa-2" style="width: 100%">
-          <div class="d-flex justify-center align-center">
-            <h2 class="text-center">
-              {{ charts.horizontal_bar_2[getRequestType.value].title }}
-            </h2>
-            <v-btn
-              @click="export_request_coeff"
-              class="ml-2"
-              color="primary--text"
-              icon
-            >
-              <v-icon class="">mdi-download</v-icon>
-            </v-btn>
-          </div>
-          <horizontal-bar-chart
-            v-if="!charts.horizontal_bar_2.loading"
-            :chart-data="charts.horizontal_bar_2.data"
-            style="height: 150px; width: 99%"
-          ></horizontal-bar-chart>
-          <v-progress-circular
-            v-if="charts.horizontal_bar_2.loading"
-            size="48"
-            indeterminate
-            color="#639FF8"
-          ></v-progress-circular>
-        </v-card>
-      </v-flex>
+      <horizontal-bar2></horizontal-bar2>
     </div>
-    <v-card class="pa-2 mb-4" style="width: 100%">
-      <div class="d-flex justify-center align-center">
-        <h2 class="text-center">
-          {{ charts.line.line_1[getRequestType.value].title }}
-        </h2>
-        <v-btn
-          @click="export_request_date"
-          class="ml-2"
-          color="primary--text"
-          icon
-        >
-          <v-icon class="">mdi-download</v-icon>
-        </v-btn>
-      </div>
-      <line-chart
-        v-if="!charts.line.line_1.loading"
-        :chart-data="charts.line.line_1.data"
-        :options="charts.line.line_1.options"
-      ></line-chart>
-      <v-progress-circular
-        v-if="charts.line.line_1.loading"
-        size="48"
-        indeterminate
-        color="#639FF8"
-      ></v-progress-circular>
-    </v-card>
-    <div class="d-flex mx-n2 mb-4">
-      <v-flex md6 class="mx-2">
-        <v-card class="pa-2 mb-4" style="width: 100%">
-          <h2 class="text-center">
-            {{ charts.line.line_3[getRequestType.value].title }}
-          </h2>
-          <line-chart
-            v-if="!charts.line.line_3.loading"
-            :chart-data="charts.line.line_3.data"
-            :options="charts.line.line_3.options"
-            style="width: 99%"
-          ></line-chart>
-          <v-progress-circular
-            v-if="charts.line.line_3.loading"
-            size="48"
-            indeterminate
-            color="#639FF8"
-          ></v-progress-circular>
-        </v-card>
-      </v-flex>
-      <v-flex md6 class="mx-2">
-        <v-card class="pa-2 mb-4" style="width: 100%">
-          <h2 class="text-center">
-            {{ charts.line.line_4[getRequestType.value].title }}
-          </h2>
-
-          <line-chart
-            v-if="!charts.line.line_4.loading"
-            :chart-data="charts.line.line_4.data"
-            :options="charts.line.line_4.options"
-            style="width: 99%"
-          ></line-chart>
-          <v-progress-circular
-            v-if="charts.line.line_4.loading"
-            size="48"
-            indeterminate
-            color="#639FF8"
-          ></v-progress-circular>
-        </v-card>
-      </v-flex>
-    </div>
+    <line-1-3-4></line-1-3-4>
 
     <v-card class="pa-2 mb-4" style="width: 100%">
       <div class="d-flex justify-center align-center">
@@ -375,6 +282,8 @@ import verticalBarChart from '@/components/charts/verticalBar.js'
 import requestTypes from '@/components/request-types'
 
 import horizontalBar1 from '@/components/horizontalBarCharts/horizontal-bar-1'
+import horizontalBar2 from '@/components/horizontalBarCharts/horizontal-bar-2'
+import line134 from '@/components/lineCharts/line-1-3-4'
 
 import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
@@ -388,6 +297,8 @@ import * as fileDownload from 'js-file-download'
 export default {
   components: {
     horizontalBar1,
+    horizontalBar2,
+    line134,
     lineChart,
     horizontalBarChart,
     verticalBarChart,
@@ -408,144 +319,7 @@ export default {
 
   data: () => ({
     charts: {
-      bubble: {
-        data: {
-          datasets: [
-            {
-              backgroundColor: '#639FF8',
-              radius: 1,
-              label: 'Топ видео Мегафон',
-              data: [
-                {
-                  x: 184,
-                  y: 10,
-                  r: 24
-                },
-                {
-                  x: 2356546, // просмотров
-                  y: 181973, // лайков
-                  r: 16 // упоминаний
-                },
-                {
-                  x: 1043304, // просмотров
-                  y: 31047, // лайков
-                  r: 4 // упоминаний
-                },
-                {
-                  x: 693395, // просмотров
-                  y: 27374, // лайков
-                  r: 4 // упоминаний
-                },
-                {
-                  x: 435177, // просмотров
-                  y: 28575, // лайков
-                  r: 16 // упоминаний
-                },
-                {
-                  x: 241489, // просмотров
-                  y: 5565, // лайков
-                  r: 24 // упоминаний
-                }
-              ]
-            }
-          ]
-        },
-        options: {
-          tooltips: {
-            callbacks: {
-              beforeTitle(tooltip) {
-                return `${tooltip[0].value} ${tooltip[0].x} ${tooltip[0].y}`
-              }
-              // labelColor: function() {
-              //   return {
-              //     borderColor: 'rgb(255, 0, 0)',
-              //     backgroundColor: 'grey'
-              //   }
-              // },
-              // labelTextColor: function() {
-              //   return '#543453'
-              // }
-            }
-          },
-          scales: {
-            yAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Количество упоминаний'
-                }
-                // gridLines: {
-                //   color: 'red',
-                //   zeroLineColor: 'violet'
-                // }
-              }
-            ],
-            xAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Количество чего-либо еще'
-                }
-              }
-            ]
-          }
-        }
-      },
       line: {
-        line_1: {
-          mentions: {
-            title: 'Упоминания брендов'
-          },
-          reach: {
-            title: 'Охват по брендам'
-          },
-          impressions: {
-            title: 'Вовлеченность по брендам'
-          },
-          data: {},
-          loading: true,
-          options: {
-            fill: false,
-            responsive: true,
-            maintainAspectRatio: false
-          }
-        },
-        line_3: {
-          mentions: {
-            title: 'Упоминания брендов YT'
-          },
-          reach: {
-            title: 'Охват по брендам YT'
-          },
-          impressions: {
-            title: 'Вовлеченность по брендам YT'
-          },
-          data: {},
-          loading: true,
-          options: {
-            fill: false,
-            responsive: true,
-            maintainAspectRatio: false
-          }
-        },
-        line_4: {
-          mentions: {
-            title: 'Упоминания брендов IG'
-          },
-          reach: {
-            title: 'Охват по брендам IG'
-          },
-          impressions: {
-            title: 'Вовлеченность по брендам IG'
-          },
-          data: {},
-          loading: true,
-          options: {
-            fill: false,
-            responsive: true,
-            maintainAspectRatio: false
-          }
-        },
         line_2: {
           mentions: {
             title: 'Динамика упоминаний брендов'
@@ -657,39 +431,6 @@ export default {
           data: {},
           options: null
         }
-      },
-      horizontal_bar_1: {
-        mentions: {
-          title: 'Общее количество упоминаний брендов'
-        },
-        reach: {
-          title: 'Общий охват упоминаний брендов'
-        },
-        impressions: {
-          title: 'Общая вовлеченность упоминаний брендов'
-        },
-        loading: true,
-        data: {},
-        options: null
-      },
-      horizontal_bar_2: {
-        mentions: {
-          title: 'Соотношение упоминаний'
-        },
-        reach: {
-          title: 'Соотношение охвата'
-        },
-        impressions: {
-          title: 'Соотношение вовлеченности'
-        },
-        loading: true,
-        data: {},
-        options: null
-      },
-      pie: {
-        loading: true,
-        data: {},
-        options: null
       }
     },
     cloud: {
@@ -823,34 +564,6 @@ export default {
   },
 
   methods: {
-    async export_request_coeff() {
-      const [start, end] = this.dates
-      const action = this.getRequestType.value
-      await http
-        .get(
-          `megafon/${action}/count?start_date=${start}&end_date=${end}&brand=мегафон&export_format=csv`,
-          {
-            responseType: 'blob'
-          }
-        )
-        .then(response => {
-          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
-        })
-    },
-    async export_request_date() {
-      const [start, end] = this.dates
-      const action = this.getRequestType.value
-      await http
-        .get(
-          `megafon/${action}/date?start_date=${start}&end_date=${end}&export_format=csv`,
-          {
-            responseType: 'blob'
-          }
-        )
-        .then(response => {
-          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
-        })
-    },
     async export_request_prod() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
@@ -934,27 +647,9 @@ export default {
         })
     },
     async init() {
-      const mentions = [
-        {
-          platform: 'youtube',
-          chart_name: 'line_3'
-        },
-        {
-          platform: 'instagram',
-          chart_name: 'line_4'
-        },
-        {
-          platform: 'all',
-          chart_name: 'line_1'
-        }
-      ]
-      mentions.forEach(mention => {
-        this.getMentions(mention)
-      })
       this.getCloudWords()
       this.getHorizontalBarYoutube()
       this.getHorizontalBarInstagram()
-      this.getHorizontalBarCoeff()
 
       this.setDataOfVerticalBar()
 
@@ -1078,72 +773,6 @@ export default {
       this.tables.video.loading = false
       // console.dir(data)
     },
-    async getMentions({chart_name, platform}) {
-      this.charts.line[chart_name].loading = true
-      const [start_date, end_date] = this.dates
-
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
-      await this.$store.dispatch('request_date', config)
-
-      jsons[config.action] = this.$store.getters[`get${config.action}_date`]
-      const brands_labels = ['мегафон', 'билайн', 'мтс', 'теле2']
-
-      const colors = ['#7FC29B', '#F2DC5D', '#EA2B1F', '#0C090D']
-      let labels = [
-        ...new Set([
-          ...brands_labels.flatMap(label =>
-            Object.keys(jsons[config.action][label])
-          )
-        ])
-      ]
-
-      const getData = label => {
-        const data = []
-        labels.forEach(date => {
-          const {instagram = {count: 0}, youtube = {count: 0}} =
-            jsons[config.action][label][date] || {}
-          const obj = {
-            instagram,
-            youtube
-          }
-          if (platform === 'all') {
-            const sum = instagram.count + youtube.count
-            data.push(sum)
-          } else {
-            data.push(obj[platform].count)
-          }
-        })
-        return data
-      }
-
-      const datasets = brands_labels.map((label, index) => ({
-        label,
-        backgroundColor: colors[index],
-        borderColor: colors[index],
-        data: getData(label),
-        fill: false
-      }))
-
-      labels = labels.map(label => {
-        label = label.split('T')
-        label.pop().toString()
-        return label
-      })
-
-      const chart_data = {
-        labels,
-        datasets
-      }
-
-      this.charts.line[chart_name].data = chart_data
-      this.charts.line[chart_name].loading = false
-    },
     async getCloudWords() {
       this.cloud.loading = true
       const [start_date, end_date] = this.dates
@@ -1159,38 +788,6 @@ export default {
       this.cloud.loading = false
     },
 
-    async getHorizontalBarCoeff() {
-      this.charts.horizontal_bar_1.loading = true
-      const [start_date, end_date] = this.dates
-
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
-      await this.$store.dispatch('request_coeff', config)
-
-      jsons[config.action] = this.$store.getters[`get${config.action}_coeff`]
-
-      const obj = jsons[config.action]
-      const labels = Object.keys(obj)
-      const sum_mentions = labels.map(label => obj[label].count)
-
-      this.charts.horizontal_bar_2.data = {
-        labels,
-        datasets: [
-          {
-            label: 'Соотношение',
-            backgroundColor: '#639FF8',
-            data: sum_mentions
-          }
-        ]
-      }
-
-      this.charts.horizontal_bar_2.loading = false
-    },
     async getHorizontalBarYoutube() {
       this.charts.horizontal_bar.youtube.loading = true
       const [start_date, end_date] = this.dates

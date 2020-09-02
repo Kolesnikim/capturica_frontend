@@ -25,34 +25,7 @@
 
     <div class="d-flex mx-n2 mb-4">
       <horizontal-bar1></horizontal-bar1>
-      <v-flex md6 class="mx-2">
-        <v-card class="pa-2" style="width: 100%">
-          <div class="d-flex justify-center align-center">
-            <h2 class="text-center">
-              {{ charts.horizontal_bar_2[getRequestType.value].title }}
-            </h2>
-            <v-btn
-              @click="export_request_coeff"
-              class="ml-2"
-              color="primary--text"
-              icon
-            >
-              <v-icon class="">mdi-download</v-icon>
-            </v-btn>
-          </div>
-          <horizontal-bar-chart
-            v-if="!charts.horizontal_bar_2.loading"
-            :chart-data="charts.horizontal_bar_2.data"
-            style="height: 150px; width: 99%"
-          ></horizontal-bar-chart>
-          <v-progress-circular
-            v-if="charts.horizontal_bar_2.loading"
-            size="48"
-            indeterminate
-            color="#639FF8"
-          ></v-progress-circular>
-        </v-card>
-      </v-flex>
+      <horizontal-bar2></horizontal-bar2>
     </div>
     <v-card class="pa-2 mb-4" style="width: 100%">
       <div class="d-flex justify-center align-center">
@@ -378,6 +351,7 @@ import verticalBarChart from '@/components/charts/verticalBar.js'
 import requestTypes from '@/components/request-types'
 
 import horizontalBar1 from '@/components/horizontalBarCharts/horizontal-bar-1'
+import horizontalBar2 from '@/components/horizontalBarCharts/horizontal-bar-2'
 
 import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
@@ -390,6 +364,7 @@ import fileDownload from 'js-file-download'
 export default {
   components: {
     horizontalBar1,
+    horizontalBar2,
     lineChart,
     horizontalBarChart,
     verticalBarChart,
@@ -576,20 +551,6 @@ export default {
           data: {},
           options: null
         }
-      },
-      horizontal_bar_2: {
-        mentions: {
-          title: 'Соотношение упоминаний'
-        },
-        reach: {
-          title: 'Соотношение охвата'
-        },
-        impressions: {
-          title: 'Соотношение вовлеченности'
-        },
-        loading: true,
-        data: {},
-        options: null
       }
     },
     cloud: {
@@ -723,20 +684,6 @@ export default {
   },
 
   methods: {
-    async export_request_coeff() {
-      const [start, end] = this.dates
-      const action = this.getRequestType.value
-      await http
-        .get(
-          `megafon/${action}/count?start_date=${start}&end_date=${end}&brand=мегафон&export_format=csv&sentiment=positive`,
-          {
-            responseType: 'blob'
-          }
-        )
-        .then(response => {
-          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
-        })
-    },
     async export_request_date() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
@@ -854,7 +801,6 @@ export default {
       this.getCloudWords()
       this.getHorizontalBarYoutube()
       this.getHorizontalBarInstagram()
-      this.getHorizontalBarCoeff()
 
       this.setDataOfVerticalBar()
 
@@ -1059,40 +1005,6 @@ export default {
       this.cloud.items = this.$store.getters.posit_get_word_cloud.youtube
 
       this.cloud.loading = false
-    },
-    async getHorizontalBarCoeff() {
-      this.charts.horizontal_bar_2.loading = true
-      const [start_date, end_date] = this.dates
-
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
-      await this.$store.dispatch('posit_request_coeff', config)
-
-      jsons[config.action] = this.$store.getters[
-        `posit_get${config.action}_coeff`
-      ]
-
-      const obj = jsons[config.action]
-      const labels = Object.keys(obj)
-      const sum_mentions = labels.map(label => obj[label].count)
-
-      this.charts.horizontal_bar_2.data = {
-        labels,
-        datasets: [
-          {
-            label: 'Соотношение',
-            backgroundColor: '#639FF8',
-            data: sum_mentions
-          }
-        ]
-      }
-
-      this.charts.horizontal_bar_2.loading = false
     },
     async getHorizontalBarYoutube() {
       this.charts.horizontal_bar.youtube.loading = true
