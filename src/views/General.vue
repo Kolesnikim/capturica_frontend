@@ -24,35 +24,7 @@
     </v-card>
 
     <div class="d-flex mx-n2 mb-4">
-      <v-flex md6 class="mx-2">
-        <v-card class="pa-2" style="width: 100%">
-          <div class="d-flex justify-center align-center">
-            <h2 class="text-center">
-              {{ charts.horizontal_bar_1[getRequestType.value].title }}
-            </h2>
-            <v-btn
-              @click="export_request"
-              class="ml-2"
-              color="primary--text"
-              icon
-            >
-              <v-icon class="">mdi-download</v-icon>
-            </v-btn>
-          </div>
-
-          <horizontal-bar-chart
-            v-if="!charts.horizontal_bar_1.loading"
-            :chart-data="charts.horizontal_bar_1.data"
-            style="height: 150px; width: 99%"
-          ></horizontal-bar-chart>
-          <v-progress-circular
-            v-if="charts.horizontal_bar_1.loading"
-            size="48"
-            indeterminate
-            color="#639FF8"
-          ></v-progress-circular>
-        </v-card>
-      </v-flex>
+      <horizontal-bar1></horizontal-bar1>
       <v-flex md6 class="mx-2">
         <v-card class="pa-2" style="width: 100%">
           <div class="d-flex justify-center align-center">
@@ -402,6 +374,8 @@ import horizontalBarChart from '@/components/charts/horizontalBar.js'
 import verticalBarChart from '@/components/charts/verticalBar.js'
 import requestTypes from '@/components/request-types'
 
+import horizontalBar1 from '@/components/horizontalBarCharts/horizontal-bar-1'
+
 import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
 
@@ -413,6 +387,7 @@ import * as fileDownload from 'js-file-download'
 
 export default {
   components: {
+    horizontalBar1,
     lineChart,
     horizontalBarChart,
     verticalBarChart,
@@ -848,20 +823,6 @@ export default {
   },
 
   methods: {
-    async export_request() {
-      const [start, end] = this.dates
-      const action = this.getRequestType.value
-      await http
-        .get(
-          `megafon/${action}/count?start_date=${start}&end_date=${end}&export_format=csv`,
-          {
-            responseType: 'blob'
-          }
-        )
-        .then(response => {
-          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
-        })
-    },
     async export_request_coeff() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
@@ -993,7 +954,6 @@ export default {
       this.getCloudWords()
       this.getHorizontalBarYoutube()
       this.getHorizontalBarInstagram()
-      this.getHorizontalBarMentions()
       this.getHorizontalBarCoeff()
 
       this.setDataOfVerticalBar()
@@ -1199,44 +1159,6 @@ export default {
       this.cloud.loading = false
     },
 
-    async getHorizontalBarMentions() {
-      this.charts.horizontal_bar_1.loading = true
-      const [start_date, end_date] = this.dates
-
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
-      await this.$store.dispatch('request', config)
-
-      jsons[config.action] = this.$store.getters[`get${config.action}`]
-
-      // const labels = Object.keys(jsons[this.getRequestType.value])
-      const labels = ['мегафон', 'мтс', 'билайн', 'теле2']
-      const mentions = labels.map(label =>
-        Object.values(jsons[config.action][label]).reduce(
-          (total, item) => total + parseFloat(item.count),
-          0
-        )
-      )
-      const datasets = []
-
-      datasets.push({
-        label: 'Количество упоминаний',
-        backgroundColor: ['#7FC29B', '#EA2B1F', '#F2DC5D', '#0C090D'],
-        data: mentions
-      })
-
-      this.charts.horizontal_bar_1.data = {
-        labels,
-        datasets
-      }
-
-      this.charts.horizontal_bar_1.loading = false
-    },
     async getHorizontalBarCoeff() {
       this.charts.horizontal_bar_1.loading = true
       const [start_date, end_date] = this.dates

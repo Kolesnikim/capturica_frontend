@@ -24,34 +24,7 @@
     </v-card>
 
     <div class="d-flex mx-n2 mb-4">
-      <v-flex md6 class="mx-2">
-        <v-card class="pa-2" style="width: 100%">
-          <div class="d-flex justify-center align-center">
-            <h2 class="text-center">
-              {{ charts.horizontal_bar_1[getRequestType.value].title }}
-            </h2>
-            <v-btn
-              @click="export_request"
-              class="ml-2"
-              color="primary--text"
-              icon
-            >
-              <v-icon class="">mdi-download</v-icon>
-            </v-btn>
-          </div>
-          <horizontal-bar-chart
-            v-if="!charts.horizontal_bar_1.loading"
-            :chart-data="charts.horizontal_bar_1.data"
-            style="height: 150px; width: 99%"
-          ></horizontal-bar-chart>
-          <v-progress-circular
-            v-if="charts.horizontal_bar_1.loading"
-            size="48"
-            indeterminate
-            color="#639FF8"
-          ></v-progress-circular>
-        </v-card>
-      </v-flex>
+      <horizontal-bar1></horizontal-bar1>
       <v-flex md6 class="mx-2">
         <v-card class="pa-2" style="width: 100%">
           <div class="d-flex justify-center align-center">
@@ -404,6 +377,8 @@ import horizontalBarChart from '@/components/charts/horizontalBar.js'
 import verticalBarChart from '@/components/charts/verticalBar.js'
 import requestTypes from '@/components/request-types'
 
+import horizontalBar1 from '@/components/horizontalBarCharts/horizontal-bar-1'
+
 import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
 
@@ -414,6 +389,7 @@ import fileDownload from 'js-file-download'
 
 export default {
   components: {
+    horizontalBar1,
     lineChart,
     horizontalBarChart,
     verticalBarChart,
@@ -434,89 +410,6 @@ export default {
 
   data: () => ({
     charts: {
-      bubble: {
-        data: {
-          datasets: [
-            {
-              backgroundColor: '#639FF8',
-              radius: 1,
-              label: 'Топ видео Мегафон',
-              data: [
-                {
-                  x: 184,
-                  y: 10,
-                  r: 24
-                },
-                {
-                  x: 2356546, // просмотров
-                  y: 181973, // лайков
-                  r: 16 // упоминаний
-                },
-                {
-                  x: 1043304, // просмотров
-                  y: 31047, // лайков
-                  r: 4 // упоминаний
-                },
-                {
-                  x: 693395, // просмотров
-                  y: 27374, // лайков
-                  r: 4 // упоминаний
-                },
-                {
-                  x: 435177, // просмотров
-                  y: 28575, // лайков
-                  r: 16 // упоминаний
-                },
-                {
-                  x: 241489, // просмотров
-                  y: 5565, // лайков
-                  r: 24 // упоминаний
-                }
-              ]
-            }
-          ]
-        },
-        options: {
-          tooltips: {
-            callbacks: {
-              beforeTitle(tooltip) {
-                return `${tooltip[0].value} ${tooltip[0].x} ${tooltip[0].y}`
-              }
-              // labelColor: function() {
-              //   return {
-              //     borderColor: 'rgb(255, 0, 0)',
-              //     backgroundColor: 'grey'
-              //   }
-              // },
-              // labelTextColor: function() {
-              //   return '#543453'
-              // }
-            }
-          },
-          scales: {
-            yAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Количество упоминаний'
-                }
-                // gridLines: {
-                //   color: 'red',
-                //   zeroLineColor: 'violet'
-                // }
-              }
-            ],
-            xAxes: [
-              {
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Количество чего-либо еще'
-                }
-              }
-            ]
-          }
-        }
-      },
       line: {
         line_1: {
           mentions: {
@@ -684,20 +577,6 @@ export default {
           options: null
         }
       },
-      horizontal_bar_1: {
-        mentions: {
-          title: 'Общее количество упоминаний брендов'
-        },
-        reach: {
-          title: 'Общий охват упоминаний брендов'
-        },
-        impressions: {
-          title: 'Общая вовлеченность упоминаний брендов'
-        },
-        loading: true,
-        data: {},
-        options: null
-      },
       horizontal_bar_2: {
         mentions: {
           title: 'Соотношение упоминаний'
@@ -708,11 +587,6 @@ export default {
         impressions: {
           title: 'Соотношение вовлеченности'
         },
-        loading: true,
-        data: {},
-        options: null
-      },
-      pie: {
         loading: true,
         data: {},
         options: null
@@ -849,20 +723,6 @@ export default {
   },
 
   methods: {
-    async export_request() {
-      const [start, end] = this.dates
-      const action = this.getRequestType.value
-      await http
-        .get(
-          `megafon/${action}/count?start_date=${start}&end_date=${end}&sentiment=positive&export_format=csv`,
-          {
-            responseType: 'blob'
-          }
-        )
-        .then(response => {
-          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
-        })
-    },
     async export_request_coeff() {
       const [start, end] = this.dates
       const action = this.getRequestType.value
@@ -994,7 +854,6 @@ export default {
       this.getCloudWords()
       this.getHorizontalBarYoutube()
       this.getHorizontalBarInstagram()
-      this.getHorizontalBarMentions()
       this.getHorizontalBarCoeff()
 
       this.setDataOfVerticalBar()
@@ -1201,45 +1060,8 @@ export default {
 
       this.cloud.loading = false
     },
-    async getHorizontalBarMentions() {
-      this.charts.horizontal_bar_1.loading = true
-      const [start_date, end_date] = this.dates
-
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
-      await this.$store.dispatch('posit_request', config)
-
-      jsons[config.action] = this.$store.getters[`posit_get${config.action}`]
-
-      const labels = ['мегафон', 'мтс', 'билайн', 'теле2']
-      const mentions = labels.map(label =>
-        Object.values(jsons[config.action][label]).reduce(
-          (total, item) => total + parseFloat(item.count),
-          0
-        )
-      )
-      const datasets = []
-
-      datasets.push({
-        label: 'Количество упоминаний',
-        backgroundColor: ['#7FC29B', '#EA2B1F', '#F2DC5D', '#0C090D'],
-        data: mentions
-      })
-
-      this.charts.horizontal_bar_1.data = {
-        labels,
-        datasets
-      }
-
-      this.charts.horizontal_bar_1.loading = false
-    },
     async getHorizontalBarCoeff() {
-      this.charts.horizontal_bar_1.loading = true
+      this.charts.horizontal_bar_2.loading = true
       const [start_date, end_date] = this.dates
 
       const config = {
