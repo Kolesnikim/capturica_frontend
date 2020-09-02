@@ -29,60 +29,9 @@
     </div>
     <line-1-3-4></line-1-3-4>
 
-    <v-card class="pa-2 mb-4" style="width: 100%">
-      <div class="d-flex justify-center align-center">
-        <h2 class="text-center">
-          {{ charts.vertical_bar.vertical_bar_1[getRequestType.value].title }}
-        </h2>
-        <v-btn
-          @click="export_request_prod"
-          class="ml-2"
-          color="primary--text"
-          icon
-        >
-          <v-icon class="">mdi-download</v-icon>
-        </v-btn>
-      </div>
-      <vertical-bar-chart
-        v-if="!charts.vertical_bar.vertical_bar_1.loading"
-        style="max-width: 99%"
-        :chart-data="charts.vertical_bar.vertical_bar_1.data"
-        :options="charts.vertical_bar.vertical_bar_1.options"
-      ></vertical-bar-chart>
-      <v-progress-circular
-        v-if="charts.vertical_bar.vertical_bar_1.loading"
-        size="48"
-        indeterminate
-        color="#639FF8"
-      ></v-progress-circular>
-    </v-card>
+    <vertical-bar1></vertical-bar1>
 
-    <v-card class="pa-2 mb-4" style="width: 100%">
-      <div class="d-flex justify-center align-center">
-        <h2 class="text-center">
-          {{ charts.line.line_2[getRequestType.value].title }}
-        </h2>
-        <v-btn
-          @click="export_request_prod_date"
-          class="ml-2"
-          color="primary--text"
-          icon
-        >
-          <v-icon class="">mdi-download</v-icon>
-        </v-btn>
-      </div>
-      <line-chart
-        v-if="!charts.line.line_2.loading"
-        :chart-data="charts.line.line_2.data"
-        :options="charts.line.line_2.options"
-      ></line-chart>
-      <v-progress-circular
-        v-if="charts.line.line_2.loading"
-        size="48"
-        indeterminate
-        color="#639FF8"
-      ></v-progress-circular>
-    </v-card>
+    <line2></line2>
 
     <div class="mb-4 d-flex mx-n2">
       <v-flex md12 class="ma-2 pb-4">
@@ -276,14 +225,14 @@
 </template>
 
 <script>
-import lineChart from '@/components/charts/line.js'
 import horizontalBarChart from '@/components/charts/horizontalBar.js'
-import verticalBarChart from '@/components/charts/verticalBar.js'
 import requestTypes from '@/components/request-types'
 
 import horizontalBar1 from '@/components/horizontalBarCharts/horizontal-bar-1'
 import horizontalBar2 from '@/components/horizontalBarCharts/horizontal-bar-2'
 import line134 from '@/components/lineCharts/line-1-3-4'
+import line2 from '@/components/lineCharts/line-2'
+import verticalBar1 from '@/components/verticalBars/vertical-bar-1'
 
 import wordCloud from 'vue-wordcloud'
 import {mapGetters} from 'vuex'
@@ -299,9 +248,9 @@ export default {
     horizontalBar1,
     horizontalBar2,
     line134,
-    lineChart,
+    line2,
+    verticalBar1,
     horizontalBarChart,
-    verticalBarChart,
     wordCloud,
     requestTypes,
     DatePicker
@@ -319,89 +268,6 @@ export default {
 
   data: () => ({
     charts: {
-      line: {
-        line_2: {
-          mentions: {
-            title: 'Динамика упоминаний брендов'
-          },
-          reach: {
-            title: 'Динамика охвата по брендам'
-          },
-          impressions: {
-            title: 'Динамика вовлеченности по брендам'
-          },
-          loading: true,
-          data: {},
-          options: {
-            fill: false,
-            responsive: true,
-            maintainAspectRatio: false
-          }
-        }
-      },
-      vertical_bar: {
-        vertical_bar_1: {
-          mentions: {
-            title: 'Упоминания продуктов брендов'
-          },
-          reach: {
-            title: 'Охват по упоминаниям продуктов'
-          },
-          impressions: {
-            title: 'Вовлеченность по упоминаниям продуктов'
-          },
-          loading: true,
-          labels: [],
-          datasets: [],
-          data: {
-            datasets: [
-              {
-                label: 'beeline',
-                backgroundColor: '#F2DC5D',
-                data: [],
-                stack: 1
-              },
-              {
-                label: 'megafon',
-                backgroundColor: '#7FC29B',
-                data: [],
-                stack: 1
-              },
-              {
-                label: 'mts',
-                backgroundColor: '#EA2B1F',
-                data: [],
-                stack: 1
-              },
-              {
-                label: 'tele2',
-                backgroundColor: '#0C090D',
-                data: [],
-                stack: 1
-              }
-            ]
-          },
-          options: {
-            // onClick(e, i) {
-            //   const chart = i[0]
-            //   console.dir(chart._view.label)
-            // },
-            animation: false,
-            scales: {
-              xAxes: [
-                {
-                  stacked: true
-                }
-              ],
-              yAxes: [
-                {
-                  stacked: true
-                }
-              ]
-            }
-          }
-        }
-      },
       horizontal_bar: {
         youtube: {
           mentions: {
@@ -564,34 +430,6 @@ export default {
   },
 
   methods: {
-    async export_request_prod() {
-      const [start, end] = this.dates
-      const action = this.getRequestType.value
-      await http
-        .get(
-          `megafon/${action}/products/count?start_date=${start}&end_date=${end}&export_format=csv`,
-          {
-            responseType: 'blob'
-          }
-        )
-        .then(response => {
-          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
-        })
-    },
-    async export_request_prod_date() {
-      const [start, end] = this.dates
-      const action = this.getRequestType.value
-      await http
-        .get(
-          `megafon/${action}/products/date?start_date=${start}&end_date=${end}&export_format=csv`,
-          {
-            responseType: 'blob'
-          }
-        )
-        .then(response => {
-          fileDownload('\uFEFF' + response.data, 'report.csv', 'text/csv')
-        })
-    },
     async export_wordcloud() {
       const [start, end] = this.dates
       await http
@@ -651,87 +489,12 @@ export default {
       this.getHorizontalBarYoutube()
       this.getHorizontalBarInstagram()
 
-      this.setDataOfVerticalBar()
-
       this.getListPosts()
       this.getListVideo()
-
-      this.getLineData()
     },
     // updateProgress(e) {
     //   console.log(e)
     // },
-    async getLineData() {
-      this.charts.line.line_2.loading = true
-      const [start_date, end_date] = this.dates
-
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-      const jsons = {}
-
-      await this.$store.dispatch('request_prod_date', config)
-      jsons[config.action] = this.$store.getters[
-        `get${config.action}_prod_date`
-      ]
-
-      let service_labels = [...new Set([...Object.keys(jsons[config.action])])]
-
-      let labels = [
-        ...new Set([
-          ...service_labels.flatMap(label =>
-            Object.keys(jsons[config.action][label])
-          )
-        ])
-      ]
-
-      const getData = label => {
-        const data = []
-        labels.forEach(date => {
-          let data_1 = 0
-          for (let operator in jsons[config.action][label][date]) {
-            const {instagram = {count: 0}, youtube = {count: 0}} =
-              jsons[config.action][label][date][operator] || {}
-            const sum = instagram.count + youtube.count
-            data_1 += sum
-          }
-          data.push(data_1)
-        })
-        return data
-      }
-      const getRandomColor = () => {
-        const letters = '0123456789ABCDEF'
-        let color = '#'
-        for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)]
-        }
-        return color
-      }
-      const colors = service_labels.map(() => getRandomColor)
-
-      const datasets = service_labels.map((label, index) => ({
-        label,
-        backgroundColor: colors[index],
-        borderColor: colors[index],
-        data: getData(label),
-        fill: false
-      }))
-      labels = labels.map(label => {
-        label = label.split('T')
-        label.pop().toString()
-        return label
-      })
-
-      const chart_data = {
-        labels,
-        datasets
-      }
-
-      this.charts.line.line_2.data = chart_data
-      this.charts.line.line_2.loading = false
-    },
     async getListPosts() {
       this.tables.posts.loading = true
       const [start_date, end_date] = this.dates
@@ -869,61 +632,6 @@ export default {
       }
 
       this.charts.horizontal_bar.instagram.loading = false
-    },
-    async setDataOfVerticalBar() {
-      this.charts.vertical_bar.vertical_bar_1.loading = true
-      const [start_date, end_date] = this.dates
-
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
-      await this.$store.dispatch('request_prod', config)
-
-      jsons[config.action] = this.$store.getters[`get${config.action}_prod`]
-
-      const labels = Object.keys(jsons[config.action])
-      const operators = ['билайн', 'теле2', 'мегафон', 'мтс']
-      const colors = ['#F2DC5D', '#0C090D', '#7FC29B', '#EA2B1F']
-
-      const datasets = operators.map((operator, index) => ({
-        label: operator,
-        backgroundColor: colors[index],
-        stack: 1,
-        data: labels.map(label => {
-          let sum = 0
-          if (
-            jsons[config.action] &&
-            jsons[config.action][label] &&
-            jsons[config.action][label][operator] &&
-            jsons[config.action][label][operator].youtube
-          ) {
-            sum += jsons[config.action][label][operator].youtube.count || 0
-          }
-
-          if (
-            jsons[config.action] &&
-            jsons[config.action][label] &&
-            jsons[config.action][label][operator] &&
-            jsons[config.action][label][operator].instagram
-          ) {
-            sum += jsons[config.action][label][operator].instagram.count || 0
-          }
-
-          return sum
-        })
-      }))
-
-      const chart_data = {
-        labels,
-        datasets
-      }
-
-      this.charts.vertical_bar.vertical_bar_1.data = chart_data
-      this.charts.vertical_bar.vertical_bar_1.loading = false
     },
 
     updateCharts() {
