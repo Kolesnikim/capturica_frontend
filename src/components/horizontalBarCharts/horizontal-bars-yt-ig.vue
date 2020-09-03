@@ -162,40 +162,25 @@ export default {
     },
     async getHorizontalBarYoutube() {
       this.charts.horizontal_bar.youtube.loading = true
-      const [start_date, end_date] = this.getDates
 
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request_yt_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `get_yt_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('request_yt_ordered')
+        apiData = this.$store.getters[`get_yt_ordered_count`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request_yt_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `posit_get_yt_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('posit_request_yt_ordered')
+        apiData = this.$store.getters[`posit_get_yt_ordered_count`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request_yt_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `negat_get_yt_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('negat_request_yt_ordered')
+        apiData = this.$store.getters[`negat_get_yt_ordered_count`]
       }
 
-      const labels = jsons[config.action].map(item => item.channel_name)
+      const labels = apiData.map(item => item.channel_name)
 
       let datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
-          const channel_name = jsons[config.action].find(
-            obj => obj.channel_name === label
-          )
+          const channel_name = apiData.find(obj => obj.channel_name === label)
           return total + parseFloat(channel_name[item] || 0)
         }, 0)
       })
@@ -215,44 +200,29 @@ export default {
     },
     async getHorizontalBarInstagram() {
       this.charts.horizontal_bar.instagram.loading = true
-      const [start_date, end_date] = this.getDates
 
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request_ig_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `get_ig_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('request_ig_ordered')
+        apiData = this.$store.getters[`get_ig_ordered_count`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request_ig_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `posit_get_ig_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('posit_request_ig_ordered')
+        apiData = this.$store.getters[`posit_get_ig_ordered_count`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request_ig_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `negat_get_ig_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('negat_request_ig_ordered')
+        apiData = this.$store.getters[`negat_get_ig_ordered_count`]
       }
 
-      const labels = jsons[config.action].map(item => item.user_name)
+      const labels = apiData.map(item => item.user_name)
       let datasets = labels.map(label => {
         return ['count'].reduce((total, item) => {
-          const user_name = jsons[config.action].find(
-            obj => obj.user_name === label
-          )
+          const user_name = apiData.find(obj => obj.user_name === label)
           return total + parseFloat(user_name[item] || 0)
         }, 0)
       })
       datasets = datasets.sort((i, j) => j - i)
-      console.log(datasets)
+
       this.charts.horizontal_bar.instagram.data = {
         labels,
         datasets: [

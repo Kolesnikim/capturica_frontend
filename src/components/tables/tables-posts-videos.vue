@@ -261,68 +261,41 @@ export default {
     },
     async getListPosts() {
       this.tables.posts.loading = true
-      const [start_date, end_date] = this.getDates
 
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request_post_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `get_post_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('request_post_ordered')
+        apiData = this.$store.getters[`get_post_ordered_count`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request_post_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `posit_get_post_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('posit_request_post_ordered')
+        apiData = this.$store.getters[`posit_get_post_ordered_count`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request_post_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `negat_get_post_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('negat_request_post_ordered')
+        apiData = this.$store.getters[`negat_get_post_ordered_count`]
       }
 
-      this.tables.posts.items = jsons[config.action]
+      this.tables.posts.items = apiData
       this.tables.posts.loading = false
     },
     async getListVideo() {
       this.tables.video.loading = true
-      const [start_date, end_date] = this.getDates
 
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request_video_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `get_video_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('request_video_ordered')
+        apiData = this.$store.getters[`get_video_ordered_count`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request_video_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `posit_get_video_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('posit_request_video_ordered')
+        apiData = this.$store.getters[`posit_get_video_ordered_count`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request_video_ordered', config)
-        jsons[config.action] = this.$store.getters[
-          `negat_get_video_ordered_${config.action}`
-        ]
+        await this.$store.dispatch('negat_request_video_ordered')
+        apiData = this.$store.getters[`negat_get_video_ordered_count`]
       }
 
-      this.tables.video.items = jsons[config.action]
+      this.tables.video.items = apiData
       this.tables.video.loading = false
-      // console.dir(data)
     }
   }
 }

@@ -199,29 +199,18 @@ export default {
 
     async getMentions({chart_name, platform}) {
       this.charts.line[chart_name].loading = true
-      const [start_date, end_date] = this.getDates
 
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request_date', config)
-        jsons[config.action] = this.$store.getters[`get${config.action}_date`]
+        await this.$store.dispatch('request_date')
+        apiData = this.$store.getters[`get_count_date`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request_date', config)
-        jsons[config.action] = this.$store.getters[
-          `posit_get${config.action}_date`
-        ]
+        await this.$store.dispatch('posit_request_date')
+        apiData = this.$store.getters[`posit_get_count_date`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request_date', config)
-        jsons[config.action] = this.$store.getters[
-          `negat_get${config.action}_date`
-        ]
+        await this.$store.dispatch('negat_request_date')
+        apiData = this.$store.getters[`negat_get_count_date`]
       }
 
       const brands_labels = ['мегафон', 'билайн', 'мтс', 'теле2']
@@ -229,9 +218,7 @@ export default {
       const colors = ['#7FC29B', '#F2DC5D', '#EA2B1F', '#0C090D']
       let labels = [
         ...new Set([
-          ...brands_labels.flatMap(label =>
-            Object.keys(jsons[config.action][label])
-          )
+          ...brands_labels.flatMap(label => Object.keys(apiData[label]))
         ])
       ]
 
@@ -239,7 +226,7 @@ export default {
         const data = []
         labels.forEach(date => {
           const {instagram = {count: 0}, youtube = {count: 0}} =
-            jsons[config.action][label][date] || {}
+            apiData[label][date] || {}
           const obj = {
             instagram,
             youtube

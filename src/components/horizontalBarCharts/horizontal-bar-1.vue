@@ -96,31 +96,23 @@ export default {
     },
     async getHorizontalBarMentions() {
       this.charts.horizontal_bar_1.loading = true
-      const [start_date, end_date] = this.getDates
 
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request', config)
-        jsons[config.action] = this.$store.getters[`get${config.action}`]
+        await this.$store.dispatch('request')
+        apiData = this.$store.getters[`get_count`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request', config)
-        jsons[config.action] = this.$store.getters[`posit_get${config.action}`]
+        await this.$store.dispatch('posit_request')
+        apiData = this.$store.getters[`posit_get_count`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request', config)
-        jsons[config.action] = this.$store.getters[`negat_get${config.action}`]
+        await this.$store.dispatch('negat_request')
+        apiData = this.$store.getters[`negat_get_count`]
       }
 
-      // const labels = Object.keys(jsons[this.getRequestType.value])
       const labels = ['мегафон', 'мтс', 'билайн', 'теле2']
       const mentions = labels.map(label =>
-        Object.values(jsons[config.action][label]).reduce(
+        Object.values(apiData[label]).reduce(
           (total, item) => total + parseFloat(item.count),
           0
         )

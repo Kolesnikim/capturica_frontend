@@ -147,32 +147,21 @@ export default {
     },
     async setDataOfVerticalBar() {
       this.charts.vertical_bar.vertical_bar_1.loading = true
-      const [start_date, end_date] = this.getDates
 
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request_prod', config)
-        jsons[config.action] = this.$store.getters[`get${config.action}_prod`]
+        await this.$store.dispatch('request_prod')
+        apiData = this.$store.getters[`get_count_prod`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request_prod', config)
-        jsons[config.action] = this.$store.getters[
-          `posit_get${config.action}_prod`
-        ]
+        await this.$store.dispatch('posit_request_prod')
+        apiData = this.$store.getters[`posit_get_count_prod`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request_prod', config)
-        jsons[config.action] = this.$store.getters[
-          `negat_get${config.action}_prod`
-        ]
+        await this.$store.dispatch('negat_request_prod')
+        apiData = this.$store.getters[`negat_get_count_prod`]
       }
 
-      const labels = Object.keys(jsons[config.action])
+      const labels = Object.keys(apiData)
       const operators = ['билайн', 'теле2', 'мегафон', 'мтс']
       const colors = ['#F2DC5D', '#0C090D', '#7FC29B', '#EA2B1F']
 
@@ -183,21 +172,21 @@ export default {
         data: labels.map(label => {
           let sum = 0
           if (
-            jsons[config.action] &&
-            jsons[config.action][label] &&
-            jsons[config.action][label][operator] &&
-            jsons[config.action][label][operator].youtube
+            apiData &&
+            apiData[label] &&
+            apiData[label][operator] &&
+            apiData[label][operator].youtube
           ) {
-            sum += jsons[config.action][label][operator].youtube.count || 0
+            sum += apiData[label][operator].youtube.count || 0
           }
 
           if (
-            jsons[config.action] &&
-            jsons[config.action][label] &&
-            jsons[config.action][label][operator] &&
-            jsons[config.action][label][operator].instagram
+            apiData &&
+            apiData[label] &&
+            apiData[label][operator] &&
+            apiData[label][operator].instagram
           ) {
-            sum += jsons[config.action][label][operator].instagram.count || 0
+            sum += apiData[label][operator].instagram.count || 0
           }
 
           return sum

@@ -99,32 +99,20 @@ export default {
     },
     async getHorizontalBarCoeff() {
       this.charts.horizontal_bar_2.loading = true
-      const [start_date, end_date] = this.getDates
-
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request_coeff', config)
-        jsons[config.action] = this.$store.getters[`get${config.action}_coeff`]
+        await this.$store.dispatch('request_coeff')
+        apiData = this.$store.getters[`get_count_coeff`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request_coeff', config)
-        jsons[config.action] = this.$store.getters[
-          `posit_get${config.action}_coeff`
-        ]
+        await this.$store.dispatch('posit_request_coeff')
+        apiData = this.$store.getters[`posit_get_count_coeff`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request_coeff', config)
-        jsons[config.action] = this.$store.getters[
-          `negat_get${config.action}_coeff`
-        ]
+        await this.$store.dispatch('negat_request_coeff')
+        apiData = this.$store.getters[`negat_get_count_coeff`]
       }
 
-      const obj = jsons[config.action]
+      const obj = apiData
       const labels = Object.keys(obj)
       const sum_mentions = labels.map(label => obj[label].count)
 

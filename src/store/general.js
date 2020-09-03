@@ -1,264 +1,156 @@
 import http from '@/api/http'
+import {mapGetters} from 'vuex'
+
+const request = () => {
+  mapGetters(['getRequestType'])
+}
+console.log(request())
 
 export default {
   state: {
-    mentions: {},
-    reach: {},
-    impressions: {},
-    mentions_coeff: {},
-    reach_coeff: {},
-    impressions_coeff: {},
-    mentions_date: {},
-    reach_date: {},
-    impressions_date: {},
-    mentions_prod: {},
-    reach_prod: {},
-    impressions_prod: {},
-    mentions_prod_date: {},
-    reach_prod_date: {},
-    impressions_prod_date: {},
+    count: {},
+    count_coeff: {},
+    count_date: {},
+    count_prod: {},
+    count_prod_date: {},
     word_cloud: {},
-    yt_ordered_mentions: {},
-    yt_ordered_reach: {},
-    yt_ordered_impressions: {},
-    ig_ordered_mentions: {},
-    ig_ordered_reach: {},
-    ig_ordered_impressions: {},
-    video_ordered_mentions: {},
-    video_ordered_reach: {},
-    video_ordered_impressions: {},
-    post_ordered_mentions: {},
-    post_ordered_reach: {},
-    post_ordered_impressions: {}
+    yt_ordered_count: {},
+    ig_ordered_count: {},
+    video_ordered_count: {},
+    post_ordered_count: {}
   },
   getters: {
-    getmentions(state) {
-      return state.mentions
+    get_count(state) {
+      return state.count
     },
-    getreach(state) {
-      return state.reach
+    get_count_coeff(state) {
+      return state.count_coeff
     },
-    getimpressions(state) {
-      return state.impressions
+    get_count_date(state) {
+      return state.count_date
     },
-    getmentions_coeff(state) {
-      return state.mentions_coeff
+    get_count_prod(state) {
+      return state.count_prod
     },
-    getreach_coeff(state) {
-      return state.reach_coeff
-    },
-    getimpressions_coeff(state) {
-      return state.impressions_coeff
-    },
-    getmentions_date(state) {
-      return state.mentions_date
-    },
-    getreach_date(state) {
-      return state.reach_date
-    },
-    getimpressions_date(state) {
-      return state.impressions_date
-    },
-    getmentions_prod(state) {
-      return state.mentions_prod
-    },
-    getreach_prod(state) {
-      return state.reach_prod
-    },
-    getimpressions_prod(state) {
-      return state.impressions_prod
-    },
-    getmentions_prod_date(state) {
-      return state.mentions_prod_date
-    },
-    getreach_prod_date(state) {
-      return state.reach_prod_date
-    },
-    getimpressions_prod_date(state) {
-      return state.impressions_prod_date
+    get_count_prod_date(state) {
+      return state.count_prod_date
     },
     get_word_cloud(state) {
       return state.word_cloud
     },
-    get_yt_ordered_mentions(state) {
-      return state.yt_ordered_mentions
+    get_yt_ordered_count(state) {
+      return state.yt_ordered_count
     },
-    get_yt_ordered_reach(state) {
-      return state.yt_ordered_reach
+    get_ig_ordered_count(state) {
+      return state.ig_ordered_count
     },
-    get_yt_ordered_impressions(state) {
-      return state.yt_ordered_impressions
+    get_video_ordered_count(state) {
+      return state.video_ordered_count
     },
-    get_ig_ordered_mentions(state) {
-      return state.ig_ordered_mentions
-    },
-    get_ig_ordered_reach(state) {
-      return state.ig_ordered_reach
-    },
-    get_ig_ordered_impressions(state) {
-      return state.ig_ordered_impressions
-    },
-    get_video_ordered_mentions(state) {
-      return state.video_ordered_mentions
-    },
-    get_video_ordered_reach(state) {
-      return state.video_ordered_reach
-    },
-    get_video_ordered_impressions(state) {
-      return state.video_ordered_impressions
-    },
-    get_post_ordered_mentions(state) {
-      return state.post_ordered_mentions
-    },
-    get_post_ordered_reach(state) {
-      return state.post_ordered_reach
-    },
-    get_post_ordered_impressions(state) {
-      return state.post_ordered_impressions
+    get_post_ordered_count(state) {
+      return state.post_ordered_count
     }
   },
   mutations: {
-    setmentions(state, payload) {
-      state.mentions = payload
+    set_count(state, payload) {
+      state.count = payload
     },
-    setreach(state, payload) {
-      state.reach = payload
+    set_count_coeff(state, payload) {
+      state.count_coeff = payload
     },
-    setimpressions(state, payload) {
-      state.impressions = payload
+    set_count_date(state, payload) {
+      state.count_date = payload
     },
-    setmentions_coeff(state, payload) {
-      state.mentions_coeff = payload
+    set_count_prod(state, payload) {
+      state.count_prod = payload
     },
-    setreach_coeff(state, payload) {
-      state.reach_coeff = payload
-    },
-    setimpressions_coeff(state, payload) {
-      state.impressions_coeff = payload
-    },
-    setmentions_date(state, payload) {
-      state.mentions_date = payload
-    },
-    setreach_date(state, payload) {
-      state.reach_date = payload
-    },
-    setimpressions_date(state, payload) {
-      state.impressions_date = payload
-    },
-    setmentions_prod(state, payload) {
-      state.mentions_prod = payload
-    },
-    setreach_prod(state, payload) {
-      state.reach_prod = payload
-    },
-    setimpressions_prod(state, payload) {
-      state.impressions_prod = payload
-    },
-    setmentions_prod_date(state, payload) {
-      state.mentions_prod_date = payload
-    },
-    setreach_prod_date(state, payload) {
-      state.reach_prod_date = payload
-    },
-    setimpressions_prod_date(state, payload) {
-      state.impressions_prod_date = payload
+    set_count_prod_date(state, payload) {
+      state.count_prod_date = payload
     },
     set_word_cloud(state, payload) {
       state.word_cloud = payload
     },
-    set_yt_ordered_mentions(state, payload) {
-      state.yt_ordered_mentions = payload
+    set_yt_ordered_count(state, payload) {
+      state.yt_ordered_count = payload
     },
-    set_yt_ordered_reach(state, payload) {
-      state.yt_ordered_reach = payload
+    set_ig_ordered_count(state, payload) {
+      state.ig_ordered_count = payload
     },
-    set_yt_ordered_impressions(state, payload) {
-      state.yt_ordered_impressions = payload
+    set_video_ordered_count(state, payload) {
+      state.video_ordered_count = payload
     },
-    set_ig_ordered_mentions(state, payload) {
-      state.ig_ordered_mentions = payload
-    },
-    set_ig_ordered_reach(state, payload) {
-      state.ig_ordered_reach = payload
-    },
-    set_ig_ordered_impressions(state, payload) {
-      state.ig_ordered_impressions = payload
-    },
-    set_video_ordered_mentions(state, payload) {
-      state.video_ordered_mentions = payload
-    },
-    set_video_ordered_reach(state, payload) {
-      state.video_ordered_reach = payload
-    },
-    set_video_ordered_impressions(state, payload) {
-      state.video_ordered_impressions = payload
-    },
-    set_post_ordered_mentions(state, payload) {
-      state.post_ordered_mentions = payload
-    },
-    set_post_ordered_reach(state, payload) {
-      state.post_ordered_reach = payload
-    },
-    set_post_ordered_impressions(state, payload) {
-      state.post_ordered_impressions = payload
+    set_post_ordered_count(state, payload) {
+      state.post_ordered_count = payload
     }
   },
   actions: {
-    async request({commit}, {action, start, end}) {
-      await http
-        .get(`megafon/${action}/count?start_date=${start}&end_date=${end}`)
-        .then(response => {
-          commit(`set${action}`, response.data)
-        })
-        .catch(err => {
-          console.warn(err.message)
-        })
-    },
-    async request_coeff({commit}, {action, start, end}) {
-      await http
-        .get(`megafon/${action}/count?start_date=${start}&end_date=${end}`)
-        .then(response => {
-          commit(`set${action}_coeff`, response.data['мегафон'])
-        })
-        .catch(err => {
-          console.warn(err.message)
-        })
-    },
-    async request_date({commit}, {action, start, end}) {
-      await http
-        .get(`megafon/${action}/date?start_date=${start}&end_date=${end}`)
-        .then(response => {
-          commit(`set${action}_date`, response.data)
-        })
-        .catch(err => {
-          console.warn(err.message)
-        })
-    },
-    async request_prod({commit}, {action, start, end}) {
+    async request({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
       await http
         .get(
-          `megafon/${action}/products/count?start_date=${start}&end_date=${end}`
+          `megafon/${rootGetters.getRequestType.value}/count?start_date=${start}&end_date=${end}`
         )
         .then(response => {
-          commit(`set${action}_prod`, response.data)
+          commit(`set_count`, response.data)
         })
         .catch(err => {
           console.warn(err.message)
         })
     },
-    async request_prod_date({commit}, {action, start, end}) {
+    async request_coeff({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
       await http
         .get(
-          `megafon/${action}/products/date?start_date=${start}&end_date=${end}`
+          `megafon/${rootGetters.getRequestType.value}/count?start_date=${start}&end_date=${end}`
         )
         .then(response => {
-          commit(`set${action}_prod_date`, response.data)
+          commit(`set_count_coeff`, response.data['мегафон'])
         })
         .catch(err => {
           console.warn(err.message)
         })
     },
-    async request_word_cloud({commit}, {start, end}) {
+    async request_date({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
+      await http
+        .get(
+          `megafon/${rootGetters.getRequestType.value}/date?start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set_count_date`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_prod({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
+      await http
+        .get(
+          `megafon/${rootGetters.getRequestType.value}/products/count?start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set_count_prod`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_prod_date({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
+      await http
+        .get(
+          `megafon/${rootGetters.getRequestType.value}/products/date?start_date=${start}&end_date=${end}`
+        )
+        .then(response => {
+          commit(`set_count_prod_date`, response.data)
+        })
+        .catch(err => {
+          console.warn(err.message)
+        })
+    },
+    async request_word_cloud({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
       await http
         .get(
           `megafon/wordcloud?brand=мегафон&start_date=${start}&end_date=${end}`
@@ -270,49 +162,53 @@ export default {
           console.warn(err.message)
         })
     },
-    async request_yt_ordered({commit}, {action, start, end}) {
+    async request_yt_ordered({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
       await http
         .get(
-          `megafon/channel?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}`
+          `megafon/channel?brand=мегафон&order_by=${rootGetters.getRequestType.value}&start_date=${start}&end_date=${end}`
         )
         .then(response => {
-          commit(`set_yt_ordered_${action}`, response.data)
+          commit(`set_yt_ordered_count`, response.data)
         })
         .catch(err => {
           console.warn(err.message)
         })
     },
-    async request_ig_ordered({commit}, {action, start, end}) {
+    async request_ig_ordered({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
       await http
         .get(
-          `megafon/user?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}`
+          `megafon/user?brand=мегафон&order_by=${rootGetters.getRequestType.value}&start_date=${start}&end_date=${end}`
         )
         .then(response => {
-          commit(`set_ig_ordered_${action}`, response.data)
+          commit(`set_ig_ordered_count`, response.data)
         })
         .catch(err => {
           console.warn(err.message)
         })
     },
-    async request_video_ordered({commit}, {action, start, end}) {
+    async request_video_ordered({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
       await http
         .get(
-          `megafon/video?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}`
+          `megafon/video?brand=мегафон&order_by=${rootGetters.getRequestType.value}&start_date=${start}&end_date=${end}`
         )
         .then(response => {
-          commit(`set_video_ordered_${action}`, response.data)
+          commit(`set_video_ordered_count`, response.data)
         })
         .catch(err => {
           console.warn(err.message)
         })
     },
-    async request_post_ordered({commit}, {action, start, end}) {
+    async request_post_ordered({commit, rootGetters}) {
+      const [start, end] = rootGetters.getDates
       await http
         .get(
-          `megafon/post?brand=мегафон&order_by=${action}&start_date=${start}&end_date=${end}`
+          `megafon/post?brand=мегафон&order_by=${rootGetters.getRequestType.value}&start_date=${start}&end_date=${end}`
         )
         .then(response => {
-          commit(`set_post_ordered_${action}`, response.data)
+          commit(`set_post_ordered_count`, response.data)
         })
         .catch(err => {
           console.warn(err.message)

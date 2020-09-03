@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import lineChart from '../charts/line'
+import lineChart from '../charts/line_modified'
 
 import {mapGetters} from 'vuex'
 import http from '@/api/http'
@@ -104,39 +104,25 @@ export default {
     },
     async getLineData() {
       this.charts.line.line_2.loading = true
-      const [start_date, end_date] = this.getDates
 
-      const config = {
-        action: this.getRequestType.value,
-        start: start_date,
-        end: end_date
-      }
-      const jsons = {}
+      let apiData = {}
 
       if (this.path === 'general') {
-        await this.$store.dispatch('request_prod_date', config)
-        jsons[config.action] = this.$store.getters[
-          `get${config.action}_prod_date`
-        ]
+        await this.$store.dispatch('request_prod_date')
+        apiData = this.$store.getters[`get_count_prod_date`]
       } else if (this.path === 'positive') {
-        await this.$store.dispatch('posit_request_prod_date', config)
-        jsons[config.action] = this.$store.getters[
-          `posit_get${config.action}_prod_date`
-        ]
+        await this.$store.dispatch('posit_request_prod_date')
+        apiData = this.$store.getters[`posit_get_count_prod_date`]
       } else if (this.path === 'negative') {
-        await this.$store.dispatch('negat_request_prod_date', config)
-        jsons[config.action] = this.$store.getters[
-          `negat_get${config.action}_prod_date`
-        ]
+        await this.$store.dispatch('negat_request_prod_date')
+        apiData = this.$store.getters[`negat_get_count_prod_date`]
       }
 
-      let service_labels = [...new Set([...Object.keys(jsons[config.action])])]
+      let service_labels = [...new Set([...Object.keys(apiData)])]
 
       let labels = [
         ...new Set([
-          ...service_labels.flatMap(label =>
-            Object.keys(jsons[config.action][label])
-          )
+          ...service_labels.flatMap(label => Object.keys(apiData[label]))
         ])
       ]
 
@@ -144,9 +130,9 @@ export default {
         const data = []
         labels.forEach(date => {
           let data_1 = 0
-          for (let operator in jsons[config.action][label][date]) {
+          for (let operator in apiData[label][date]) {
             const {instagram = {count: 0}, youtube = {count: 0}} =
-              jsons[config.action][label][date][operator] || {}
+              apiData[label][date][operator] || {}
             const sum = instagram.count + youtube.count
             data_1 += sum
           }
