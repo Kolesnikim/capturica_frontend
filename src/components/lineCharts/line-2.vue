@@ -40,6 +40,7 @@ export default {
     lineChart
   },
   data: () => ({
+    path: '',
     charts: {
       line: {
         line_2: {
@@ -59,36 +60,6 @@ export default {
             responsive: true,
             maintainAspectRatio: false
           }
-        }
-      },
-      horizontal_bar: {
-        youtube: {
-          mentions: {
-            title: 'Топ каналов по упоминаниям YT'
-          },
-          reach: {
-            title: 'Топ каналов по охвату YT'
-          },
-          impressions: {
-            title: 'Топ каналов по вовлеченности YT'
-          },
-          loading: true,
-          data: {},
-          options: null
-        },
-        instagram: {
-          mentions: {
-            title: 'Топ каналов по упоминаниям IG'
-          },
-          reach: {
-            title: 'Топ каналов по охвату IG'
-          },
-          impressions: {
-            title: 'Топ каналов по вовлеченности IG'
-          },
-          loading: true,
-          data: {},
-          options: null
         }
       }
     }

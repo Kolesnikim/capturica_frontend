@@ -41,6 +41,7 @@ export default {
     verticalBarChart
   },
   data: () => ({
+    path: '',
     charts: {
       vertical_bar: {
         vertical_bar_1: {
