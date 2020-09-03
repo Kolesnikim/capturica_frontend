@@ -113,24 +113,37 @@ export default {
     }
   },
   actions: {
-    async request_bar_charts(
-      context,
-      {start, end, action, type, operator, operatorEng}
+    async request_bar_charts_channel(
+      {commit, rootGetters},
+      {operator, operatorEng}
     ) {
+      const [start, end] = rootGetters.getDates
       await HTTP.get(
-        `megafon/${type}?brand=${operator}&order_by=${action}&start_date=${start}&end_date=${end}`
+        `megafon/channel?brand=${operator}&order_by=${rootGetters.getRequestType.value}&start_date=${start}&end_date=${end}`
       ).then(response => {
-        context.commit(
-          `set_horizontal_bar_${operatorEng}_${type}`,
-          response.data
-        )
+        commit(`set_horizontal_bar_${operatorEng}_channel`, response.data)
       })
     },
-    async request_cloud_word(context, {start, end, operatorRus, operatorEng}) {
+    async request_bar_charts_user(
+      {commit, rootGetters},
+      {operator, operatorEng}
+    ) {
+      const [start, end] = rootGetters.getDates
+      await HTTP.get(
+        `megafon/user?brand=${operator}&order_by=${rootGetters.getRequestType.value}&start_date=${start}&end_date=${end}`
+      ).then(response => {
+        commit(`set_horizontal_bar_${operatorEng}_user`, response.data)
+      })
+    },
+    async request_cloud_word(
+      {commit, rootGetters},
+      {operatorRus, operatorEng}
+    ) {
+      const [start, end] = rootGetters.getDates
       await HTTP.get(
         `megafon/wordcloud?brand=${operatorRus}&start_date=${start}&end_date=${end}`
       ).then(response => {
-        context.commit(`set_wordcloud_${operatorEng}`, response.data)
+        commit(`set_wordcloud_${operatorEng}`, response.data)
       })
     },
     async request_posts(context, {start, end, action, operator}) {
