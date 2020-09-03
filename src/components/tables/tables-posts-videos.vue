@@ -266,14 +266,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_post_ordered')
-        apiData = this.$store.getters[`get_post_ordered_count`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_post_ordered')
-        apiData = this.$store.getters[`posit_get_post_ordered_count`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_post_ordered')
-        apiData = this.$store.getters[`negat_get_post_ordered_count`]
       }
+
+      apiData = this.$store.getters[`get_post_ordered_count`]
 
       this.tables.posts.items = apiData
       this.tables.posts.loading = false
@@ -285,14 +284,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_video_ordered')
-        apiData = this.$store.getters[`get_video_ordered_count`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_video_ordered')
-        apiData = this.$store.getters[`posit_get_video_ordered_count`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_video_ordered')
-        apiData = this.$store.getters[`negat_get_video_ordered_count`]
       }
+
+      apiData = this.$store.getters[`get_video_ordered_count`]
 
       this.tables.video.items = apiData
       this.tables.video.loading = false

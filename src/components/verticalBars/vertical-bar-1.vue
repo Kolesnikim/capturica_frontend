@@ -152,14 +152,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_prod')
-        apiData = this.$store.getters[`get_count_prod`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_prod')
-        apiData = this.$store.getters[`posit_get_count_prod`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_prod')
-        apiData = this.$store.getters[`negat_get_count_prod`]
       }
+
+      apiData = this.$store.getters[`get_count_prod`]
 
       const labels = Object.keys(apiData)
       const operators = ['билайн', 'теле2', 'мегафон', 'мтс']

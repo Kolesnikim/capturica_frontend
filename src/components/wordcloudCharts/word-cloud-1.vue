@@ -101,14 +101,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_word_cloud', config)
-        this.cloud.items = this.$store.getters.get_word_cloud.youtube
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_word_cloud', config)
-        this.cloud.items = this.$store.getters.posit_get_word_cloud.youtube
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_word_cloud', config)
-        this.cloud.items = this.$store.getters.negat_get_word_cloud.youtube
       }
+
+      this.cloud.items = this.$store.getters.get_word_cloud.youtube
       this.cloud.loading = false
     }
   }

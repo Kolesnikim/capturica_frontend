@@ -101,14 +101,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request')
-        apiData = this.$store.getters[`get_count`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request')
-        apiData = this.$store.getters[`posit_get_count`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request')
-        apiData = this.$store.getters[`negat_get_count`]
       }
+
+      apiData = this.$store.getters[`get_count`]
 
       const labels = ['мегафон', 'мтс', 'билайн', 'теле2']
       const mentions = labels.map(label =>

@@ -146,18 +146,20 @@ export default {
         commit(`set_wordcloud_${operatorEng}`, response.data)
       })
     },
-    async request_posts(context, {start, end, action, operator}) {
+    async request_posts({commit, rootGetters}, operator) {
+      const [start, end] = rootGetters.getDates
       await HTTP.get(
-        `megafon/post?brand=${operator.operatorRus}&order_by=${action}&start_date=${start}&end_date=${end}`
+        `megafon/post?brand=${operator.operatorRus}&order_by=${rootGetters.getRequestType.value}&start_date=${start}&end_date=${end}`
       ).then(response => {
-        context.commit(`set_posts_${operator.operatorEng}`, response.data)
+        commit(`set_posts_${operator.operatorEng}`, response.data)
       })
     },
-    async request_video(context, {start, end, action, operator}) {
+    async request_video({commit, rootGetters}, operator) {
+      const [start, end] = rootGetters.getDates
       await HTTP.get(
-        `megafon/video?brand=${operator.operatorRus}&order_by=${action}&start_date=${start}&end_date=${end}`
+        `megafon/video?brand=${operator.operatorRus}&order_by=${rootGetters.getRequestType.value}&start_date=${start}&end_date=${end}`
       ).then(response => {
-        context.commit(`set_video_${operator.operatorEng}`, response.data)
+        commit(`set_video_${operator.operatorEng}`, response.data)
       })
     }
   }

@@ -167,14 +167,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_yt_ordered')
-        apiData = this.$store.getters[`get_yt_ordered_count`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_yt_ordered')
-        apiData = this.$store.getters[`posit_get_yt_ordered_count`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_yt_ordered')
-        apiData = this.$store.getters[`negat_get_yt_ordered_count`]
       }
+
+      apiData = this.$store.getters[`get_yt_ordered_count`]
 
       const labels = apiData.map(item => item.channel_name)
 
@@ -205,14 +204,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_ig_ordered')
-        apiData = this.$store.getters[`get_ig_ordered_count`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_ig_ordered')
-        apiData = this.$store.getters[`posit_get_ig_ordered_count`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_ig_ordered')
-        apiData = this.$store.getters[`negat_get_ig_ordered_count`]
       }
+
+      apiData = this.$store.getters[`get_ig_ordered_count`]
 
       const labels = apiData.map(item => item.user_name)
       let datasets = labels.map(label => {

@@ -204,14 +204,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_date')
-        apiData = this.$store.getters[`get_count_date`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_date')
-        apiData = this.$store.getters[`posit_get_count_date`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_date')
-        apiData = this.$store.getters[`negat_get_count_date`]
       }
+
+      apiData = this.$store.getters[`get_count_date`]
 
       const brands_labels = ['мегафон', 'билайн', 'мтс', 'теле2']
 

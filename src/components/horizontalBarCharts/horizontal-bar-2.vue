@@ -103,14 +103,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_coeff')
-        apiData = this.$store.getters[`get_count_coeff`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_coeff')
-        apiData = this.$store.getters[`posit_get_count_coeff`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_coeff')
-        apiData = this.$store.getters[`negat_get_count_coeff`]
       }
+
+      apiData = this.$store.getters[`get_count_coeff`]
 
       const obj = apiData
       const labels = Object.keys(obj)

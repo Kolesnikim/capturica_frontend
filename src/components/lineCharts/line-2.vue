@@ -109,14 +109,13 @@ export default {
 
       if (this.path === 'general') {
         await this.$store.dispatch('request_prod_date')
-        apiData = this.$store.getters[`get_count_prod_date`]
       } else if (this.path === 'positive') {
         await this.$store.dispatch('posit_request_prod_date')
-        apiData = this.$store.getters[`posit_get_count_prod_date`]
       } else if (this.path === 'negative') {
         await this.$store.dispatch('negat_request_prod_date')
-        apiData = this.$store.getters[`negat_get_count_prod_date`]
       }
+
+      apiData = this.$store.getters[`get_count_prod_date`]
 
       let service_labels = [...new Set([...Object.keys(apiData)])]
 
