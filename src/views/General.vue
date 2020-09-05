@@ -1,6 +1,6 @@
 <template>
   <v-layout class="d-flex pa-4" column>
-    <v-card class="mb-6">
+    <v-card>
       <v-app-bar dense flat tile class="relative">
         <div class="spacer_1"></div>
         <h1>Упоминания</h1>
@@ -9,7 +9,6 @@
       </v-app-bar>
       <request-types class="mt-16"></request-types>
     </v-card>
-
     <div class="d-flex mx-n2 mb-4">
       <horizontal-bar1></horizontal-bar1>
       <horizontal-bar2></horizontal-bar2>
