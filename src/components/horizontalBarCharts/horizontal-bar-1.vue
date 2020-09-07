@@ -60,9 +60,9 @@ export default {
     ...mapGetters(['getRequestType', 'getDates'])
   },
 
-  created() {
+  async created() {
     this.path = this.$route.fullPath.slice(1)
-    this.init()
+    await this.init()
   },
   watch: {
     getRequestType() {
@@ -92,7 +92,7 @@ export default {
       })
     },
     async init() {
-      this.getHorizontalBarMentions()
+      await this.getHorizontalBarMentions()
     },
     async getHorizontalBarMentions() {
       this.charts.horizontal_bar_1.loading = true

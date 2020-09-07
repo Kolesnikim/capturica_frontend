@@ -63,11 +63,11 @@ export default {
     this.init()
   },
   watch: {
-    getRequestType() {
-      this.init()
+    async getRequestType() {
+      await this.init()
     },
-    getDates() {
-      this.init()
+    async getDates() {
+      await this.init()
     }
   },
   methods: {
@@ -88,7 +88,7 @@ export default {
       })
     },
     async init() {
-      this.getCloudWords()
+      await this.getCloudWords()
     },
     async getCloudWords() {
       this.cloud.loading = true

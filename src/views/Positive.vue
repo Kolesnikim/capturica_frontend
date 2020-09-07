@@ -1,8 +1,7 @@
 <template>
   <v-layout class="d-flex pa-4" column>
     <v-card>
-      <v-app-bar dense flat tile class="relative">
-        <div class="spacer_1"></div>
+      <v-app-bar dense flat tile class="relative mx-2">
         <h1>Позитивная тональность</h1>
         <v-spacer></v-spacer>
         <date-picker-container></date-picker-container>

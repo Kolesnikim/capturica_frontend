@@ -1,37 +1,13 @@
 <template>
-  <v-app>
-    <v-app-bar v-if="$route.path !== '/auth'" app color="#3A4149" dark>
-      <v-layout class="justify-end align-center">
-        <div class="d-flex align-center">
-          <span>{{ getUserData.username }}</span>
-          <v-btn @click="logout()" icon>
-            <v-icon>mdi-run</v-icon>
-          </v-btn>
-        </div>
-      </v-layout>
-    </v-app-bar>
-
+  <v-app v-if="mounted">
     <v-navigation-drawer
-      v-if="$route.path !== '/auth'"
+      v-if="$route.path !== '/auth' && drawer"
       class="drawer"
-      v-model="drawer"
       app
+      clipped
       style="background: #3A4149"
       width="200"
     >
-      <div class="d-flex align-center justify-center drawer__title">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-1"
-          contain
-          src="@/assets/logo.svg"
-          transition="scale-transition"
-          width="70"
-          height="70"
-        />
-        <h3 class="white--text mr-5">Capturica</h3>
-      </div>
-
       <div>
         <v-list>
           <template v-for="(item, index) in items">
@@ -93,11 +69,44 @@
         </v-list>
       </div>
     </v-navigation-drawer>
-
-    <v-main
-      style="background: #EBEDEF; height: calc(100% + 48px); margin-bottom: -48px"
+    <v-app-bar
+      v-if="$route.path !== '/auth'"
+      app
+      clipped-left
+      color="#3A4149"
+      dark
     >
-      <router-view></router-view>
+      <v-btn tile dense color="#3A4149" @click="drawer = !drawer">
+        <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+      </v-btn>
+      <div class="d-flex align-center justify-center drawer__title">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-1"
+          contain
+          src="@/assets/logo.svg"
+          transition="scale-transition"
+          width="70"
+          height="70"
+        />
+      </div>
+      <h3 class="white--text mr-5">Capturica</h3>
+      <v-layout class="justify-end align-center">
+        <div class="d-flex align-center">
+          <span>{{ getUserData.username }}</span>
+          <v-btn @click="logout()" icon>
+            <v-icon>mdi-run</v-icon>
+          </v-btn>
+        </div>
+      </v-layout>
+    </v-app-bar>
+    <v-main
+      style="background: #EBEDEF; height: 100%; margin-top: 130px"
+      class="justify-end align-end"
+    >
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
     </v-main>
   </v-app>
 </template>
@@ -108,7 +117,8 @@ import {mapGetters} from 'vuex'
 
 export default {
   data: () => ({
-    drawer: true,
+    mounted: false,
+    drawer: false,
     items: [
       {
         title: 'Главная',
@@ -142,13 +152,13 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters(['getUserData'])
+    ...mapGetters(['getUserData', 'getDates'])
   },
-
-  mounted() {
+  created() {
     if (this.$route.path === '/') {
       this.$router.push('/general')
     }
+    this.mounted = true
   },
 
   methods: {
