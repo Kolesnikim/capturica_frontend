@@ -6,7 +6,6 @@
       app
       clipped
       style="background: #3A4149"
-      width="200"
     >
       <div>
         <v-list>
@@ -76,9 +75,10 @@
       color="#3A4149"
       dark
     >
-      <v-btn tile dense color="#3A4149" @click="drawer = !drawer">
-        <v-icon dark>mdi-format-list-bulleted-square</v-icon>
-      </v-btn>
+      <v-app-bar-nav-icon @click="drawer = !drawer">
+        <v-icon class="mx-4" dark>mdi-format-list-bulleted-square</v-icon>
+      </v-app-bar-nav-icon>
+
       <div class="d-flex align-center justify-center drawer__title">
         <v-img
           alt="Vuetify Logo"
@@ -100,14 +100,11 @@
         </div>
       </v-layout>
     </v-app-bar>
-    <v-main
-      style="background: #EBEDEF; height: 100%; margin-top: 130px"
-      class="justify-end align-end"
-    >
-      <v-container fluid>
+    <v-content style="background: #EBEDEF; margin-top: 70px">
+      <v-container fluid class="fill-height">
         <router-view></router-view>
       </v-container>
-    </v-main>
+    </v-content>
   </v-app>
 </template>
 

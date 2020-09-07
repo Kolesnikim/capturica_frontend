@@ -1,7 +1,8 @@
 <template>
   <v-layout class="d-flex pa-4" column>
-    <v-card class="mb-6">
+    <v-card>
       <v-app-bar dense flat tile class="relative mx-2">
+        <div style="width: 260px"></div>
         <h1>Упоминания конкурентов</h1>
         <v-spacer></v-spacer>
         <date-picker-container></date-picker-container>
