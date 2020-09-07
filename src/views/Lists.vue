@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="pa-4 mx-n2" wrap>
+  <v-layout class="pa-4 mx-n2" style="margin-top: -140px" wrap>
     <v-flex class="px-2" md6>
       <v-card class="pa-2 mb-4" style="width: 100%">
         <h2 class="text-center">Видео в YT</h2>
