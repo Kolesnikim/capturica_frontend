@@ -1,14 +1,16 @@
 <template>
-  <v-layout class="d-flex pa-4" column>
-    <v-card>
-      <v-app-bar dense flat tile class="relative">
-        <div class="spacer_1"></div>
-        <h1>Упоминания</h1>
-        <v-spacer></v-spacer>
-        <date-picker-container></date-picker-container>
-      </v-app-bar>
-      <request-types class="mt-16"></request-types>
+  <v-col>
+    <v-card
+      dense
+      flat
+      tile
+      class="d-flex justify-space-between align-center mb-2"
+    >
+      <h1>Упоминания</h1>
+      <v-spacer></v-spacer>
+      <date-picker-container></date-picker-container>
     </v-card>
+    <request-types></request-types>
     <div class="d-flex mx-n2 mb-4">
       <horizontal-bar1></horizontal-bar1>
       <horizontal-bar2></horizontal-bar2>
@@ -19,7 +21,7 @@
     <word-cloud1></word-cloud1>
     <horizontal-bars-yt-ig></horizontal-bars-yt-ig>
     <tables-posts-videos></tables-posts-videos>
-  </v-layout>
+  </v-col>
 </template>
 
 <script>
@@ -55,12 +57,6 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.spacer_1
-  width: 200px
-.relative
-  position: fixed
-  top: 80px
-  z-index: 1
 .total
   height: 100px
   &--red

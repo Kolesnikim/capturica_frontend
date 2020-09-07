@@ -1,14 +1,16 @@
 <template>
-  <v-layout class="d-flex pa-4" column>
-    <v-card class="mb-6">
-      <v-app-bar dense flat tile class="relative">
-        <div class="spacer_1"></div>
-        <h1>Упоминания конкурентов</h1>
-        <v-spacer></v-spacer>
-        <date-picker-container></date-picker-container>
-      </v-app-bar>
-      <request-types class="mt-16"></request-types>
+  <v-col>
+    <v-card
+      dense
+      flat
+      tile
+      class="d-flex justify-space-between align-center mb-2"
+    >
+      <h1>Упоминания конкурентов</h1>
+      <v-spacer></v-spacer>
+      <date-picker-container></date-picker-container>
     </v-card>
+    <request-types></request-types>
     <div class="d-flex mx-n2 mb-4">
       <v-flex class="mx-2" md4>
         <v-card class="total total--blue" style="background: #639FF8">
@@ -49,7 +51,7 @@
     <horizontal-bar-user-compets></horizontal-bar-user-compets>
     <tables-videos-compets></tables-videos-compets>
     <tables-posts-compets></tables-posts-compets>
-  </v-layout>
+  </v-col>
 </template>
 
 <script>
@@ -79,12 +81,7 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.spacer_1
-  width: 200px
-.relative
-  position: fixed
-  top: 80px
-  z-index: 1
+
 .total
     height: 100%
 
