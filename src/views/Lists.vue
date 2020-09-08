@@ -2,7 +2,13 @@
   <v-layout class="pa-4 mx-n2" style="margin-top: -140px" wrap>
     <v-flex class="px-2" md6>
       <v-card class="pa-2 mb-4" style="width: 100%">
-        <h2 class="text-center">Видео в YT</h2>
+        <div class="d-flex justify-center align-center">
+          <h2 class="text-center">Видео в YT</h2>
+          <v-btn @click="export_yt" class="ml-2" color="primary--text" icon>
+            <v-icon class="">mdi-download</v-icon>
+          </v-btn>
+        </div>
+
         <v-data-table
           :headers="tables.video.headers"
           :items="tables.video.items"
@@ -32,7 +38,12 @@
     </v-flex>
     <v-flex class="px-2" md6>
       <v-card class="pa-2 mb-4" style="width: 100%">
-        <h2 class="text-center">Посты в IG</h2>
+        <div class="d-flex justify-center align-center">
+          <h2 class="text-center">Посты в IG</h2>
+          <v-btn @click="export_ig" class="ml-2" color="primary--text" icon>
+            <v-icon class="">mdi-download</v-icon>
+          </v-btn>
+        </div>
         <v-data-table
           :headers="tables.posts.headers"
           :items="tables.posts.items"
@@ -133,7 +144,6 @@ export default {
       )
       this.tables.posts.items = data
       this.tables.posts.loading = false
-      // console.dir(data)
     },
     async getListVideo() {
       const params = this.$route.query
